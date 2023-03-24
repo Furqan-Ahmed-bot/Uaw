@@ -99,18 +99,21 @@ class _AdminLoginState extends State<AdminLogin> {
                           },
                           child: Hero(
                             transitionOnUserGestures: true,
-                            tag: "Submit",
-                            child: Container(
-                              width: 345.w,
-                              height: 55.h,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.r),
-                                color: bluishshade,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  "Submit",
-                                  style: txtstylewhite20,
+                            tag: 'myTag-4',
+                            child: Material(
+                              type: MaterialType.transparency,
+                              child: Container(
+                                width: 345.w,
+                                height: 55.h,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.r),
+                                  color: bluishshade,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "Submit",
+                                    style: txtstylewhite20,
+                                  ),
                                 ),
                               ),
                             ),

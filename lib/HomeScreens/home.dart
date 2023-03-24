@@ -1,5 +1,11 @@
-import 'package:_uaw/Documents.dart';
+import 'dart:developer';
+
+import 'package:_uaw/Auth/CreateProfile.dart';
+
 import 'package:_uaw/Helpers.dart';
+import 'package:_uaw/HomeScreens/Documents.dart';
+import 'package:_uaw/HomeScreens/Magzines.dart';
+import 'package:_uaw/HomeScreens/VideosScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -7,7 +13,9 @@ import 'package:intl/intl.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  HomeScreen({
+    super.key,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -16,13 +24,22 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String now = DateFormat("yyyy-MM-dd").format(DateTime.now());
   int i = 0;
+
+  // List routingscreennames = [
+  //   DocumentsScreen(),
+  //   CreateProfileScreen(),
+  //   DocumentsScreen(),
+  //   CreateProfileScreen(),
+  //   DocumentsScreen(),
+  //   CreateProfileScreen(),
+  // ];
   List StatusWidgetDetails = [
     {"containerimage": "assets/images/romain-dancre-doplSDELX7E-unsplash@3x.png", "statustext": "Documents", "navigateTo": "DocumentsScreen"},
-    {"containerimage": "assets/images/zhang-shaoqi-PdUACzBJP-Y-unsplash@3x.png", "statustext": "Videos", "navigateTo": "HomeScreen"},
-    {"containerimage": "assets/images/krakenimages-Y5bvRlcCx8k-unsplash@3x.png", "statustext": "Magzine", "navigateTo": "HomeScreen"},
-    {"containerimage": "assets/images/md-duran-rE9vgD_TXgM-unsplash@3x.png", "statustext": "Events", "navigateTo": "HomeScreen"},
-    {"containerimage": "assets/images/romain-dancre-doplSDELX7E-unsplash@3x.png", "statustext": "Documents", "navigateTo": "HomeScreen"},
-    {"containerimage": "assets/images/zhang-shaoqi-PdUACzBJP-Y-unsplash@3x.png", "statustext": "Videos", "navigateTo": "HomeScreen"},
+    {"containerimage": "assets/images/zhang-shaoqi-PdUACzBJP-Y-unsplash@3x.png", "statustext": "Videos", "navigateTo": "DocumentsScreen"},
+    {"containerimage": "assets/images/krakenimages-Y5bvRlcCx8k-unsplash@3x.png", "statustext": "Magzine", "navigateTo": "DocumentsScreen"},
+    {"containerimage": "assets/images/md-duran-rE9vgD_TXgM-unsplash@3x.png", "statustext": "Events", "navigateTo": "DocumentsScreen"},
+    {"containerimage": "assets/images/romain-dancre-doplSDELX7E-unsplash@3x.png", "statustext": "Documents", "navigateTo": "DocumentsScreen"},
+    {"containerimage": "assets/images/zhang-shaoqi-PdUACzBJP-Y-unsplash@3x.png", "statustext": "Videos", "navigateTo": "DocumentsScreen"},
   ];
   @override
   Widget build(BuildContext context) {
@@ -108,17 +125,51 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 0.15.sh,
                   child: ListView.separated(
                     separatorBuilder: (BuildContext context, int index) {
-                      return SizedBox(width: 10);
+                      return const SizedBox(width: 10);
                     },
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: false,
                     itemCount: StatusWidgetDetails.length,
                     itemBuilder: (BuildContext context, i) {
                       return GestureDetector(
+                        onTap: () {
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(builder: (context) => routingscreennames[i]),
+                          // );
+                          log('ujijiuhiu: $i');
+                          if (i == 0) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DocumentsScreen(
+                                    value: 'home$i',
+                                  ),
+                                ));
+                          } else if (i == 1) {
+                            // log('ujijiukjjkjkhiu: $i');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => VideoScreen(
+                                        value: 'home$i',
+                                      )),
+                            );
+                          } else if (i == 2) {
+                            // log('ujijiukjjkjkhiu: $i');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MagzineScreen(
+                                        value: 'home$i',
+                                      )),
+                            );
+                          }
+                        },
                         child: StatusWidget(
-                          navigateTo: StatusWidgetDetails[i]["navigateTo"],
                           containerimage: StatusWidgetDetails[i]["containerimage"],
                           statustext: StatusWidgetDetails[i]["statustext"],
+                          index: i,
                         ),
                       );
                     },
@@ -275,6 +326,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
+                
+                
                 15.verticalSpace,
                 Align(
                   alignment: Alignment.centerLeft,
@@ -429,45 +482,44 @@ class _HomeScreenState extends State<HomeScreen> {
 
 class StatusWidget extends StatelessWidget {
   var statustext;
+  int index;
 
   String containerimage;
-  final navigateTo;
+  // final VoidCallback? route;
 
   StatusWidget({
     this.statustext,
+    required this.index,
     required this.containerimage,
-    required this.navigateTo,
+    // required this.route,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Get.to(() {
-          navigateTo + "()";
-        });
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            width: 80.w,
-            height: 80.h,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: AssetImage(containerimage),
-              ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          width: 80.w,
+          height: 80.h,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: DecorationImage(
+              image: AssetImage(containerimage),
             ),
           ),
-          10.verticalSpace,
-          Text(
+        ),
+        10.verticalSpace,
+        Hero(
+          transitionOnUserGestures: true,
+          tag: ValueKey('home$index'),
+          child: Text(
             statustext,
             style: textroboto14blue,
-          )
-        ],
-      ),
+          ),
+        )
+      ],
     );
   }
 }

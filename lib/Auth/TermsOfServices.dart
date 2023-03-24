@@ -226,7 +226,7 @@ class _TermsOfServicesState extends State<TermsOfServices> with SingleTickerProv
                     ),
                   ),
                   Hero(
-                    tag: "Submit",
+                    tag: 'myTag-4',
                     transitionOnUserGestures: true,
                     child: Material(
                       type: MaterialType.transparency,

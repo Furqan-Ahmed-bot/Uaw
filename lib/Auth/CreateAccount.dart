@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:_uaw/Helpers.dart';
-import 'package:_uaw/home.dart';
+import 'package:_uaw/HomeScreens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
