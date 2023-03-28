@@ -5,6 +5,9 @@ import 'package:_uaw/Auth/CreateProfile.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:_uaw/HomeScreens/Documents.dart';
 import 'package:_uaw/HomeScreens/Magzines.dart';
+import 'package:_uaw/HomeScreens/NewsAndEventDetails.dart';
+import 'package:_uaw/HomeScreens/NewsAndEvents.dart';
+import 'package:_uaw/HomeScreens/VideoScreen.dart';
 import 'package:_uaw/HomeScreens/VideosScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -164,6 +167,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                         value: 'home$i',
                                       )),
                             );
+                          } else if (i == 3) {
+                            // log('ujijiukjjkjkhiu: $i');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => NewsAndEventsScreen(
+                                        value: 'home$i',
+                                      )),
+                            );
                           }
                         },
                         child: StatusWidget(
@@ -179,13 +191,26 @@ class _HomeScreenState extends State<HomeScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "News & Events",
-                      style: textroboto20,
+                    Hero(
+                      tag: "newtag",
+                      child: Material(
+                        type: MaterialType.transparency,
+                        child: Text(
+                          "News & Events",
+                          style: textroboto20,
+                        ),
+                      ),
                     ),
-                    Text(
-                      "View all",
-                      style: txtstylebluehshade14,
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(() => NewsAndEventsScreen(
+                              value: "",
+                            ));
+                      },
+                      child: Text(
+                        "View all",
+                        style: txtstylebluehshade14,
+                      ),
                     )
                   ],
                 ),
@@ -238,83 +263,88 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                         15.verticalSpace,
-                        StaggeredGrid.count(
-                          crossAxisCount: 3,
-                          mainAxisSpacing: 5,
-                          crossAxisSpacing: 5,
-                          children: [
-                            StaggeredGridTile.count(
-                              crossAxisCellCount: 1,
-                              mainAxisCellCount: 1,
-                              child: Container(
-                                width: 115.w,
-                                height: 135.h,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10.r),
-                                  ),
-                                  color: black,
-                                  image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
-                                ),
-                              ),
-                            ),
-                            StaggeredGridTile.count(
-                              crossAxisCellCount: 1,
-                              mainAxisCellCount: 1,
-                              child: Container(
-                                width: 115.w,
-                                height: 135.h,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
-                                  color: black,
-                                ),
-                              ),
-                            ),
-                            StaggeredGridTile.count(
-                              crossAxisCellCount: 1,
-                              mainAxisCellCount: 1,
-                              child: Container(
-                                width: 115.w,
-                                height: 135.h,
-                                decoration: BoxDecoration(
-                                  color: black,
-                                  borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(10.r),
-                                  ),
-                                  image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
-                                ),
-                              ),
-                            ),
-                            StaggeredGridTile.count(
-                              crossAxisCellCount: 5,
-                              mainAxisCellCount: 1,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    width: 170.w,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(10.r),
-                                      ),
-                                      color: black,
-                                      image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(() => NewsAndEventsDetailsScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+                          },
+                          child: StaggeredGrid.count(
+                            crossAxisCount: 3,
+                            mainAxisSpacing: 5,
+                            crossAxisSpacing: 5,
+                            children: [
+                              StaggeredGridTile.count(
+                                crossAxisCellCount: 1,
+                                mainAxisCellCount: 1,
+                                child: Container(
+                                  width: 115.w,
+                                  height: 135.h,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10.r),
                                     ),
+                                    color: black,
+                                    image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
                                   ),
-                                  Container(
-                                    width: 170.w,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        bottomRight: Radius.circular(10.r),
-                                      ),
-                                      color: black,
-                                      image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
-                            ),
-                          ],
+                              StaggeredGridTile.count(
+                                crossAxisCellCount: 1,
+                                mainAxisCellCount: 1,
+                                child: Container(
+                                  width: 115.w,
+                                  height: 135.h,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                    color: black,
+                                  ),
+                                ),
+                              ),
+                              StaggeredGridTile.count(
+                                crossAxisCellCount: 1,
+                                mainAxisCellCount: 1,
+                                child: Container(
+                                  width: 115.w,
+                                  height: 135.h,
+                                  decoration: BoxDecoration(
+                                    color: black,
+                                    borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(10.r),
+                                    ),
+                                    image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                  ),
+                                ),
+                              ),
+                              StaggeredGridTile.count(
+                                crossAxisCellCount: 5,
+                                mainAxisCellCount: 1,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      width: 170.w,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(10.r),
+                                        ),
+                                        color: black,
+                                        image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 170.w,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                          bottomRight: Radius.circular(10.r),
+                                        ),
+                                        color: black,
+                                        image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                         10.verticalSpace,
                         Text(
@@ -326,8 +356,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                
-                
                 15.verticalSpace,
                 Align(
                   alignment: Alignment.centerLeft,
@@ -432,33 +460,44 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             15.horizontalSpace,
-                            Text(
-                              "Admin",
-                              style: txtstyleblue17,
+                            Hero(
+                              tag: "Video",
+                              child: Material(
+                                type: MaterialType.transparency,
+                                child: Text(
+                                  "Admin",
+                                  style: txtstyleblue17,
+                                ),
+                              ),
                             )
                           ],
                         ),
                         15.verticalSpace,
-                        Container(
-                          width: 0.9.sw,
-                          height: 250.h,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.r),
-                            color: whitecolor,
-                            image: DecorationImage(
-                              image: AssetImage("assets/images/Group 1440@3x.png"),
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                "assets/images/Group 12950@3x.png",
-                                scale: 3.5,
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(() => VidePalayerScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+                          },
+                          child: Container(
+                            width: 0.9.sw,
+                            height: 250.h,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.r),
+                              color: whitecolor,
+                              image: DecorationImage(
+                                image: AssetImage("assets/images/Group 1440@3x.png"),
+                                fit: BoxFit.fill,
                               ),
-                            ],
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  "assets/images/Group 12950@3x.png",
+                                  scale: 3.5,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         10.verticalSpace,

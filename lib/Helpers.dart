@@ -428,6 +428,11 @@ var txtstyleblue25 = GoogleFonts.roboto(
   color: Color(0xff04366B),
   fontWeight: FontWeight.bold,
 );
+var txtstyleblue24 = GoogleFonts.roboto(
+  fontSize: 24.sp,
+  color: Color(0xff04366B),
+  fontWeight: FontWeight.bold,
+);
 
 var txtstyleblue17 = GoogleFonts.roboto(
   fontSize: 17.sp,
