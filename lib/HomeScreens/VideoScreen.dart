@@ -12,19 +12,19 @@ class VidePalayerScreen extends StatefulWidget {
 }
 
 class _VidePalayerScreenState extends State<VidePalayerScreen> {
-  bool _isPlaying = false;
+  late bool _isPlaying = false;
   late VideoPlayerController _videoPlayerController;
   @override
   void initState() {
     super.initState();
     _videoPlayerController = VideoPlayerController.asset('assets/images/video.mp4')
-      ..addListener(() {
-        setState(() {});
-      })
       ..initialize().then((_) {
-        setState(() {});
-        _videoPlayerController.play();
+        _videoPlayerController.pause();
+        setState(() {
+          _isPlaying = false;
+        });
       });
+
     Duration durationOfVideo = _videoPlayerController.value.duration;
   }
 
@@ -41,7 +41,7 @@ class _VidePalayerScreenState extends State<VidePalayerScreen> {
 
   void _playPause() {
     setState(() {
-      _isPlaying ? _videoPlayerController.pause() : _videoPlayerController.play();
+      _isPlaying ? _videoPlayerController.play() : _videoPlayerController.pause();
       _isPlaying = !_isPlaying;
     });
   }
@@ -91,54 +91,127 @@ class _VidePalayerScreenState extends State<VidePalayerScreen> {
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.r),
           child: Column(children: [
-            Container(
-              width: 1.sw,
-              height: 524.h,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: AspectRatio(
-                  aspectRatio: _videoPlayerController!.value.aspectRatio,
-                  child: VideoPlayer(
-                    _videoPlayerController,
-                  ),
-                ),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Stack(
+              clipBehavior: Clip.none,
+              alignment: Alignment.center,
               children: [
                 Container(
-                  width: 48.w,
-                  height: 48.h,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: white,
+                  width: 1.sw,
+                  height: 524.h,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: AspectRatio(
+                      aspectRatio: _videoPlayerController!.value.aspectRatio,
+                      child: VideoPlayer(
+                        _videoPlayerController,
+                      ),
+                    ),
                   ),
-                  child: Image.asset("assets/images/Group 1437@3x.png"),
                 ),
-                ElevatedButton(
-                    onPressed: () {
+                Positioned(
+                    child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _isPlaying = true;
+                    });
+                    _videoPlayerController.play();
+                  },
+                  child: !_isPlaying
+                      ? Container(
+                          width: 90.w,
+                          height: 90.w,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              width: 5.w,
+                              color: whitecolor,
+                            ),
+                            color: Colors.white.withOpacity(0.25),
+                          ),
+                          child: Icon(
+                            Icons.play_arrow_rounded,
+                            color: whitecolor,
+                            size: 55,
+                          ),
+                        )
+                      : Container(),
+                ))
+              ],
+            ),
+            50.verticalSpace,
+            Text(
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod",
+              textAlign: TextAlign.center,
+              style: txtstylewhite15opacity,
+            ),
+            30.verticalSpace,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  '${position.inMinutes}:${(position.inSeconds % 60).toString().padLeft(2, '0')}',
+                  style: txtstylewhite15opacity,
+                ),
+                Container(
+                  width: 0.7.sw,
+                  height: 10.h,
+                  child: VideoProgressIndicator(
+                    colors: VideoProgressColors(backgroundColor: Colors.white.withOpacity(0.25), playedColor: Color(0xffEEF6FF)),
+                    _videoPlayerController,
+                    allowScrubbing: true,
+                  ),
+                ),
+                Text(
+                  '${duration.inMinutes}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}',
+                  style: txtstylewhite15opacity,
+                ),
+              ],
+            ),
+            40.verticalSpace,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 50.r),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    width: 48.w,
+                    height: 48.h,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: white,
+                    ),
+                    child: Image.asset("assets/images/Group 1437@3x.png"),
+                  ),
+                  GestureDetector(
+                    onTap: () {
                       _videoPlayerController.pause();
                     },
-                    child: Icon(Icons.pause)),
-                Padding(padding: EdgeInsets.all(2)),
-                ElevatedButton(
-                    onPressed: () {
-                      _videoPlayerController.play();
-                    },
-                    child: Icon(Icons.play_arrow))
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('${position.inMinutes}:${(position.inSeconds % 60).toString().padLeft(2, '0')}'),
-                Text('${duration.inMinutes}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}'),
-              ],
-            ),
-            VideoProgressIndicator(
-              _videoPlayerController,
-              allowScrubbing: true,
+                    child: Container(
+                      width: 70.w,
+                      height: 70.h,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: white,
+                      ),
+                      child: Icon(
+                        Icons.pause_rounded,
+                        color: bluishshade,
+                        size: 45,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 48.w,
+                    height: 48.h,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: white,
+                    ),
+                    child: Image.asset("assets/images/Group 1439@3x.png"),
+                  ),
+                ],
+              ),
             ),
             10.verticalSpace,
           ]),

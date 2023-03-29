@@ -1,32 +1,23 @@
 import 'package:_uaw/Helpers.dart';
-import 'package:_uaw/HomeScreens/NewsAndEventDetails.dart';
-import 'package:_uaw/HomeScreens/SelectedDateEvents.dart';
-import 'package:_uaw/HomeScreens/home.dart';
+import 'package:_uaw/HomeScreens/SelectedDateEventDetails.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
-import 'package:intl/intl.dart';
-
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:intl/intl.dart';
-import 'package:table_calendar/table_calendar.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart' as intl;
 
-class NewsAndEventsScreen extends StatefulWidget {
-  final String value;
-  const NewsAndEventsScreen({super.key, required this.value});
+class SelectedDateEventsScreen extends StatefulWidget {
+  const SelectedDateEventsScreen({super.key});
 
   @override
-  State<NewsAndEventsScreen> createState() => _NewsAndEventsScreenState();
+  State<SelectedDateEventsScreen> createState() => _SelectedDateEventsScreenState();
 }
 
-class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
+class _SelectedDateEventsScreenState extends State<SelectedDateEventsScreen> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOn; // Can be toggled on/off by longpressing a date
   DateTime _focusedDay = DateTime.now();
@@ -88,7 +79,7 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
           leading: Center(
             child: GestureDetector(
               onTap: () {
-                Get.to(() => HomeScreen());
+                Get.back();
               },
               child: Image.asset(
                 "assets/images/Group 1430@3x.png",
@@ -96,13 +87,9 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
               ),
             ),
           ),
-          title: Hero(
-            transitionOnUserGestures: true,
-            tag: "newtag",
-            child: Text(
-              "NEWS & EVENTS",
-              style: textroboto18,
-            ),
+          title: Text(
+            "14 SEPTEMBER 2023",
+            style: textroboto18,
           ),
           centerTitle: true,
           actions: [
@@ -204,9 +191,9 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                         20.verticalSpace,
                                         SfDateRangePicker(
                                           allowViewNavigation: true,
-                                          onSelectionChanged: (dateRangePickerSelectionChangedArgs) {
-                                            Get.to(() => SelectedDateEventsScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
-                                          },
+                                          // onSelectionChanged: (dateRangePickerSelectionChangedArgs) {
+                                          //   Get.to(() => SelectedDateEventsScreen());
+                                          // },
                                           selectionColor: Color(0xffEDEDED),
                                           selectionTextStyle: TextStyle(
                                             color: Colors.black,
@@ -272,9 +259,9 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                     itemBuilder: (BuildContext contex, i) {
                       return GestureDetector(
                           onTap: () {
-                            Get.to(() => NewsAndEventsDetailsScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+                            Get.to(() => SelectedDateEventDetailsScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
                           },
-                          child: Newsandeventswidget());
+                          child: SelectedDateWidget());
                     })
               ],
             ),
@@ -285,8 +272,8 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
   }
 }
 
-class Newsandeventswidget extends StatelessWidget {
-  const Newsandeventswidget({
+class SelectedDateWidget extends StatelessWidget {
+  const SelectedDateWidget({
     Key? key,
   }) : super(key: key);
 

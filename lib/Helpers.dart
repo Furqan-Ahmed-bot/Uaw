@@ -325,6 +325,10 @@ var txtstylewhite14opacity = GoogleFonts.roboto(
   color: Colors.white.withOpacity(0.65),
   fontWeight: FontWeight.bold,
 );
+var txtstylewhite15opacity = GoogleFonts.roboto(
+  fontSize: 15.sp,
+  color: Colors.white,
+);
 
 var txtstylewhite12opacity = GoogleFonts.roboto(
   fontSize: 12.sp,
@@ -438,4 +442,8 @@ var txtstyleblue17 = GoogleFonts.roboto(
   fontSize: 17.sp,
   color: Color(0xff04366B),
   fontWeight: FontWeight.bold,
+);
+var fontsize16opacitywhite = GoogleFonts.poppins(
+  fontSize: 16,
+  color: Colors.white.withOpacity(0.50),
 );

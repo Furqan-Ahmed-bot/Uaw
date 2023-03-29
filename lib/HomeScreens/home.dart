@@ -4,6 +4,7 @@ import 'package:_uaw/Auth/CreateProfile.dart';
 
 import 'package:_uaw/Helpers.dart';
 import 'package:_uaw/HomeScreens/Documents.dart';
+import 'package:_uaw/HomeScreens/Drawer.dart';
 import 'package:_uaw/HomeScreens/Magzines.dart';
 import 'package:_uaw/HomeScreens/NewsAndEventDetails.dart';
 import 'package:_uaw/HomeScreens/NewsAndEvents.dart';
@@ -25,6 +26,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
   String now = DateFormat("yyyy-MM-dd").format(DateTime.now());
   int i = 0;
 
@@ -51,22 +53,28 @@ class _HomeScreenState extends State<HomeScreen> {
       height: 1.sh,
       color: whitish,
       child: Scaffold(
+         key: _key,
         backgroundColor: transparentcolor,
         appBar: AppBar(
           backgroundColor: transparentcolor,
           elevation: 0,
           leadingWidth: 70,
-          leading: Center(
-            child: Container(
-              width: 55.w,
-              height: 55.h,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: whitecolor,
-              ),
-              child: Image.asset(
-                "assets/images/Group 1288@3x.png",
-                scale: 2.5,
+          leading: GestureDetector(
+            onTap: () {
+              _key.currentState!.openDrawer();
+            },
+            child: Center(
+              child: Container(
+                width: 55.w,
+                height: 55.h,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: whitecolor,
+                ),
+                child: Image.asset(
+                  "assets/images/Group 1288@3x.png",
+                  scale: 2.5,
+                ),
               ),
             ),
           ),
@@ -88,6 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ],
         ),
+        drawer: DrawerScreen(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.r),
           child: SingleChildScrollView(
