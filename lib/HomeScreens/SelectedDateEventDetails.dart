@@ -306,6 +306,8 @@ class _SelectedDateEventDetailsScreenState extends State<SelectedDateEventDetail
                           );
                         },
                       );
+                  
+                  
                     },
                     child: Container(
                       width: 189.w,

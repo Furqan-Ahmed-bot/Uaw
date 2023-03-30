@@ -124,7 +124,7 @@ class DocumentWidget extends StatelessWidget {
                         5.verticalSpace,
                         Text(
                           DateFormat(
-                            "MM-dd-yyyy",
+                            "MMM dd yyyy",
                           ).format(
                             DateTime.now(),
                           ),

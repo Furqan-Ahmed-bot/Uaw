@@ -15,7 +15,8 @@ class AdminLogin extends StatefulWidget {
 class _AdminLoginState extends State<AdminLogin> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return 
+    Scaffold(
       backgroundColor: transparentcolor,
       body: SingleChildScrollView(
         child: Container(
@@ -129,5 +130,7 @@ class _AdminLoginState extends State<AdminLogin> {
         ),
       ),
     );
+ 
+ 
   }
 }

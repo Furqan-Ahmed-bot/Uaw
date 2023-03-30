@@ -1,4 +1,5 @@
 import 'package:_uaw/Helpers.dart';
+import 'package:_uaw/HomeScreens/DrawerVideoPlayer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -87,82 +88,87 @@ class VideoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          width: 1.sw,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.r),
-            color: white,
-          ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.r),
-            child: Column(
-              children: [
-                20.verticalSpace,
-                Row(
-                  children: [
-                    Container(
-                      width: 60.h,
-                      height: 60.h,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: AssetImage(
-                            userimage,
-                          ),
-                        ),
-                      ),
-                    ),
-                    15.horizontalSpace,
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Admin",
-                          style: txtstyleblue17,
-                        ),
-                        5.verticalSpace,
-                        Text(
-                          DateFormat(
-                            "MM-dd-yyyy",
-                          ).format(
-                            DateTime.now(),
-                          ),
-                          style: textroboto12,
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-                15.verticalSpace,
-                Container(
-                  width: 0.9.sw,
-                  height: 250.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.r),
-                    color: whitecolor,
-                    image: DecorationImage(
-                      image: AssetImage("assets/images/Group 1440@3x.png"),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+        GestureDetector(
+          onTap: () {
+            Get.to(() => DrawerVideoPlayerSvreen());
+          },
+          child: Container(
+            width: 1.sw,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.r),
+              color: white,
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.r),
+              child: Column(
+                children: [
+                  20.verticalSpace,
+                  Row(
                     children: [
-                      Image.asset(
-                        "assets/images/Group 12950@3x.png",
-                        scale: 3.5,
+                      Container(
+                        width: 60.h,
+                        height: 60.h,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            image: AssetImage(
+                              userimage,
+                            ),
+                          ),
+                        ),
                       ),
+                      15.horizontalSpace,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Admin",
+                            style: txtstyleblue17,
+                          ),
+                          5.verticalSpace,
+                          Text(
+                            DateFormat(
+                              "MM-dd-yyyy",
+                            ).format(
+                              DateTime.now(),
+                            ),
+                            style: textroboto12,
+                          ),
+                        ],
+                      )
                     ],
                   ),
-                ),
-                10.verticalSpace,
-                Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae vulputate velit. Nulla facilisi. Fusce interdum ornare arcu, quis",
-                  style: textroboto15,
-                ),
-                20.verticalSpace,
-              ],
+                  15.verticalSpace,
+                  Container(
+                    width: 0.9.sw,
+                    height: 250.h,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.r),
+                      color: whitecolor,
+                      image: DecorationImage(
+                        image: AssetImage("assets/images/Group 1440@3x.png"),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          "assets/images/Group 12950@3x.png",
+                          scale: 3.5,
+                        ),
+                      ],
+                    ),
+                  ),
+                  10.verticalSpace,
+                  Text(
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae vulputate velit. Nulla facilisi. Fusce interdum ornare arcu, quis",
+                    style: textroboto15,
+                  ),
+                  20.verticalSpace,
+                ],
+              ),
             ),
           ),
         ),
