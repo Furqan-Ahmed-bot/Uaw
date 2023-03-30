@@ -1,19 +1,17 @@
-import 'dart:ui';
-
+import 'package:_uaw/Auth/Login.dart';
 import 'package:_uaw/Helpers.dart';
-import 'package:_uaw/HomeScreens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class CreateAccountScreen extends StatefulWidget {
-  const CreateAccountScreen({super.key});
+class SetNewPasswordScreen extends StatefulWidget {
+  const SetNewPasswordScreen({super.key});
 
   @override
-  State<CreateAccountScreen> createState() => _CreateAccountScreenState();
+  State<SetNewPasswordScreen> createState() => _SetNewPasswordScreenState();
 }
 
-class _CreateAccountScreenState extends State<CreateAccountScreen> {
+class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
   bool _obscureText = false;
   bool _obscureText2 = false;
   @override
@@ -68,7 +66,6 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
           body: SingleChildScrollView(
             child: Column(
               children: [
-                50.verticalSpace,
                 Center(
                   child: Container(
                     width: 190,
@@ -99,38 +96,16 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         children: [
                           70.verticalSpace,
                           Text(
-                            "Create Account",
+                            "New Password",
                             style: textroboto28,
                           ),
-                          50.verticalSpace,
-                          TextFormField(
-                            decoration: InputDecoration(
-                              prefixIconConstraints: BoxConstraints(minWidth: 50),
-                              prefixIcon: Container(
-                                width: 50.w,
-                                child: Image.asset(
-                                  "assets/images/Icon ionic-ios-mail@3x.png",
-                                  color: bluishshade,
-                                  scale: 3,
-                                ),
-                                alignment: Alignment.centerLeft,
-                              ),
-                              labelText: "Jonathonm@exm.com",
-                              labelStyle: textroboto15,
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: bluishshadewith40,
-                                ),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: bluishshadewith40,
-                                ),
-                              ),
-                            ),
-                            style: textroboto15,
+                          20.verticalSpace,
+                          Text(
+                            "Please enter your new password",
+                            textAlign: TextAlign.center,
+                            style: textroboto16,
                           ),
-                          30.verticalSpace,
+                          50.verticalSpace,
                           TextFormField(
                             obscureText: _obscureText,
                             decoration: InputDecoration(
@@ -213,7 +188,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           30.verticalSpace,
                           GestureDetector(
                             onTap: () {
-                              Get.to(() => HomeScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+                              Get.to(() => LoginScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
                             },
                             child: Container(
                               width: 1.sw,
@@ -224,7 +199,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                               ),
                               child: Center(
                                 child: Text(
-                                  "Signup",
+                                  "Submit",
                                   style: txtstylewhite20,
                                 ),
                               ),

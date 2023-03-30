@@ -1,3 +1,4 @@
+import 'package:_uaw/Auth/Login.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -57,12 +58,17 @@ class _PreloginScreenState extends State<PreloginScreen> {
                           style: textroboto28,
                         ),
                         50.verticalSpace,
-                        PreloginWidget(
-                          containercolor2: Color(0xffFD6939),
-                          containercolor: Color(0xffFDAA4A),
-                          containertextcolor: whitecolor,
-                          iconimage: "assets/images/Icon zocial-email@3x.png",
-                          containertext: "Login with Email",
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(() => LoginScreen());
+                          },
+                          child: PreloginWidget(
+                            containercolor2: Color(0xffFD6939),
+                            containercolor: Color(0xffFDAA4A),
+                            containertextcolor: whitecolor,
+                            iconimage: "assets/images/Icon zocial-email@3x.png",
+                            containertext: "Login with Email",
+                          ),
                         ),
                         15.verticalSpace,
                         PreloginWidget(
@@ -85,10 +91,32 @@ class _PreloginScreenState extends State<PreloginScreen> {
                           containercolor2: Color(0xff000000),
                           containercolor: Color(0xff000000),
                           containertextcolor: whitecolor,
-                          iconimage: "assets/images/Icon simple-google@3x.png",
+                          iconimage: "assets/images/Icon awesome-apple@3x.png",
                           containertext: "Login with Apple",
                         ),
                         Spacer(),
+                        Center(
+                          child: RichText(
+                            text: TextSpan(
+                              text: "Don't have an account? ",
+                              style: GoogleFonts.roboto(
+                                fontSize: 16.sp,
+                                color: Color(0xff04366B),
+                              ),
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: 'Signup',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.sp,
+                                    color: Color(0xff04366B),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        20.verticalSpace
                       ],
                     ),
                   ),
