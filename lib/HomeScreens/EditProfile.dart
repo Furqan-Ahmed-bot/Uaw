@@ -3,22 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'CreateAccount.dart';
-
-class CreateProfileScreen extends StatefulWidget {
-  const CreateProfileScreen({super.key});
+class EditProfileScreen extends StatefulWidget {
+  const EditProfileScreen({super.key});
 
   @override
-  State<CreateProfileScreen> createState() => _CreateProfileScreenState();
+  State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
 
-class _CreateProfileScreenState extends State<CreateProfileScreen> {
+class _EditProfileScreenState extends State<EditProfileScreen> {
   List<String> _locations = ['Designation-1', 'Designation-2', 'Designation-3', 'Designation-4'];
   var _propertytype;
   @override
   Widget build(BuildContext context) {
-    return 
-    Scaffold(
+    return Scaffold(
         backgroundColor: whitish,
         body: SingleChildScrollView(
           child: Column(
@@ -66,9 +63,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                           ),
                         ),
                       ),
-                      80.horizontalSpace,
+                      85.horizontalSpace,
                       Text(
-                        "CREATE PROFILE",
+                        "EDIT PROFILE",
                         style: txtstylewhite18,
                       )
                     ],
@@ -94,7 +91,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                           color: Color(0xff00000026),
                         ),
                         image: DecorationImage(
-                          image: AssetImage("assets/images/Group 1433@3x.png"),
+                          image: AssetImage("assets/images/Group 1443@3x.png"),
                         ),
                       ),
                       child: Row(
@@ -120,11 +117,26 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                   )
                 ],
               ),
-              140.verticalSpace,
+              120.verticalSpace,
+              Text(
+                "John Doe",
+                style: textroboto20,
+              ),
+              20.verticalSpace,
+              Text(
+                "johndoe@gmail.com",
+                style: txtstyleblack14WO,
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.r),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Text(
+                      "Full Name",
+                      style: txtstyleblack14WO,
+                    ),
+                    5.verticalSpace,
                     TextFormField(
                       decoration: InputDecoration(
                         filled: true,
@@ -153,19 +165,23 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       ),
                       style: medium18blackwopacity,
                     ),
-                   
-                   
                     15.verticalSpace,
+                    Text(
+                      "Email",
+                      style: txtstyleblack14WO,
+                    ),
+                    5.verticalSpace,
                     TextFormField(
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: white,
                         prefixIconConstraints: BoxConstraints(minWidth: 50),
                         prefixIcon: Image.asset(
-                          "assets/images/Icon feather-phone-call@3x.png",
+                          "assets/images/Icon zocial-email@3x.png",
                           scale: 3.5,
+                          color: black,
                         ),
-                        hintText: "Phone Number",
+                        hintText: "email@domain.com",
                         hintStyle: medium18blackwopacity,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
@@ -185,6 +201,81 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       style: medium18blackwopacity,
                     ),
                     15.verticalSpace,
+                    Text(
+                      "Password",
+                      style: txtstyleblack14WO,
+                    ),
+                    5.verticalSpace,
+                    TextFormField(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: white,
+                        prefixIconConstraints: BoxConstraints(minWidth: 50),
+                        prefixIcon: Image.asset(
+                          "assets/images/Icon ionic-ios-lock@3x.png",
+                          scale: 3.5,
+                          color: black,
+                        ),
+                        hintText: "........",
+                        hintStyle: medium18blackwopacity,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.r),
+                          borderSide: BorderSide(
+                            color: transparentcolor,
+                            width: 1.w,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.r),
+                          borderSide: BorderSide(
+                            color: transparentcolor,
+                            width: 1.w,
+                          ),
+                        ),
+                      ),
+                      style: medium18blackwopacity,
+                    ),
+                    15.verticalSpace,
+                    Text(
+                      "Phone Number",
+                      style: txtstyleblack14WO,
+                    ),
+                    5.verticalSpace,
+                    TextFormField(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: white,
+                        prefixIconConstraints: BoxConstraints(minWidth: 50),
+                        prefixIcon: Image.asset(
+                          "assets/images/Icon feather-phone-call@3x.png",
+                          scale: 3.5,
+                          color: black,
+                        ),
+                        hintText: "123 456 7890",
+                        hintStyle: medium18blackwopacity,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.r),
+                          borderSide: BorderSide(
+                            color: transparentcolor,
+                            width: 1.w,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.r),
+                          borderSide: BorderSide(
+                            color: transparentcolor,
+                            width: 1.w,
+                          ),
+                        ),
+                      ),
+                      style: medium18blackwopacity,
+                    ),
+                    15.verticalSpace,
+                    Text(
+                      "Location",
+                      style: txtstyleblack14WO,
+                    ),
+                    5.verticalSpace,
                     TextFormField(
                       decoration: InputDecoration(
                         filled: true,
@@ -194,7 +285,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                           "assets/images/Group 1313@3x.png",
                           scale: 3.5,
                         ),
-                        hintText: "Location",
+                        hintText: "Lorem ipsum dolor sit amet,",
                         hintStyle: medium18blackwopacity,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
@@ -264,7 +355,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                     30.verticalSpace,
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => CreateAccountScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+                        Get.back();
                       },
                       child: Container(
                         width: 1.sw,
@@ -275,19 +366,18 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         ),
                         child: Center(
                           child: Text(
-                            "Next",
+                            "Save",
                             style: txtstylewhite20,
                           ),
                         ),
                       ),
-                    )
+                    ),
+                    50.verticalSpace,
                   ],
                 ),
               ),
             ],
           ),
         ));
-   
-   
   }
 }

@@ -18,7 +18,8 @@ class _SelectedDateEventDetailsScreenState extends State<SelectedDateEventDetail
   DateTime currentTime = new DateTime.now();
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return 
+    Container(
       width: 1.sw,
       height: 1.sh,
       color: whitish,
@@ -348,5 +349,7 @@ class _SelectedDateEventDetailsScreenState extends State<SelectedDateEventDetail
         ),
       ),
     );
+  
+  
   }
 }

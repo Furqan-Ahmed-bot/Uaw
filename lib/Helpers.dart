@@ -227,6 +227,11 @@ var txtstyleblack14 = GoogleFonts.roboto(
   color: Colors.black,
   fontWeight: FontWeight.bold,
 );
+var txtstyleblack14WO = GoogleFonts.roboto(
+  fontSize: 14.sp,
+  color: Colors.black.withOpacity(0.8),
+  fontWeight: FontWeight.bold,
+);
 
 var txtstyleblack14wobold = GoogleFonts.roboto(
   fontSize: 14.sp,

@@ -12,7 +12,7 @@ class DocumentsScreen extends StatefulWidget {
   State<DocumentsScreen> createState() => _DocumentsScreenState();
 }
 
-class _DocumentsScreenState extends State<DocumentsScreen> {
+class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProviderStateMixin {
   String now = DateFormat("yyyy-MM-dd").format(DateTime.now());
   List DocumentDetails = [
     {"userimage": "assets/images/Ellipse 68-1@3x.png"},
@@ -44,7 +44,6 @@ class _DocumentsScreenState extends State<DocumentsScreen> {
             ),
           ),
           title: Hero(
-            
             transitionOnUserGestures: true,
             tag: ValueKey(widget.value),
             child: Text(

@@ -75,7 +75,8 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
   String now = DateFormat("yyyy-MM-dd").format(DateTime.now());
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return 
+    Container(
       width: 1.sw,
       height: 1.sh,
       color: whitish,
@@ -88,7 +89,7 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
           leading: Center(
             child: GestureDetector(
               onTap: () {
-                Get.to(() => HomeScreen());
+                Get.back();
               },
               child: Image.asset(
                 "assets/images/Group 1430@3x.png",
@@ -282,6 +283,8 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
         ),
       ),
     );
+ 
+ 
   }
 }
 
