@@ -80,7 +80,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
                             width: 5.w,
                             color: whitecolor,
                           ),
-                          image: DecorationImage(image: AssetImage("assets/images/Group 1433@3x1.png"), fit: BoxFit.fill),
+                          image: DecorationImage(
+                              image: AssetImage(
+                                  "assets/images/Group 1433@3x1.png"),
+                              fit: BoxFit.fill),
                         ),
                       ),
                       20.verticalSpace,
@@ -97,133 +100,143 @@ class _DrawerScreenState extends State<DrawerScreen> {
                         padding: EdgeInsets.symmetric(horizontal: 50.r),
                         child: Column(
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                Get.back();
-                              },
-                              child: Row(
+                            SizedBox(
+                              height: 400.h,
+                              child: ListView(
                                 children: [
-                                  Image.asset(
-                                    "assets/images/Icon material-rss-feed@3x.png",
-                                    scale: 2,
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.back();
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Image.asset(
+                                          "assets/images/Icon material-rss-feed@3x.png",
+                                          scale: 2,
+                                        ),
+                                        20.horizontalSpace,
+                                        Text(
+                                          "Feed",
+                                          style: medium18white,
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                  20.horizontalSpace,
-                                  Text(
-                                    "Feed",
-                                    style: medium18white,
+                                  30.verticalSpace,
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.to(() =>
+                                          NewsAndEventsScreen(value: "null"));
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Image.asset(
+                                          "assets/images/Group 60@3x.png",
+                                          scale: 2,
+                                        ),
+                                        20.horizontalSpace,
+                                        Text(
+                                          "Events",
+                                          style: medium18white,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  30.verticalSpace,
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.to(() => UserProfileScreen());
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Image.asset(
+                                          "assets/images/Icon feather-user@3x.png",
+                                          scale: 2,
+                                        ),
+                                        20.horizontalSpace,
+                                        Text(
+                                          "Profile",
+                                          style: medium18white,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  30.verticalSpace,
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.to(
+                                          () => DocumentsScreen(value: "null"));
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Image.asset(
+                                          "assets/images/Group 169@3x.png",
+                                          scale: 2,
+                                        ),
+                                        20.horizontalSpace,
+                                        Text(
+                                          "Documents",
+                                          style: medium18white,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  30.verticalSpace,
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.to(() => VideoScreen(value: "null"));
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Image.asset(
+                                          "assets/images/Icon material-slow-motion-video@3x.png",
+                                          scale: 2,
+                                        ),
+                                        20.horizontalSpace,
+                                        Text(
+                                          "Videos",
+                                          style: medium18white,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  30.verticalSpace,
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.to(
+                                          () => MagzineScreen(value: "null"));
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Image.asset(
+                                          "assets/images/Group 170@3x.png",
+                                          scale: 2,
+                                        ),
+                                        20.horizontalSpace,
+                                        Text(
+                                          "Magazines",
+                                          style: medium18white,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  30.verticalSpace,
+                                  Row(
+                                    children: [
+                                      Image.asset(
+                                        "assets/images/Icon feather-settings@3x.png",
+                                        scale: 2,
+                                      ),
+                                      20.horizontalSpace,
+                                      Text(
+                                        "Settings",
+                                        style: medium18white,
+                                      )
+                                    ],
                                   )
                                 ],
                               ),
                             ),
-                            30.verticalSpace,
-                            GestureDetector(
-                              onTap: () {
-                                Get.to(() => NewsAndEventsScreen(value: "null"));
-                              },
-                              child: Row(
-                                children: [
-                                  Image.asset(
-                                    "assets/images/Group 60@3x.png",
-                                    scale: 2,
-                                  ),
-                                  20.horizontalSpace,
-                                  Text(
-                                    "Events",
-                                    style: medium18white,
-                                  )
-                                ],
-                              ),
-                            ),
-                            30.verticalSpace,
-                            GestureDetector(
-                              onTap: () {
-                                Get.to(() => UserProfileScreen());
-                              },
-                              child: Row(
-                                children: [
-                                  Image.asset(
-                                    "assets/images/Icon feather-user@3x.png",
-                                    scale: 2,
-                                  ),
-                                  20.horizontalSpace,
-                                  Text(
-                                    "Profile",
-                                    style: medium18white,
-                                  )
-                                ],
-                              ),
-                            ),
-                            30.verticalSpace,
-                            GestureDetector(
-                              onTap: () {
-                                Get.to(() => DocumentsScreen(value: "null"));
-                              },
-                              child: Row(
-                                children: [
-                                  Image.asset(
-                                    "assets/images/Group 169@3x.png",
-                                    scale: 2,
-                                  ),
-                                  20.horizontalSpace,
-                                  Text(
-                                    "Documents",
-                                    style: medium18white,
-                                  )
-                                ],
-                              ),
-                            ),
-                            30.verticalSpace,
-                            GestureDetector(
-                              onTap: () {
-                                Get.to(() => VideoScreen(value: "null"));
-                              },
-                              child: Row(
-                                children: [
-                                  Image.asset(
-                                    "assets/images/Icon material-slow-motion-video@3x.png",
-                                    scale: 2,
-                                  ),
-                                  20.horizontalSpace,
-                                  Text(
-                                    "Videos",
-                                    style: medium18white,
-                                  )
-                                ],
-                              ),
-                            ),
-                            30.verticalSpace,
-                            GestureDetector(
-                              onTap: () {
-                                Get.to(() => MagzineScreen(value: "null"));
-                              },
-                              child: Row(
-                                children: [
-                                  Image.asset(
-                                    "assets/images/Group 170@3x.png",
-                                    scale: 2,
-                                  ),
-                                  20.horizontalSpace,
-                                  Text(
-                                    "Magazines",
-                                    style: medium18white,
-                                  )
-                                ],
-                              ),
-                            ),
-                            30.verticalSpace,
-                            Row(
-                              children: [
-                                Image.asset(
-                                  "assets/images/Icon feather-settings@3x.png",
-                                  scale: 2,
-                                ),
-                                20.horizontalSpace,
-                                Text(
-                                  "Settings",
-                                  style: medium18white,
-                                )
-                              ],
-                            )
                           ],
                         ),
                       )
@@ -265,7 +278,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
                             actions: [
                               Container(
                                 width: 370.w,
-                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.r), color: Color(0xffFFFFFF)),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15.r),
+                                    color: Color(0xffFFFFFF)),
                                 child: Column(
                                   children: [
                                     Row(
@@ -280,7 +295,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                             height: 35.h,
                                             decoration: BoxDecoration(
                                               borderRadius: BorderRadius.only(
-                                                bottomLeft: Radius.circular(15.r),
+                                                bottomLeft:
+                                                    Radius.circular(15.r),
                                                 topRight: Radius.circular(15.r),
                                               ),
                                               color: bluishshade,
@@ -302,7 +318,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                     ),
                                     30.verticalSpace,
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
                                       children: [
                                         GestureDetector(
                                           onTap: () {
@@ -312,7 +329,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                             width: 162.w,
                                             height: 55.h,
                                             decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(10.r),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.r),
                                               color: redishcolor,
                                             ),
                                             child: Center(
@@ -325,13 +343,16 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                         ),
                                         GestureDetector(
                                           onTap: () {
-                                            Get.to(() => PreloginScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+                                            Get.to(() => PreloginScreen(),
+                                                duration: Duration(seconds: 1),
+                                                transition: Transition.fadeIn);
                                           },
                                           child: Container(
                                             width: 162.w,
                                             height: 55.h,
                                             decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(10.r),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.r),
                                               color: bluishshade,
                                             ),
                                             child: Center(
