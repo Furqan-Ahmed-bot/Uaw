@@ -8,6 +8,7 @@ import 'package:_uaw/HomeScreens/Drawer.dart';
 import 'package:_uaw/HomeScreens/Magzines.dart';
 import 'package:_uaw/HomeScreens/NewsAndEventDetails.dart';
 import 'package:_uaw/HomeScreens/NewsAndEvents.dart';
+import 'package:_uaw/HomeScreens/Settings.dart';
 import 'package:_uaw/HomeScreens/VideoScreen.dart';
 import 'package:_uaw/HomeScreens/VideosScreen.dart';
 import 'package:flutter/material.dart';
@@ -39,12 +40,41 @@ class _HomeScreenState extends State<HomeScreen> {
   //   CreateProfileScreen(),
   // ];
   List StatusWidgetDetails = [
-    {"containerimage": "assets/images/romain-dancre-doplSDELX7E-unsplash@3x.png", "statustext": "Documents", "navigateTo": "DocumentsScreen"},
-    {"containerimage": "assets/images/zhang-shaoqi-PdUACzBJP-Y-unsplash@3x.png", "statustext": "Videos", "navigateTo": "DocumentsScreen"},
-    {"containerimage": "assets/images/krakenimages-Y5bvRlcCx8k-unsplash@3x.png", "statustext": "Magzine", "navigateTo": "DocumentsScreen"},
-    {"containerimage": "assets/images/md-duran-rE9vgD_TXgM-unsplash@3x.png", "statustext": "Events", "navigateTo": "DocumentsScreen"},
-    {"containerimage": "assets/images/romain-dancre-doplSDELX7E-unsplash@3x.png", "statustext": "Documents", "navigateTo": "DocumentsScreen"},
-    {"containerimage": "assets/images/zhang-shaoqi-PdUACzBJP-Y-unsplash@3x.png", "statustext": "Videos", "navigateTo": "DocumentsScreen"},
+    {
+      "containerimage":
+          "assets/images/romain-dancre-doplSDELX7E-unsplash@3x.png",
+      "statustext": "Documents",
+      "navigateTo": "DocumentsScreen"
+    },
+    {
+      "containerimage":
+          "assets/images/zhang-shaoqi-PdUACzBJP-Y-unsplash@3x.png",
+      "statustext": "Videos",
+      "navigateTo": "DocumentsScreen"
+    },
+    {
+      "containerimage":
+          "assets/images/krakenimages-Y5bvRlcCx8k-unsplash@3x.png",
+      "statustext": "Magzine",
+      "navigateTo": "DocumentsScreen"
+    },
+    {
+      "containerimage": "assets/images/md-duran-rE9vgD_TXgM-unsplash@3x.png",
+      "statustext": "Events",
+      "navigateTo": "DocumentsScreen"
+    },
+    {
+      "containerimage":
+          "assets/images/romain-dancre-doplSDELX7E-unsplash@3x.png",
+      "statustext": "Documents",
+      "navigateTo": "DocumentsScreen"
+    },
+    {
+      "containerimage":
+          "assets/images/zhang-shaoqi-PdUACzBJP-Y-unsplash@3x.png",
+      "statustext": "Videos",
+      "navigateTo": "DocumentsScreen"
+    },
   ];
   @override
   Widget build(BuildContext context) {
@@ -53,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
       height: 1.sh,
       color: whitish,
       child: Scaffold(
-         key: _key,
+        key: _key,
         backgroundColor: transparentcolor,
         appBar: AppBar(
           backgroundColor: transparentcolor,
@@ -81,16 +111,21 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: [
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Container(
-                width: 50.w,
-                height: 50.h,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: whitecolor,
-                ),
-                child: Image.asset(
-                  "assets/images/Group 1289@3x.png",
-                  scale: 2.5,
+              child: GestureDetector(
+                onTap: () {
+                  Get.to(() => SettingsScreen());
+                },
+                child: Container(
+                  width: 50.w,
+                  height: 50.h,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: whitecolor,
+                  ),
+                  child: Image.asset(
+                    "assets/images/Group 1289@3x.png",
+                    scale: 2.5,
+                  ),
                 ),
               ),
             ),
@@ -188,7 +223,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           }
                         },
                         child: StatusWidget(
-                          containerimage: StatusWidgetDetails[i]["containerimage"],
+                          containerimage: StatusWidgetDetails[i]
+                              ["containerimage"],
                           statustext: StatusWidgetDetails[i]["statustext"],
                           index: i,
                         ),
@@ -274,7 +310,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         15.verticalSpace,
                         GestureDetector(
                           onTap: () {
-                            Get.to(() => NewsAndEventsDetailsScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+                            Get.to(() => NewsAndEventsDetailsScreen(),
+                                duration: Duration(seconds: 1),
+                                transition: Transition.fadeIn);
                           },
                           child: StaggeredGrid.count(
                             crossAxisCount: 3,
@@ -292,7 +330,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       topLeft: Radius.circular(10.r),
                                     ),
                                     color: black,
-                                    image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            "assets/images/Group 1440@3x.png"),
+                                        fit: BoxFit.fill),
                                   ),
                                 ),
                               ),
@@ -303,7 +344,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   width: 115.w,
                                   height: 135.h,
                                   decoration: BoxDecoration(
-                                    image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            "assets/images/Group 1440@3x.png"),
+                                        fit: BoxFit.fill),
                                     color: black,
                                   ),
                                 ),
@@ -319,7 +363,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     borderRadius: BorderRadius.only(
                                       topRight: Radius.circular(10.r),
                                     ),
-                                    image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            "assets/images/Group 1440@3x.png"),
+                                        fit: BoxFit.fill),
                                   ),
                                 ),
                               ),
@@ -327,7 +374,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 crossAxisCellCount: 5,
                                 mainAxisCellCount: 1,
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
                                       width: 170.w,
@@ -336,7 +384,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                           bottomLeft: Radius.circular(10.r),
                                         ),
                                         color: black,
-                                        image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/images/Group 1440@3x.png"),
+                                            fit: BoxFit.fill),
                                       ),
                                     ),
                                     Container(
@@ -346,7 +397,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                           bottomRight: Radius.circular(10.r),
                                         ),
                                         color: black,
-                                        image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                "assets/images/Group 1440@3x.png"),
+                                            fit: BoxFit.fill),
                                       ),
                                     ),
                                   ],
@@ -414,7 +468,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             borderRadius: BorderRadius.circular(10.r),
                             color: whitecolor,
                             image: DecorationImage(
-                              image: AssetImage("assets/images/Rectangle 179@3x.png"),
+                              image: AssetImage(
+                                  "assets/images/Rectangle 179@3x.png"),
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -484,7 +539,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         15.verticalSpace,
                         GestureDetector(
                           onTap: () {
-                            Get.to(() => VidePalayerScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+                            Get.to(() => VidePalayerScreen(),
+                                duration: Duration(seconds: 1),
+                                transition: Transition.fadeIn);
                           },
                           child: Container(
                             width: 0.9.sw,
@@ -493,7 +550,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(10.r),
                               color: whitecolor,
                               image: DecorationImage(
-                                image: AssetImage("assets/images/Group 1440@3x.png"),
+                                image: AssetImage(
+                                    "assets/images/Group 1440@3x.png"),
                                 fit: BoxFit.fill,
                               ),
                             ),

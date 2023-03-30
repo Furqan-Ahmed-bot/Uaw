@@ -13,12 +13,16 @@ class CreateProfileScreen extends StatefulWidget {
 }
 
 class _CreateProfileScreenState extends State<CreateProfileScreen> {
-  List<String> _locations = ['Designation-1', 'Designation-2', 'Designation-3', 'Designation-4'];
+  List<String> _locations = [
+    'Designation-1',
+    'Designation-2',
+    'Designation-3',
+    'Designation-4'
+  ];
   var _propertytype;
   @override
   Widget build(BuildContext context) {
-    return 
-    Scaffold(
+    return Scaffold(
         backgroundColor: whitish,
         body: SingleChildScrollView(
           child: Column(
@@ -153,8 +157,6 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       ),
                       style: medium18blackwopacity,
                     ),
-                   
-                   
                     15.verticalSpace,
                     TextFormField(
                       decoration: InputDecoration(
@@ -264,7 +266,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                     30.verticalSpace,
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => CreateAccountScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+                        Get.to(() => CreateAccountScreen(),
+                            duration: Duration(seconds: 1),
+                            transition: Transition.fadeIn);
                       },
                       child: Container(
                         width: 1.sw,
@@ -287,7 +291,5 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
             ],
           ),
         ));
-   
-   
   }
 }

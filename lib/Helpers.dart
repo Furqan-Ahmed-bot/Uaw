@@ -32,9 +32,12 @@ var medium12Orange = GoogleFonts.poppins(
   color: Color(0xffFE9A17),
 );
 
-var medium20white = GoogleFonts.poppins(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold);
-var medium20black = GoogleFonts.poppins(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold);
-var medium20orange = GoogleFonts.poppins(fontSize: 20, color: Color(0xffFE9A17), fontWeight: FontWeight.bold);
+var medium20white = GoogleFonts.poppins(
+    fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold);
+var medium20black = GoogleFonts.poppins(
+    fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold);
+var medium20orange = GoogleFonts.poppins(
+    fontSize: 20, color: Color(0xffFE9A17), fontWeight: FontWeight.bold);
 
 var medium20blackwobold = GoogleFonts.poppins(
   fontSize: 20,
@@ -47,34 +50,48 @@ const black = Colors.black;
 var blackopacity = Colors.black.withOpacity(0.50);
 const purplish = Color(0xff878799);
 
-var medium14white = GoogleFonts.poppins(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w500);
-var medium14black = GoogleFonts.poppins(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w500);
-var medium14orange = GoogleFonts.poppins(fontSize: 14, color: Color(0xffFE9A17), fontWeight: FontWeight.w500);
+var medium14white = GoogleFonts.poppins(
+    fontSize: 14, color: Colors.white, fontWeight: FontWeight.w500);
+var medium14black = GoogleFonts.poppins(
+    fontSize: 14, color: Colors.black, fontWeight: FontWeight.w500);
+var medium14orange = GoogleFonts.poppins(
+    fontSize: 14, color: Color(0xffFE9A17), fontWeight: FontWeight.w500);
 
-var medium15white = GoogleFonts.poppins(fontSize: 15, color: Colors.white, fontWeight: FontWeight.w500);
-var medium15black = GoogleFonts.poppins(fontSize: 15, color: Colors.black, fontWeight: FontWeight.w500);
-var medium15orange = GoogleFonts.poppins(fontSize: 15, color: Color(0xffFE9A17), fontWeight: FontWeight.w500);
-var medium15grey = GoogleFonts.poppins(fontSize: 15, color: Colors.grey, fontWeight: FontWeight.w500);
+var medium15white = GoogleFonts.poppins(
+    fontSize: 15, color: Colors.white, fontWeight: FontWeight.w500);
+var medium15black = GoogleFonts.poppins(
+    fontSize: 15, color: Colors.black, fontWeight: FontWeight.w500);
+var medium15orange = GoogleFonts.poppins(
+    fontSize: 15, color: Color(0xffFE9A17), fontWeight: FontWeight.w500);
+var medium15grey = GoogleFonts.poppins(
+    fontSize: 15, color: Colors.grey, fontWeight: FontWeight.w500);
 
-var fontsize28white = GoogleFonts.poppins(fontSize: 28, color: Colors.white, fontWeight: FontWeight.bold);
+var fontsize28white = GoogleFonts.poppins(
+    fontSize: 28, color: Colors.white, fontWeight: FontWeight.bold);
 
 var HintStyle14 = GoogleFonts.poppins(
   fontSize: 14.sp,
   color: Color(0xff667080).withOpacity(0.50),
 );
 
-var medium16white = GoogleFonts.poppins(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500);
-var medium16black = GoogleFonts.poppins(fontSize: 16, color: Colors.black, fontWeight: FontWeight.w500);
-var medium16orange = GoogleFonts.poppins(fontSize: 16, color: Color(0xffFE9A17), fontWeight: FontWeight.w500);
+var medium16white = GoogleFonts.poppins(
+    fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500);
+var medium16black = GoogleFonts.poppins(
+    fontSize: 16, color: Colors.black, fontWeight: FontWeight.w500);
+var medium16orange = GoogleFonts.poppins(
+    fontSize: 16, color: Color(0xffFE9A17), fontWeight: FontWeight.w500);
 
 var medium16blacknew = GoogleFonts.poppins(
   fontSize: 16,
   color: Colors.black,
 );
 
-var medium22white = GoogleFonts.poppins(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold);
-var medium22black = GoogleFonts.poppins(fontSize: 22, color: Colors.black, fontWeight: FontWeight.bold);
-var medium22orange = GoogleFonts.poppins(fontSize: 22, color: Color(0xffFE9A17), fontWeight: FontWeight.bold);
+var medium22white = GoogleFonts.poppins(
+    fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold);
+var medium22black = GoogleFonts.poppins(
+    fontSize: 22, color: Colors.black, fontWeight: FontWeight.bold);
+var medium22orange = GoogleFonts.poppins(
+    fontSize: 22, color: Color(0xffFE9A17), fontWeight: FontWeight.bold);
 var fontsize12white = GoogleFonts.poppins(
   fontSize: 12,
   color: Colors.white,
@@ -83,46 +100,72 @@ var fontsize12opacitywhite = GoogleFonts.poppins(
   fontSize: 12,
   color: Colors.white.withOpacity(0.80),
 );
-var fontsize13opacitywhite = GoogleFonts.poppins(fontSize: 13, color: Colors.white.withOpacity(0.80));
+var fontsize13opacitywhite =
+    GoogleFonts.poppins(fontSize: 13, color: Colors.white.withOpacity(0.80));
 
-var medium18white = GoogleFonts.poppins(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold);
-var medium18black = GoogleFonts.poppins(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w500);
-var medium18orange = GoogleFonts.poppins(fontSize: 18, color: Color(0xffFE9A17), fontWeight: FontWeight.w500);
-var medium18whitish = GoogleFonts.poppins(fontSize: 18, color: Color(0xffA2A6B5), fontWeight: FontWeight.w500);
-var medium18blackwopacity = GoogleFonts.poppins(fontSize: 18, color: Colors.black.withOpacity(0.8), fontWeight: FontWeight.w500);
+var medium18white = GoogleFonts.poppins(
+    fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold);
+var medium18black = GoogleFonts.poppins(
+    fontSize: 18, color: Colors.black, fontWeight: FontWeight.w500);
+var medium18orange = GoogleFonts.poppins(
+    fontSize: 18, color: Color(0xffFE9A17), fontWeight: FontWeight.w500);
+var medium18whitish = GoogleFonts.poppins(
+    fontSize: 18, color: Color(0xffA2A6B5), fontWeight: FontWeight.w500);
+var medium18blackwopacity = GoogleFonts.poppins(
+    fontSize: 18,
+    color: Colors.black.withOpacity(0.8),
+    fontWeight: FontWeight.w500);
 
-var medium13white = GoogleFonts.poppins(fontSize: 13, color: Colors.white, fontWeight: FontWeight.w500);
-var medium13black = GoogleFonts.poppins(fontSize: 13, color: Colors.black, fontWeight: FontWeight.w500);
-var medium13orange = GoogleFonts.poppins(fontSize: 13, color: Color(0xffFE9A17), fontWeight: FontWeight.w500);
+var medium13white = GoogleFonts.poppins(
+    fontSize: 13, color: Colors.white, fontWeight: FontWeight.w500);
+var medium13black = GoogleFonts.poppins(
+    fontSize: 13, color: Colors.black, fontWeight: FontWeight.w500);
+var medium13orange = GoogleFonts.poppins(
+    fontSize: 13, color: Color(0xffFE9A17), fontWeight: FontWeight.w500);
 
 var medium13greywobold = GoogleFonts.poppins(
   fontSize: 13,
   color: Color(0xff667080).withOpacity(0.81),
 );
 
-var medium17white = GoogleFonts.poppins(fontSize: 17, color: Colors.white, fontWeight: FontWeight.bold);
-var medium17black = GoogleFonts.poppins(fontSize: 17, color: Colors.black, fontWeight: FontWeight.bold);
-var medium17orange = GoogleFonts.poppins(fontSize: 17, color: Color(0xffFE9A17), fontWeight: FontWeight.bold);
+var medium17white = GoogleFonts.poppins(
+    fontSize: 17, color: Colors.white, fontWeight: FontWeight.bold);
+var medium17black = GoogleFonts.poppins(
+    fontSize: 17, color: Colors.black, fontWeight: FontWeight.bold);
+var medium17orange = GoogleFonts.poppins(
+    fontSize: 17, color: Color(0xffFE9A17), fontWeight: FontWeight.bold);
 
-var medium32white = GoogleFonts.poppins(fontSize: 32, color: Colors.white, fontWeight: FontWeight.bold);
-var medium32black = GoogleFonts.poppins(fontSize: 32, color: Colors.black, fontWeight: FontWeight.bold);
-var medium32orange = GoogleFonts.poppins(fontSize: 32, color: Color(0xffFE9A17), fontWeight: FontWeight.bold);
+var medium32white = GoogleFonts.poppins(
+    fontSize: 32, color: Colors.white, fontWeight: FontWeight.bold);
+var medium32black = GoogleFonts.poppins(
+    fontSize: 32, color: Colors.black, fontWeight: FontWeight.bold);
+var medium32orange = GoogleFonts.poppins(
+    fontSize: 32, color: Color(0xffFE9A17), fontWeight: FontWeight.bold);
 
 var fontsize14opacitywhite = GoogleFonts.poppins(
   fontSize: 14,
   color: Colors.white.withOpacity(0.50),
 );
-var medium24white = GoogleFonts.poppins(fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold);
-var medium24black = GoogleFonts.poppins(fontSize: 24, color: Colors.black, fontWeight: FontWeight.bold);
-var medium24orange = GoogleFonts.poppins(fontSize: 24, color: Color(0xffFE9A17), fontWeight: FontWeight.bold);
+var medium24white = GoogleFonts.poppins(
+    fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold);
+var medium24black = GoogleFonts.poppins(
+    fontSize: 24, color: Colors.black, fontWeight: FontWeight.bold);
+var medium24orange = GoogleFonts.poppins(
+    fontSize: 24, color: Color(0xffFE9A17), fontWeight: FontWeight.bold);
 
-var medium11white = GoogleFonts.poppins(fontSize: 11, color: Color(0xffC1B1B1), fontWeight: FontWeight.bold);
-var medium11black = GoogleFonts.poppins(fontSize: 11, color: Color(0xffC1B1B1), fontWeight: FontWeight.bold);
-var medium11orange = GoogleFonts.poppins(fontSize: 11, color: Color(0xffC1B1B1), fontWeight: FontWeight.bold);
+var medium11white = GoogleFonts.poppins(
+    fontSize: 11, color: Color(0xffC1B1B1), fontWeight: FontWeight.bold);
+var medium11black = GoogleFonts.poppins(
+    fontSize: 11, color: Color(0xffC1B1B1), fontWeight: FontWeight.bold);
+var medium11orange = GoogleFonts.poppins(
+    fontSize: 11, color: Color(0xffC1B1B1), fontWeight: FontWeight.bold);
 
-var medium25white = GoogleFonts.poppins(fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold);
-var medium25black = GoogleFonts.poppins(fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold);
-var medium25orange = GoogleFonts.poppins(fontSize: 25, color: Color(0xffFE9A17), fontWeight: FontWeight.bold);
+var medium25white = GoogleFonts.poppins(
+    fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold);
+var medium25black = GoogleFonts.poppins(
+    fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold);
+var medium25orange = GoogleFonts.poppins(
+    fontSize: 25, color: Color(0xffFE9A17), fontWeight: FontWeight.bold);
 
 var HintStyle14Purple = GoogleFonts.poppins(
   fontSize: 14.sp,
@@ -147,6 +190,19 @@ var txtstylewhite18 = GoogleFonts.roboto(
 var txtstylewhite18wobold = GoogleFonts.roboto(
   fontSize: 18.sp,
   color: Colors.white,
+);
+var txtstyleblack15regular = GoogleFonts.roboto(
+  fontSize: 15.sp,
+  color: blackcolor,
+);
+var txtstylewhite18bold = GoogleFonts.roboto(
+  fontSize: 14.sp,
+  color: Colors.white,
+  fontWeight: FontWeight.bold,
+);
+var txtstyleblack14regular = GoogleFonts.roboto(
+  fontSize: 14.sp,
+  color: blackcolor,
 );
 var txtstylewhite10 = GoogleFonts.roboto(
   fontSize: 10.sp,
@@ -188,6 +244,11 @@ var txtstyleblack20 = GoogleFonts.roboto(
   color: Colors.black,
   fontWeight: FontWeight.bold,
 );
+var txtstyleblack20Bold = GoogleFonts.roboto(
+  fontSize: 20.sp,
+  color: Colors.black,
+  fontWeight: FontWeight.bold,
+);
 var txtstyleblack20wb = GoogleFonts.roboto(
   fontSize: 20.sp,
   color: Colors.black,
@@ -196,6 +257,11 @@ var txtstyleblack20wb = GoogleFonts.roboto(
 var txtstylewhite20 = GoogleFonts.roboto(
   fontSize: 20.sp,
   color: Colors.white,
+  fontWeight: FontWeight.bold,
+);
+var txtstyleblack22 = GoogleFonts.roboto(
+  fontSize: 22.sp,
+  color: blackcolor,
   fontWeight: FontWeight.bold,
 );
 
@@ -294,6 +360,11 @@ var labeltxtblack16 = GoogleFonts.roboto(
   color: Colors.black,
   fontWeight: FontWeight.bold,
 );
+var robotobluishshade16bold = GoogleFonts.roboto(
+  fontSize: 16.sp,
+  color: bluishshade,
+  fontWeight: FontWeight.bold,
+);
 
 var labeltxtblack16new = GoogleFonts.roboto(
   fontSize: 16.sp,
@@ -305,8 +376,11 @@ var labeltxtblack14 = GoogleFonts.roboto(
   fontWeight: FontWeight.bold,
 );
 
-var underlinetxtWwhite14 =
-    GoogleFonts.roboto(fontSize: 14.sp, color: Colors.white, fontWeight: FontWeight.bold, decoration: TextDecoration.underline);
+var underlinetxtWwhite14 = GoogleFonts.roboto(
+    fontSize: 14.sp,
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+    decoration: TextDecoration.underline);
 
 var txtstylegrey18 = GoogleFonts.roboto(
   fontSize: 18.sp,
@@ -408,6 +482,11 @@ var textroboto20 = GoogleFonts.roboto(
   color: Color(0xff0F3F72),
   fontWeight: FontWeight.bold,
 );
+var textrobotobluishshade22Medium = GoogleFonts.roboto(
+  fontSize: 22.sp,
+  color: Color(0xff0F3F72),
+  fontWeight: FontWeight.w500,
+);
 
 var textroboto16 = GoogleFonts.roboto(
   fontSize: 16.sp,
@@ -435,6 +514,11 @@ var textroboto14blue = GoogleFonts.roboto(
 var txtstyleblue25 = GoogleFonts.roboto(
   fontSize: 25.sp,
   color: Color(0xff04366B),
+  fontWeight: FontWeight.bold,
+);
+var txtstyleblack26bold = GoogleFonts.roboto(
+  fontSize: 26.sp,
+  color: blackcolor,
   fontWeight: FontWeight.bold,
 );
 var txtstyleblue24 = GoogleFonts.roboto(

@@ -21,7 +21,9 @@ class _PreloginScreenState extends State<PreloginScreen> {
           width: 1.sw,
           height: 1.sh,
           decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage("assets/images/Mask Group 3@3x.png"), fit: BoxFit.fill),
+            image: DecorationImage(
+                image: AssetImage("assets/images/Mask Group 3@3x.png"),
+                fit: BoxFit.fill),
           ),
           child: Column(
             children: [
@@ -69,7 +71,8 @@ class _PreloginScreenState extends State<PreloginScreen> {
                           containercolor2: Color(0xff5C82E8),
                           containercolor: Color(0xff3A559F),
                           containertextcolor: whitecolor,
-                          iconimage: "assets/images/Icon awesome-facebook-f@3x.png",
+                          iconimage:
+                              "assets/images/Icon awesome-facebook-f@3x.png",
                           containertext: "Login with Facebook",
                         ),
                         15.verticalSpace,
