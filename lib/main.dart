@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'Auth/check.dart';
 
+import 'HomeScreens/NavBar.dart';
 import 'HomeScreens/Notification.dart';
 import 'Splash.dart';
 import 'Welcome.dart';
@@ -29,8 +30,12 @@ class MyApp extends StatelessWidget {
                 ),
               ),
               debugShowCheckedModeBanner: false,
-              initialRoute: "/NotificationScreen",
+              initialRoute: "/SplashScreen",
               getPages: [
+                GetPage(
+                  name: "/NavBarScreen",
+                  page: () => NavBarScreen(),
+                ),
                 GetPage(
                   name: "/SplashScreen",
                   page: () => SplashScreen(),

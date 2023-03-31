@@ -1,5 +1,7 @@
 import 'package:_uaw/Auth/ForgotPassword.dart';
+import 'package:_uaw/Controller.dart';
 import 'package:_uaw/Helpers.dart';
+import 'package:_uaw/HomeScreens/NavBar.dart';
 import 'package:_uaw/HomeScreens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,6 +18,8 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _obscureText = false;
   @override
   Widget build(BuildContext context) {
+    final bottomcontroller = Get.put(BottomController());
+
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(image: AssetImage("assets/images/Mask Group 3@3x.png"), fit: BoxFit.fill),
@@ -160,8 +164,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           30.verticalSpace,
                           GestureDetector(
                             onTap: () {
+                              bottomcontroller.navBarChange(0);
                               Get.to(
-                                () => HomeScreen(),
+                                () => NavBarScreen(),
                                 duration: Duration(seconds: 1),
                                 transition: Transition.fadeIn,
                               );

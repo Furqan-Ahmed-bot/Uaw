@@ -12,14 +12,30 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
-  List detailsnotification = [
-    {"userimage": "assets/images/Ellipse 68@3x.png", "attacheditemimage": "assets/images/Rectangle 990@3x.png"},
-    {"userimage": "assets/images/Ellipse 68-1@3x.png", "attacheditemimage": "assets/images/Group 1440@3x.png"},
-    {"userimage": "assets/images/Group 1433@3x1.png", "attacheditemimage": "assets/images/Rectangle 990@3x.png"},
-    {"userimage": "assets/images/Group 1433@3x.png", "attacheditemimage": "assets/images/Group 1440@3x.png"},
-    {"userimage": "assets/images/zhang-shaoqi-PdUACzBJP-Y-unsplash@3x.png", "attacheditemimage": "assets/images/Rectangle 990@3x.png"},
-    {"userimage": "assets/images/romain-dancre-doplSDELX7E-unsplash@3x.png", "attacheditemimage": "assets/images/Group 1440@3x.png"},
-    {"userimage": "assets/images/Ellipse 68@3x.png", "attacheditemimage": "assets/images/Rectangle 990@3x.png"},
+  bool isVisible = true;
+  List<Map<String, dynamic>> detailsnotification = [
+    {"userimage": "assets/images/Ellipse 68@3x.png", "attacheditemimage": "assets/images/Rectangle 990@3x.png", "isselected": true, "type": "video"},
+    {"userimage": "assets/images/Ellipse 68-1@3x.png", "attacheditemimage": "assets/images/Group 1440@3x.png", "isselected": false, "type": "image"},
+    {
+      "userimage": "assets/images/Group 1433@3x1.png",
+      "attacheditemimage": "assets/images/Rectangle 990@3x.png",
+      "isselected": true,
+      "type": "document"
+    },
+    {"userimage": "assets/images/Group 1433@3x.png", "attacheditemimage": "assets/images/NoPath@3x.png", "isselected": false, "type": "document"},
+    {
+      "userimage": "assets/images/zhang-shaoqi-PdUACzBJP-Y-unsplash@3x.png",
+      "attacheditemimage": "assets/images/Rectangle 990@3x.png",
+      "isselected": true,
+      "type": "video"
+    },
+    {
+      "userimage": "assets/images/romain-dancre-doplSDELX7E-unsplash@3x.png",
+      "attacheditemimage": "assets/images/Group 1440@3x.png",
+      "isselected": false,
+      "type": "video"
+    },
+    {"userimage": "assets/images/Ellipse 68@3x.png", "attacheditemimage": "assets/images/NoPath@3x.png", "isselected": true, "type": "document"},
   ];
 
   @override
@@ -63,21 +79,18 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     itemCount: detailsnotification.length,
                     itemBuilder: (BuildContext context, i) {
                       return NotificationWidget(
-                        attacheditemimage: detailsnotification[i]["attacheditemimage"],
-                        userimage: detailsnotification[i]["userimage"],
-                      );
-                    }),
-                // NotificationWidget(),
+                          attacheditemimage: detailsnotification[i]["attacheditemimage"],
+                          userimage: detailsnotification[i]["userimage"],
+                          type: detailsnotification[i]["type"]);
 
-                // ListView.builder(
-                //     physics: NeverScrollableScrollPhysics(),
-                //     shrinkWrap: true,
-                //     itemCount: imagelist.length,
-                //     itemBuilder: (BuildContext context, i) {
-                //       return Magzinewidget(
-                //         userimage: imagelist[i]["userimage"],
-                //       );
-                //     })
+                      //  Visibility(
+                      //   visible: detailsnotification[i]['isselected'] == true? true:false,
+                      //   child: NotificationWidget(
+                      //     attacheditemimage: detailsnotification[i]["attacheditemimage"],
+                      //     userimage: detailsnotification[i]["userimage"],
+                      //   ),
+                      // );
+                    }),
               ],
             ),
           ),
@@ -88,106 +101,167 @@ class _NotificationScreenState extends State<NotificationScreen> {
 }
 
 class NotificationWidget extends StatelessWidget {
+  bool isVisible = true;
   String userimage;
+  final type;
 
   String attacheditemimage;
 
   NotificationWidget({
     required this.userimage,
     required this.attacheditemimage,
+    required this.type,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Slidable(
-      key: const ValueKey(0),
-      useTextDirection: false,
-      direction: Axis.horizontal,
-      closeOnScroll: true,
-      endActionPane: ActionPane(
-        dragDismissible: true,
-        extentRatio: 0.3,
-        children: [
-          25.horizontalSpace,
-          Image.asset(
-            "assets/images/Icon metro-bin@3x.png",
-            scale: 2.5,
-          )
-        ],
-        motion: ScrollMotion(),
-      ),
-      child: Container(
-        // margin: EdgeInsets.symmetric(vertical: 5),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.r),
-          color: white,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 15,
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+    return Column(
+      children: [
+        Slidable(
+          key: const ValueKey(0),
+          useTextDirection: false,
+          direction: Axis.horizontal,
+          closeOnScroll: true,
+          endActionPane: ActionPane(
+            dragDismissible: true,
+            extentRatio: 0.3,
             children: [
-              Container(
-                height: 45,
-                width: 45,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                        image: AssetImage(
-                      userimage,
-                    ))),
-              ),
-              10.horizontalSpace,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 0.57.sw,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Admin added a Videos', style: txtstyleblue16),
-                        Text('Lorem ipsum dolor sit amet...', style: medium13black),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              Spacer(),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    "30m ago",
-                    style: medium13black,
-                  ),
-                  10.verticalSpace,
-                  Container(
-                    width: 35.w,
-                    height: 35.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4.r),
-                      image: DecorationImage(
-                          image: AssetImage(
-                            attacheditemimage,
-                          ),
-                          fit: BoxFit.fill),
-                    ),
-                    child: Image.asset(
-                      "assets/images/Group 1295@3x.png",
-                      scale: 15,
-                    ),
-                  )
-                ],
+              25.horizontalSpace,
+              Image.asset(
+                "assets/images/Icon metro-bin@3x.png",
+                scale: 2.5,
               )
             ],
+            motion: ScrollMotion(),
+          ),
+          child: Container(
+            // margin: EdgeInsets.symmetric(vertical: 5),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.r),
+              color: white,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: 15,
+              ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 45,
+                    width: 45,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: AssetImage(
+                          userimage,
+                        ))),
+                  ),
+                  10.horizontalSpace,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Admin added a Videos', style: txtstyleblue16),
+                            Text('Lorem ipsum dolor sit amet...', style: medium13black),
+                            10.verticalSpace,
+                            type == "document"
+                                ? Container(
+                                    height: 35.h,
+                                    width: 160.w,
+                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10.r), color: bluishshade),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Image.asset(
+                                          "assets/images/pdf@3x.png",
+                                          scale: 3.5,
+                                        ),
+                                        Text(
+                                          "Document.PDF",
+                                          style: fontsize11,
+                                        ),
+                                        Image.asset(
+                                          "assets/images/Group 1442@3x.png",
+                                          scale: 3.5,
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                : Container()
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Spacer(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        "30m ago",
+                        style: medium13black,
+                      ),
+                      10.verticalSpace,
+                      type == "document"
+                          ? Container(
+                              width: 35.w,
+                              height: 35.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(4.r),
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                      attacheditemimage,
+                                    ),
+                                    fit: BoxFit.fill),
+                              ),
+                            )
+                          : Container(),
+                      type == "video"
+                          ? Container(
+                              width: 35.w,
+                              height: 35.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(4.r),
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                      attacheditemimage,
+                                    ),
+                                    fit: BoxFit.fill),
+                              ),
+                              child: Image.asset(
+                                "assets/images/Group 1295@3x.png",
+                                scale: 15,
+                              ))
+                          : type == "image"
+                              ? Container(
+                                  width: 35.w,
+                                  height: 35.h,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(4.r),
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                          attacheditemimage,
+                                        ),
+                                        fit: BoxFit.fill),
+                                  ),
+                                )
+                              : Container()
+                    ],
+                  )
+                ],
+              ),
+            ),
           ),
         ),
-      ),
+        15.verticalSpace,
+      ],
     );
   }
 }

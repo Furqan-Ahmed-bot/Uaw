@@ -541,3 +541,7 @@ var fontsize16opacitywhite = GoogleFonts.poppins(
   fontSize: 16,
   color: Colors.white.withOpacity(0.50),
 );
+var fontsize11 = GoogleFonts.poppins(
+  fontSize: 11,
+  color: Colors.white,
+);
