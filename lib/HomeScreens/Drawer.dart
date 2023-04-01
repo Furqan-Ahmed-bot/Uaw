@@ -1,13 +1,18 @@
 import 'package:_uaw/Auth/Prelogin.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:_uaw/HomeScreens/Documents.dart';
+import 'package:_uaw/HomeScreens/DrawerVideoPlayer.dart';
 import 'package:_uaw/HomeScreens/Magzines.dart';
+import 'package:_uaw/HomeScreens/NavBar.dart';
 import 'package:_uaw/HomeScreens/NewsAndEvents.dart';
 import 'package:_uaw/HomeScreens/Profile.dart';
+import 'package:_uaw/HomeScreens/Settings.dart';
 import 'package:_uaw/HomeScreens/VideosScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
+import '../Controller.dart';
 
 class DrawerScreen extends StatefulWidget {
   const DrawerScreen({super.key});
@@ -17,6 +22,7 @@ class DrawerScreen extends StatefulWidget {
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
+  final bottomcontroller = Get.put(BottomController());
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,7 +34,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
           ),
           child: Container(
             width: 0.8.sw,
-            height: 0.9.sh,
+            height: 0.83.sh,
             child: Stack(
               clipBehavior: Clip.none,
               alignment: Alignment.center,
@@ -62,10 +68,15 @@ class _DrawerScreenState extends State<DrawerScreen> {
                         children: [
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20.r),
-                            child: Icon(
-                              Icons.close,
-                              color: whitecolor,
-                              size: 25,
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.back();
+                              },
+                              child: Icon(
+                                Icons.close,
+                                color: whitecolor,
+                                size: 25,
+                              ),
                             ),
                           ),
                         ],
@@ -80,10 +91,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                             width: 5.w,
                             color: whitecolor,
                           ),
-                          image: DecorationImage(
-                              image: AssetImage(
-                                  "assets/images/Group 1433@3x1.png"),
-                              fit: BoxFit.fill),
+                          image: DecorationImage(image: AssetImage("assets/images/Group 1433@3x1.png"), fit: BoxFit.fill),
                         ),
                       ),
                       20.verticalSpace,
@@ -106,7 +114,11 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                      Get.back();
+                                      if (bottomcontroller.navigationBarIndexValue != 0) {
+                                        bottomcontroller.navBarChange(0);
+                                      } else {
+                                        Get.back();
+                                      }
                                     },
                                     child: Row(
                                       children: [
@@ -125,8 +137,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                   30.verticalSpace,
                                   GestureDetector(
                                     onTap: () {
-                                      Get.to(() =>
-                                          NewsAndEventsScreen(value: "null"));
+                                      bottomcontroller.navBarChange(1);
+                                      Get.to(() => NavBarScreen());
                                     },
                                     child: Row(
                                       children: [
@@ -145,7 +157,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                   30.verticalSpace,
                                   GestureDetector(
                                     onTap: () {
-                                      Get.to(() => UserProfileScreen());
+                                      bottomcontroller.navBarChange(3);
+                                      Get.to(() => NavBarScreen());
                                     },
                                     child: Row(
                                       children: [
@@ -164,8 +177,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                   30.verticalSpace,
                                   GestureDetector(
                                     onTap: () {
-                                      Get.to(
-                                          () => DocumentsScreen(value: "null"));
+                                      Get.to(() => DocumentsScreen(value: "null"));
                                     },
                                     child: Row(
                                       children: [
@@ -184,7 +196,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                   30.verticalSpace,
                                   GestureDetector(
                                     onTap: () {
-                                      Get.to(() => VideoScreen(value: "null"));
+                                      Get.to(() => DrawerVideoPlayerSvreen());
                                     },
                                     child: Row(
                                       children: [
@@ -203,8 +215,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                   30.verticalSpace,
                                   GestureDetector(
                                     onTap: () {
-                                      Get.to(
-                                          () => MagzineScreen(value: "null"));
+                                      Get.to(() => MagzineScreen(value: "null"));
                                     },
                                     child: Row(
                                       children: [
@@ -221,18 +232,23 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                     ),
                                   ),
                                   30.verticalSpace,
-                                  Row(
-                                    children: [
-                                      Image.asset(
-                                        "assets/images/Icon feather-settings@3x.png",
-                                        scale: 2,
-                                      ),
-                                      20.horizontalSpace,
-                                      Text(
-                                        "Settings",
-                                        style: medium18white,
-                                      )
-                                    ],
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.to(() => SettingsScreen());
+                                    },
+                                    child: Row(
+                                      children: [
+                                        Image.asset(
+                                          "assets/images/Icon feather-settings@3x.png",
+                                          scale: 2,
+                                        ),
+                                        20.horizontalSpace,
+                                        Text(
+                                          "Settings",
+                                          style: medium18white,
+                                        )
+                                      ],
+                                    ),
                                   )
                                 ],
                               ),
@@ -278,9 +294,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                             actions: [
                               Container(
                                 width: 370.w,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15.r),
-                                    color: Color(0xffFFFFFF)),
+                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.r), color: Color(0xffFFFFFF)),
                                 child: Column(
                                   children: [
                                     Row(
@@ -295,8 +309,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                             height: 35.h,
                                             decoration: BoxDecoration(
                                               borderRadius: BorderRadius.only(
-                                                bottomLeft:
-                                                    Radius.circular(15.r),
+                                                bottomLeft: Radius.circular(15.r),
                                                 topRight: Radius.circular(15.r),
                                               ),
                                               color: bluishshade,
@@ -318,8 +331,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                     ),
                                     30.verticalSpace,
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
                                         GestureDetector(
                                           onTap: () {
@@ -329,8 +341,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                             width: 162.w,
                                             height: 55.h,
                                             decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.r),
+                                              borderRadius: BorderRadius.circular(10.r),
                                               color: redishcolor,
                                             ),
                                             child: Center(
@@ -343,16 +354,13 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                         ),
                                         GestureDetector(
                                           onTap: () {
-                                            Get.to(() => PreloginScreen(),
-                                                duration: Duration(seconds: 1),
-                                                transition: Transition.fadeIn);
+                                            Get.to(() => PreloginScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
                                           },
                                           child: Container(
                                             width: 162.w,
                                             height: 55.h,
                                             decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.r),
+                                              borderRadius: BorderRadius.circular(10.r),
                                               color: bluishshade,
                                             ),
                                             child: Center(

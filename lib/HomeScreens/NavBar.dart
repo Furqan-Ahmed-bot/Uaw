@@ -1,4 +1,5 @@
 import 'package:_uaw/Helpers.dart';
+import 'package:_uaw/HomeScreens/Drawer.dart';
 import 'package:_uaw/HomeScreens/NewsAndEvents.dart';
 import 'package:_uaw/HomeScreens/Notification.dart';
 import 'package:_uaw/HomeScreens/Profile.dart';
@@ -17,7 +18,32 @@ class NavBarScreen extends StatefulWidget {
   State<NavBarScreen> createState() => _NavBarScreenState();
 }
 
-class _NavBarScreenState extends State<NavBarScreen> {
+class _NavBarScreenState extends State<NavBarScreen> with SingleTickerProviderStateMixin {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  late AnimationController _controller;
+  late Animation<Offset> _animation;
+
+  final List<Offset> _itemPositions = [
+    Offset(0.0, 0.0),
+    Offset(0.5, 0.0),
+    Offset(1.0, 0.0),
+    Offset(1.5, 0.0),
+  ];
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+
+    _animation = Tween<Offset>(
+      begin: _itemPositions[pageIndex],
+      end: _itemPositions[pageIndex],
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+  }
+
+  final Color _semiCircleColor = Colors.blue;
   final bottomcontroller = Get.put(BottomController());
   int pageIndex = 0;
 
@@ -27,8 +53,24 @@ class _NavBarScreenState extends State<NavBarScreen> {
     NotificationScreen(),
     UserProfileScreen(),
   ];
-  void _onItemTapped(int index) {
-    bottomcontroller.navBarChange(index);
+  void _onItemTapped(int pageIndex) {
+    print("index" + pageIndex.toString());
+    setState(() {
+      pageIndex = pageIndex;
+
+      _animation = Tween<Offset>(
+        begin: _itemPositions[pageIndex],
+        end: _itemPositions[pageIndex],
+      ).animate(CurvedAnimation(parent: _controller, curve: Curves.bounceIn));
+      _controller.forward(from: 0);
+    });
+    bottomcontroller.navBarChange(pageIndex);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -53,20 +95,19 @@ class _NavBarScreenState extends State<NavBarScreen> {
 
   buildMyNavBar(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 10.r, right: 10.r, bottom: 10.r),
+      padding: EdgeInsets.only(left: 20.r, right: 20.r, bottom: 10.r),
       child: Container(
-        height: 70.h,
+        height: 65.h,
         width: double.infinity,
-        decoration: BoxDecoration(boxShadow: [
-          // BoxShadow(
-          //   color: Colors.grey.withOpacity(0.5),
-          //   spreadRadius: 2,
-          //   blurRadius: 50,
-          //   offset: Offset(0, -8), // changes position of shadow
-          // ),
-        ], borderRadius: BorderRadius.circular(20.r), color: Colors.black),
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
+              colors: [Color(0xff021B36), Color(0xff175698)],
+            ),
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(10.r), topRight: Radius.circular(10.r))),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10.w),
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -79,28 +120,36 @@ class _NavBarScreenState extends State<NavBarScreen> {
                   // Get.to(() => MainScreen());
                 },
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Container(
                       width: 22.5.w,
                       height: 22.5.h,
                       child: Image.asset(
                         "assets/images/Icon material-rss-feed@3x.png",
-                        color: bottomcontroller.navigationBarIndexValue == 0 ? orangeshade : Colors.white,
+                        color: Colors.white,
                       ),
                     ),
                     SizedBox(
                       height: 5.h,
                     ),
                     Text(
-                      "Home",
+                      "Feed",
                       style: TextStyle(
                         letterSpacing: -0.48,
                         fontSize: 12.sp,
-                        color: bottomcontroller.navigationBarIndexValue == 0 ? orangeshade : Colors.white,
+                        color: Colors.white,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
+                    5.verticalSpace,
+                    Container(
+                      height: 8.h,
+                      width: 15.w,
+                      decoration: BoxDecoration(
+                          color: bottomcontroller.navigationBarIndexValue == 0 ? Color(0xff38A8FE) : transparentcolor,
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(100.r), topRight: Radius.circular(100.r))),
+                    )
                   ],
                 ),
               ),
@@ -108,7 +157,7 @@ class _NavBarScreenState extends State<NavBarScreen> {
               //   width: 30.w,
               // ),
               Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   GestureDetector(
                     onTap: () {
@@ -123,7 +172,7 @@ class _NavBarScreenState extends State<NavBarScreen> {
                       height: 22.5.h,
                       child: Image.asset(
                         "assets/images/Group 1300@3x.png",
-                        color: bottomcontroller.navigationBarIndexValue == 1 ? orangeshade : Colors.white,
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -131,14 +180,22 @@ class _NavBarScreenState extends State<NavBarScreen> {
                     height: 5.h,
                   ),
                   Text(
-                    "Chat",
+                    "Events",
                     style: TextStyle(
                       letterSpacing: -0.48,
                       fontSize: 12.sp,
-                      color: bottomcontroller.navigationBarIndexValue == 1 ? orangeshade : Colors.white,
+                      color: Colors.white,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
+                  5.verticalSpace,
+                  Container(
+                    height: 8.h,
+                    width: 15.w,
+                    decoration: BoxDecoration(
+                        color: bottomcontroller.navigationBarIndexValue == 1 ? Color(0xff38A8FE) : transparentcolor,
+                        borderRadius: BorderRadius.only(topLeft: Radius.circular(100.r), topRight: Radius.circular(100.r))),
+                  )
                 ],
               ),
 
@@ -151,28 +208,36 @@ class _NavBarScreenState extends State<NavBarScreen> {
                   // Get.to(() => MainScreen());
                 },
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Container(
                       width: 22.5.w,
                       height: 22.5.h,
                       child: Image.asset(
                         "assets/images/Group 1301@3x.png",
-                        color: bottomcontroller.navigationBarIndexValue == 2 ? orangeshade : Colors.white,
+                        color: Colors.white,
                       ),
                     ),
                     SizedBox(
                       height: 5.h,
                     ),
                     Text(
-                      "Bookings",
+                      "Notifications",
                       style: TextStyle(
                         letterSpacing: -0.48,
                         fontSize: 12.sp,
-                        color: bottomcontroller.navigationBarIndexValue == 2 ? orangeshade : Colors.white,
+                        color: Colors.white,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
+                    5.verticalSpace,
+                    Container(
+                      height: 8.h,
+                      width: 15.w,
+                      decoration: BoxDecoration(
+                          color: bottomcontroller.navigationBarIndexValue == 2 ? Color(0xff38A8FE) : transparentcolor,
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(100.r), topRight: Radius.circular(100.r))),
+                    )
                   ],
                 ),
               ),
@@ -188,14 +253,14 @@ class _NavBarScreenState extends State<NavBarScreen> {
                   // Get.to(() => MainScreen());
                 },
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Container(
                       width: 22.5.w,
                       height: 22.5.h,
                       child: Image.asset(
                         "assets/images/Group 1302@3x.png",
-                        color: bottomcontroller.navigationBarIndexValue == 3 ? orangeshade : Colors.white,
+                        color: Colors.white,
                       ),
                     ),
                     SizedBox(
@@ -205,10 +270,18 @@ class _NavBarScreenState extends State<NavBarScreen> {
                       "Profile",
                       style: TextStyle(
                         fontSize: 12.sp,
-                        color: bottomcontroller.navigationBarIndexValue == 3 ? orangeshade : Colors.white,
+                        color: Colors.white,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
+                    5.verticalSpace,
+                    Container(
+                      height: 8.h,
+                      width: 15.w,
+                      decoration: BoxDecoration(
+                          color: bottomcontroller.navigationBarIndexValue == 3 ? Color(0xff38A8FE) : transparentcolor,
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(100.r), topRight: Radius.circular(100.r))),
+                    )
                   ],
                 ),
               ),

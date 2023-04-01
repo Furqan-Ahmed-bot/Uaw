@@ -1,5 +1,6 @@
 import 'package:_uaw/Helpers.dart';
 import 'package:_uaw/HomeScreens/AttendingEvent.dart';
+import 'package:_uaw/HomeScreens/Drawer.dart';
 import 'package:_uaw/HomeScreens/EditProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,10 +16,13 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _key,
         backgroundColor: whitish,
+        drawer: DrawerScreen(),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -38,46 +42,47 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   padding: EdgeInsets.symmetric(
                     horizontal: 15.r,
                   ),
-                  child: Row(
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    alignment: Alignment.center,
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          Get.back();
-                        },
-                        child: Container(
-                          width: 30.w,
-                          height: 30.h,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            gradient: LinearGradient(
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                              colors: [
-                                greycolor,
-                                whitecolor,
-                              ],
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              _key.currentState!.openDrawer();
+                            },
+                            child: Center(
+                              child: Container(
+                                width: 55.w,
+                                height: 55.h,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: whitecolor,
+                                ),
+                                child: Image.asset(
+                                  "assets/images/Group 1288@3x.png",
+                                  scale: 2.5,
+                                ),
+                              ),
                             ),
                           ),
-                          child: Icon(
-                            Icons.arrow_back,
-                            color: blackcolor,
-                            size: 20,
-                          ),
-                        ),
+                          Spacer(),
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(() => EditProfileScreen());
+                            },
+                            child: Image.asset(
+                              "assets/images/Group 1377@3x.png",
+                              scale: 3.5,
+                            ),
+                          )
+                        ],
                       ),
-                      Spacer(),
-                      Text(
-                        "PROFILE",
-                        style: txtstylewhite18,
-                      ),
-                      Spacer(),
-                      GestureDetector(
-                        onTap: () {
-                          Get.to(() => EditProfileScreen());
-                        },
-                        child: Image.asset(
-                          "assets/images/Group 1377@3x.png",
-                          scale: 3.5,
+                      Positioned(
+                        child: Text(
+                          "PROFILE",
+                          style: txtstylewhite18,
                         ),
                       )
                     ],
@@ -299,6 +304,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   ],
                 ),
               ),
+              80.verticalSpace,
             ],
           ),
         ));

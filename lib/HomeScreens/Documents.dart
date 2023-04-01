@@ -1,8 +1,11 @@
 import 'package:_uaw/Helpers.dart';
+import 'package:_uaw/HomeScreens/NavBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+
+import '../Controller.dart';
 
 class DocumentsScreen extends StatefulWidget {
   final String value;
@@ -13,6 +16,7 @@ class DocumentsScreen extends StatefulWidget {
 }
 
 class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProviderStateMixin {
+  final bottomcontroller = Get.put(BottomController());
   String now = DateFormat("yyyy-MM-dd").format(DateTime.now());
   List DocumentDetails = [
     {"userimage": "assets/images/Ellipse 68-1@3x.png"},
@@ -35,7 +39,11 @@ class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProv
           leading: Center(
             child: GestureDetector(
               onTap: () {
-                Get.back();
+                if (bottomcontroller.navigationBarIndexValue != 0) {
+                  bottomcontroller.navBarChange(0);
+                } else {
+                  Get.back();
+                }
               },
               child: Image.asset(
                 "assets/images/Group 1430@3x.png",

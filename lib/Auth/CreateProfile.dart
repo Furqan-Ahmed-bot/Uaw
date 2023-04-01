@@ -13,12 +13,7 @@ class CreateProfileScreen extends StatefulWidget {
 }
 
 class _CreateProfileScreenState extends State<CreateProfileScreen> {
-  List<String> _locations = [
-    'Designation-1',
-    'Designation-2',
-    'Designation-3',
-    'Designation-4'
-  ];
+  List<String> _locations = ['Designation-1', 'Designation-2', 'Designation-3', 'Designation-4'];
   var _propertytype;
   @override
   Widget build(BuildContext context) {
@@ -39,13 +34,26 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                     center: Alignment.bottomLeft,
                   ),
                 ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20.r,
-                  ),
-                  child: Row(
-                    children: [
-                      GestureDetector(
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  alignment: Alignment.topLeft,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            "CREATE PROFILE",
+                            style: txtstylewhite18,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Positioned(
+                      top: 60,
+                      left: 20,
+                      child: GestureDetector(
                         onTap: () {
                           Get.back();
                         },
@@ -70,13 +78,8 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                           ),
                         ),
                       ),
-                      80.horizontalSpace,
-                      Text(
-                        "CREATE PROFILE",
-                        style: txtstylewhite18,
-                      )
-                    ],
-                  ),
+                    )
+                  ],
                 ),
               ),
               Stack(
@@ -266,9 +269,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                     30.verticalSpace,
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => CreateAccountScreen(),
-                            duration: Duration(seconds: 1),
-                            transition: Transition.fadeIn);
+                        Get.to(() => CreateAccountScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
                       },
                       child: Container(
                         width: 1.sw,

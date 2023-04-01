@@ -7,6 +7,9 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+import '../Controller.dart';
+import 'NavBar.dart';
+
 class MagzineScreen extends StatefulWidget {
   final String value;
   const MagzineScreen({super.key, required this.value});
@@ -16,6 +19,7 @@ class MagzineScreen extends StatefulWidget {
 }
 
 class _MagzineScreenState extends State<MagzineScreen> {
+  final bottomcontroller = Get.put(BottomController());
   List imagelist = [
     {"userimage": "assets/images/Ellipse 68-1@3x.png"},
     {"userimage": "assets/images/Ellipse 68@3x.png"},
@@ -38,7 +42,11 @@ class _MagzineScreenState extends State<MagzineScreen> {
           leading: Center(
             child: GestureDetector(
               onTap: () {
-                Get.back();
+                if (bottomcontroller.navigationBarIndexValue != 0) {
+                  bottomcontroller.navBarChange(0);
+                } else {
+                  Get.back();
+                }
               },
               child: Image.asset(
                 "assets/images/Group 1430@3x.png",

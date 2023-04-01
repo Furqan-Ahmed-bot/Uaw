@@ -5,6 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../Controller.dart';
+import 'NavBar.dart';
+
 class VideoScreen extends StatefulWidget {
   final String value;
   const VideoScreen({super.key, required this.value});
@@ -14,6 +17,7 @@ class VideoScreen extends StatefulWidget {
 }
 
 class _VideoScreenState extends State<VideoScreen> {
+  final bottomcontroller = Get.put(BottomController());
   String now = DateFormat("yyyy-MM-dd").format(DateTime.now());
   List VideoDetails = [
     {"userimage": "assets/images/Ellipse 68-1@3x.png"},
@@ -35,7 +39,12 @@ class _VideoScreenState extends State<VideoScreen> {
           leading: Center(
             child: GestureDetector(
               onTap: () {
-                Get.back();
+                bottomcontroller.navBarChange(0);
+                Get.to(
+                  () => NavBarScreen(),
+                  duration: Duration(seconds: 1),
+                  transition: Transition.fadeIn,
+                );
               },
               child: Image.asset(
                 "assets/images/Group 1430@3x.png",

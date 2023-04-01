@@ -185,22 +185,55 @@ class _VidePalayerScreenState extends State<VidePalayerScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      _videoPlayerController.pause();
+                      setState(() {
+                        if (_videoPlayerController.value.isPlaying) {
+                          _videoPlayerController.pause();
+                        } else {
+                          _videoPlayerController.play();
+                        }
+                      });
                     },
                     child: Container(
-                      width: 70.w,
-                      height: 70.h,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: white,
-                      ),
-                      child: Icon(
-                        Icons.pause_rounded,
-                        color: bluishshade,
-                        size: 45,
-                      ),
-                    ),
+                        width: 70.w,
+                        height: 70.h,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: white,
+                        ),
+                        child: _videoPlayerController.value.isPlaying
+                            ? Icon(
+                                Icons.pause_rounded,
+                                color: bluishshade,
+                                size: 40,
+                              )
+                            : Icon(
+                                Icons.play_arrow_rounded,
+                                color: bluishshade,
+                                size: 40,
+                              )
+
+                        // IconButton(
+                        //   icon: Icon(
+                        //     _videoPlayerController.value.isPlaying ? Icons.pause : Icons.play_arrow,
+                        //   ),
+                        //   onPressed: () {
+
+                        //   },
+                        // ),
+                        ),
                   ),
+                  // _videoPlayerController.value.isPlaying
+                  //     ? Icon(
+                  //         Icons.pause_rounded,
+                  //         color: bluishshade,
+                  //         size: 45,
+                  //       )
+                  //     : Icon(
+                  //         Icons.play_arrow,
+                  //         color: bluishshade,
+                  //         size: 45,
+                  //       ),
+
                   Container(
                     width: 48.w,
                     height: 48.h,

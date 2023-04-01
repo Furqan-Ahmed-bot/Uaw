@@ -18,6 +18,8 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart' as intl;
 
+import 'Drawer.dart';
+
 class NewsAndEventsScreen extends StatefulWidget {
   final String value;
   const NewsAndEventsScreen({super.key, required this.value});
@@ -27,6 +29,7 @@ class NewsAndEventsScreen extends StatefulWidget {
 }
 
 class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOn; // Can be toggled on/off by longpressing a date
   DateTime _focusedDay = DateTime.now();
@@ -75,25 +78,33 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
   String now = DateFormat("yyyy-MM-dd").format(DateTime.now());
   @override
   Widget build(BuildContext context) {
-    return 
-    Container(
+    return Container(
       width: 1.sw,
       height: 1.sh,
       color: whitish,
       child: Scaffold(
+        key: _key,
         backgroundColor: transparentcolor,
         appBar: AppBar(
           backgroundColor: transparentcolor,
           elevation: 0,
           leadingWidth: 70,
-          leading: Center(
-            child: GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: Image.asset(
-                "assets/images/Group 1430@3x.png",
-                scale: 2.5,
+          leading: GestureDetector(
+            onTap: () {
+              _key.currentState!.openDrawer();
+            },
+            child: Center(
+              child: Container(
+                width: 55.w,
+                height: 55.h,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: whitecolor,
+                ),
+                child: Image.asset(
+                  "assets/images/Group 1288@3x.png",
+                  scale: 2.5,
+                ),
               ),
             ),
           ),
@@ -260,6 +271,7 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
             )
           ],
         ),
+        drawer: DrawerScreen(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.r),
           child: SingleChildScrollView(
@@ -283,8 +295,6 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
         ),
       ),
     );
- 
- 
   }
 }
 

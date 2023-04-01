@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+import 'Drawer.dart';
+
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
 
@@ -12,6 +14,7 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
   bool isVisible = true;
   List<Map<String, dynamic>> detailsnotification = [
     {"userimage": "assets/images/Ellipse 68@3x.png", "attacheditemimage": "assets/images/Rectangle 990@3x.png", "isselected": true, "type": "video"},
@@ -45,19 +48,28 @@ class _NotificationScreenState extends State<NotificationScreen> {
       height: 1.sh,
       color: whitish,
       child: Scaffold(
+        key: _key,
         backgroundColor: transparentcolor,
         appBar: AppBar(
           backgroundColor: transparentcolor,
           elevation: 0,
           leadingWidth: 70,
-          leading: Center(
-            child: GestureDetector(
-              onTap: () {
-                Get.back();
-              },
-              child: Image.asset(
-                "assets/images/Group 1430@3x.png",
-                scale: 2.5,
+          leading: GestureDetector(
+            onTap: () {
+              _key.currentState!.openDrawer();
+            },
+            child: Center(
+              child: Container(
+                width: 55.w,
+                height: 55.h,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: whitecolor,
+                ),
+                child: Image.asset(
+                  "assets/images/Group 1288@3x.png",
+                  scale: 2.5,
+                ),
               ),
             ),
           ),
@@ -66,6 +78,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
             style: textroboto18,
           ),
           centerTitle: true,
+        ),
+        drawer: DrawerScreen(
+        
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.r),
