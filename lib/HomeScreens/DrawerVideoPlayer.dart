@@ -71,7 +71,7 @@ class _DrawerVideoPlayerSvreenState extends State<DrawerVideoPlayerSvreen> {
                 Get.back();
               },
               child: Image.asset(
-                "assets/images/Group 1430@3x.png",
+                "assets/images/Group 1431@3x.png",
                 scale: 2.5,
               ),
             ),

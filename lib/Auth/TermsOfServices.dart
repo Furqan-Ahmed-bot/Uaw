@@ -63,7 +63,7 @@ class _TermsOfServicesState extends State<TermsOfServices> with SingleTickerProv
             ),
           ),
           title: Text(
-            "Terms Of Services",
+            "Terms Of Service",
             style: textroboto18,
           ),
           centerTitle: true,
@@ -109,6 +109,7 @@ class _TermsOfServicesState extends State<TermsOfServices> with SingleTickerProv
                                   actions: [
                                     Container(
                                       width: 370.w,
+                                      height: 202.h,
                                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.r), color: Color(0xffFFFFFF)),
                                       child: Column(
                                         children: [
@@ -143,13 +144,13 @@ class _TermsOfServicesState extends State<TermsOfServices> with SingleTickerProv
                                               )
                                             ],
                                           ),
-                                          30.verticalSpace,
+                                          0.verticalSpace,
                                           Text(
                                             "Are you sure you want to reject?",
                                             textAlign: TextAlign.center,
                                             style: txtstyleblue25,
                                           ),
-                                          30.verticalSpace,
+                                          20.verticalSpace,
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                             children: [

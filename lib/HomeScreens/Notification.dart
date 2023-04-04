@@ -17,28 +17,55 @@ class _NotificationScreenState extends State<NotificationScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   bool isVisible = true;
   List<Map<String, dynamic>> detailsnotification = [
-    {"userimage": "assets/images/Ellipse 68@3x.png", "attacheditemimage": "assets/images/Rectangle 990@3x.png", "isselected": true, "type": "video"},
-    {"userimage": "assets/images/Ellipse 68-1@3x.png", "attacheditemimage": "assets/images/Group 1440@3x.png", "isselected": false, "type": "image"},
+    {
+      "userimage": "assets/images/Ellipse 68@3x.png",
+      "attacheditemimage": "assets/images/Rectangle 990@3x.png",
+      "isselected": true,
+      "type": "video",
+      "documenttype": "Admin added a Videos"
+    },
+    {
+      "userimage": "assets/images/Ellipse 68-1@3x.png",
+      "attacheditemimage": "assets/images/Group 1440@3x.png",
+      "isselected": false,
+      "type": "image",
+      "documenttype": "Admin added a Videos"
+    },
     {
       "userimage": "assets/images/Group 1433@3x1.png",
       "attacheditemimage": "assets/images/Rectangle 990@3x.png",
       "isselected": true,
-      "type": "document"
+      "type": "document",
+      "documenttype": "Document Uploaded"
     },
-    {"userimage": "assets/images/Group 1433@3x.png", "attacheditemimage": "assets/images/NoPath@3x.png", "isselected": false, "type": "document"},
+    {
+      "userimage": "assets/images/Group 1433@3x.png",
+      "attacheditemimage": "assets/images/NoPath@3x.png",
+      "isselected": false,
+      "type": "document",
+      "documenttype": "Magzine Uploaded"
+    },
     {
       "userimage": "assets/images/zhang-shaoqi-PdUACzBJP-Y-unsplash@3x.png",
       "attacheditemimage": "assets/images/Rectangle 990@3x.png",
       "isselected": true,
-      "type": "video"
+      "type": "video",
+      "documenttype": "Magzine Uploaded"
     },
     {
       "userimage": "assets/images/romain-dancre-doplSDELX7E-unsplash@3x.png",
       "attacheditemimage": "assets/images/Group 1440@3x.png",
       "isselected": false,
-      "type": "video"
+      "type": "video",
+      "documenttype": "Admin added a Event"
     },
-    {"userimage": "assets/images/Ellipse 68@3x.png", "attacheditemimage": "assets/images/NoPath@3x.png", "isselected": true, "type": "document"},
+    {
+      "userimage": "assets/images/Ellipse 68@3x.png",
+      "attacheditemimage": "assets/images/NoPath@3x.png",
+      "isselected": true,
+      "type": "document",
+      "documenttype": "Document Uploaded"
+    },
   ];
 
   @override
@@ -79,9 +106,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           ),
           centerTitle: true,
         ),
-        drawer: DrawerScreen(
-        
-        ),
+        drawer: DrawerScreen(),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.r),
           child: SingleChildScrollView(
@@ -94,9 +119,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     itemCount: detailsnotification.length,
                     itemBuilder: (BuildContext context, i) {
                       return NotificationWidget(
-                          attacheditemimage: detailsnotification[i]["attacheditemimage"],
-                          userimage: detailsnotification[i]["userimage"],
-                          type: detailsnotification[i]["type"]);
+                        attacheditemimage: detailsnotification[i]["attacheditemimage"],
+                        userimage: detailsnotification[i]["userimage"],
+                        type: detailsnotification[i]["type"],
+                        documenttype: detailsnotification[i]["documenttype"],
+                      );
 
                       //  Visibility(
                       //   visible: detailsnotification[i]['isselected'] == true? true:false,
@@ -119,6 +146,7 @@ class NotificationWidget extends StatelessWidget {
   bool isVisible = true;
   String userimage;
   final type;
+  var documenttype;
 
   String attacheditemimage;
 
@@ -126,6 +154,7 @@ class NotificationWidget extends StatelessWidget {
     required this.userimage,
     required this.attacheditemimage,
     required this.type,
+    this.documenttype,
     Key? key,
   }) : super(key: key);
 
@@ -183,7 +212,7 @@ class NotificationWidget extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Admin added a Videos', style: txtstyleblue16),
+                            Text(documenttype, style: txtstyleblue16),
                             Text('Lorem ipsum dolor sit amet...', style: medium13black),
                             10.verticalSpace,
                             type == "document"

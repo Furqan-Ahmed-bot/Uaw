@@ -134,12 +134,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   )
                 ],
               ),
-              120.verticalSpace,
+              100.verticalSpace,
               Text(
                 "John Doe",
                 style: textroboto20,
               ),
-              20.verticalSpace,
+              5.verticalSpace,
               Text(
                 "johndoe@gmail.com",
                 style: txtstyleblack14WO,
@@ -276,12 +276,17 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         filled: true,
                         fillColor: white,
                         prefixIconConstraints: BoxConstraints(minWidth: 50),
-                        prefixIcon: Image.asset(
-                          "assets/images/Group 60@3x.png",
-                          scale: 3.5,
+                        prefixIcon: Icon(
+                          Icons.calendar_month_outlined,
                           color: black,
                         ),
-                        hintText: "Lorem ipsum dolor sit amet,",
+
+                        //  Image.asset(
+                        //   "assets/images/Group 60@3x.png",
+                        //   scale: 3.5,
+                        //   color: black,
+                        // ),
+                        hintText: "3 upcoming events",
                         hintStyle: medium18blackwopacity,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),

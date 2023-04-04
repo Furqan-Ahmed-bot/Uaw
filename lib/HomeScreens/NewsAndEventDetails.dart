@@ -119,13 +119,18 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                       ),
                       5.verticalSpace,
                       Text(
-                        DateFormat(
-                          "MM-dd-yyyy",
-                        ).format(
-                          DateTime.now(),
-                        ),
+                        "July 17,2023",
                         style: textroboto12,
                       ),
+                      // Text(
+                      //   DateFormat(
+                      //     "MMM dd yyyy",
+                      //   ).format(
+                      //     DateTime.now(),
+                      //   ),
+                      //   style: textroboto12,
+
+                      // ),
                     ],
                   ),
                   Spacer(),
@@ -137,9 +142,13 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                       ),
                       5.horizontalSpace,
                       Text(
-                        tdata,
+                        "03:00 Pm",
                         style: textroboto14blue,
-                      )
+                      ),
+                      // Text(
+                      //   tdata,
+                      //   style: textroboto14blue,
+                      // )
                     ],
                   ),
                 ],
@@ -182,9 +191,13 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                   ),
                   15.horizontalSpace,
                   Text(
-                    tdata,
+                    "03:00 Pm",
                     style: textroboto14blue,
-                  )
+                  ),
+                  // Text(
+                  //   tdata,
+                  //   style: textroboto14blue,
+                  // )
                 ],
               ),
               15.verticalSpace,
@@ -257,6 +270,7 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                                   actions: [
                                     Container(
                                       width: 370.w,
+                                      height: 202.h,
                                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.r), color: Color(0xffFFFFFF)),
                                       child: Column(
                                         children: [
@@ -291,13 +305,13 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                                               )
                                             ],
                                           ),
-                                          30.verticalSpace,
+                                          0.verticalSpace,
                                           Text(
                                             "Are you sure you want to reject?",
                                             textAlign: TextAlign.center,
                                             style: txtstyleblue25,
                                           ),
-                                          30.verticalSpace,
+                                          20.verticalSpace,
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                             children: [

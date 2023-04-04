@@ -48,8 +48,6 @@ class _HomeScreenState extends State<HomeScreen> {
     {"containerimage": "assets/images/zhang-shaoqi-PdUACzBJP-Y-unsplash@3x.png", "statustext": "Videos", "navigateTo": "DocumentsScreen"},
     {"containerimage": "assets/images/krakenimages-Y5bvRlcCx8k-unsplash@3x.png", "statustext": "Magzine", "navigateTo": "DocumentsScreen"},
     {"containerimage": "assets/images/md-duran-rE9vgD_TXgM-unsplash@3x.png", "statustext": "Events", "navigateTo": "DocumentsScreen"},
-    {"containerimage": "assets/images/romain-dancre-doplSDELX7E-unsplash@3x.png", "statustext": "Documents", "navigateTo": "DocumentsScreen"},
-    {"containerimage": "assets/images/zhang-shaoqi-PdUACzBJP-Y-unsplash@3x.png", "statustext": "Videos", "navigateTo": "DocumentsScreen"},
   ];
   @override
   Widget build(BuildContext context) {
@@ -149,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 0.15.sh,
                   child: ListView.separated(
                     separatorBuilder: (BuildContext context, int index) {
-                      return const SizedBox(width: 10);
+                      return const SizedBox(width: 23);
                     },
                     scrollDirection: Axis.horizontal,
                     shrinkWrap: false,

@@ -117,12 +117,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   )
                 ],
               ),
-              120.verticalSpace,
+              100.verticalSpace,
               Text(
                 "John Doe",
                 style: textroboto20,
               ),
-              20.verticalSpace,
+              5.verticalSpace,
               Text(
                 "johndoe@gmail.com",
                 style: txtstyleblack14WO,

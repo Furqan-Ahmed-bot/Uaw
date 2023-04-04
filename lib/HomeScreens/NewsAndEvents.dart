@@ -248,6 +248,7 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                             ),
                                           ),
                                           monthViewSettings: DateRangePickerMonthViewSettings(
+                                            firstDayOfWeek: DateTime.monday,
                                             viewHeaderStyle: DateRangePickerViewHeaderStyle(
                                               textStyle: TextStyle(
                                                 color: Colors.black,

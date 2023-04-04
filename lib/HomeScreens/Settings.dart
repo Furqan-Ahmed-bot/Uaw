@@ -193,7 +193,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               child: Material(
                                 type: MaterialType.transparency,
                                 child: Text(
-                                  "Terms & Condiciton",
+                                  "Terms & Conditions",
                                   style: robotobluishshade16bold,
                                 ),
                               ),
@@ -262,14 +262,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               actions: [
                                 Container(
                                   width: 370.w,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15.r),
-                                      color: Color(0xffFFFFFF)),
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.r), color: Color(0xffFFFFFF)),
                                   child: Column(
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                                        mainAxisAlignment: MainAxisAlignment.end,
                                         children: [
                                           GestureDetector(
                                             onTap: () {
@@ -280,10 +277,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               height: 35.h,
                                               decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.only(
-                                                  bottomLeft:
-                                                      Radius.circular(15.r),
-                                                  topRight:
-                                                      Radius.circular(15.r),
+                                                  bottomLeft: Radius.circular(15.r),
+                                                  topRight: Radius.circular(15.r),
                                                 ),
                                                 color: bluishshade,
                                               ),
@@ -304,8 +299,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                       ),
                                       30.verticalSpace,
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                         children: [
                                           GestureDetector(
                                             onTap: () {
@@ -315,8 +309,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                               width: 162.w,
                                               height: 55.h,
                                               decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10.r),
+                                                borderRadius: BorderRadius.circular(10.r),
                                                 color: redishcolor,
                                               ),
                                               child: Center(
@@ -329,18 +322,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           ),
                                           GestureDetector(
                                             onTap: () {
-                                              Get.to(() => PreloginScreen(),
-                                                  duration:
-                                                      Duration(seconds: 1),
-                                                  transition:
-                                                      Transition.fadeIn);
+                                              Get.to(() => PreloginScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
                                             },
                                             child: Container(
                                               width: 162.w,
                                               height: 55.h,
                                               decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10.r),
+                                                borderRadius: BorderRadius.circular(10.r),
                                                 color: bluishshade,
                                               ),
                                               child: Center(
