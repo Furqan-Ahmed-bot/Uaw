@@ -125,6 +125,7 @@ class _NavBarScreenState extends State<NavBarScreen> with SingleTickerProviderSt
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               GestureDetector(
+                behavior: HitTestBehavior.translucent,
                 onTap: () {
                   setState(() {
                     _onItemTapped(0);
@@ -173,6 +174,7 @@ class _NavBarScreenState extends State<NavBarScreen> with SingleTickerProviderSt
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   GestureDetector(
+                    behavior: HitTestBehavior.translucent,
                     onTap: () {
                       setState(() {
                         _onItemTapped(1);
@@ -213,6 +215,7 @@ class _NavBarScreenState extends State<NavBarScreen> with SingleTickerProviderSt
               ),
 
               GestureDetector(
+                behavior: HitTestBehavior.translucent,
                 onTap: () {
                   setState(() {
                     _onItemTapped(2);
@@ -258,6 +261,7 @@ class _NavBarScreenState extends State<NavBarScreen> with SingleTickerProviderSt
               //   width: 25.w,
               // ),
               GestureDetector(
+                behavior: HitTestBehavior.translucent,
                 onTap: () {
                   setState(() {
                     _onItemTapped(3);

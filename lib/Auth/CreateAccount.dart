@@ -18,8 +18,8 @@ class CreateAccountScreen extends StatefulWidget {
 
 class _CreateAccountScreenState extends State<CreateAccountScreen> {
   final bottomcontroller = Get.put(BottomController());
-  bool _obscureText = false;
-  bool _obscureText2 = false;
+  bool _obscureText = true;
+  bool _obscureText2 = true;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -187,7 +187,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                             ),
                             alignment: Alignment.centerLeft,
                           ),
-                          labelText: "*******",
+                          labelText: "Confirm Password",
                           labelStyle: textroboto15,
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(

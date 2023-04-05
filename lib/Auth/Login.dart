@@ -15,7 +15,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool _obscureText = false;
+  bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
     final bottomcontroller = Get.put(BottomController());

@@ -65,7 +65,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   width: 0.8.sw,
                   height: 0.91.sh,
                   child: Image.asset(
-                    "assets/images/Rectangle 74@3x.png",
+                    "assets/images/Drawerscreen2.png",
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -73,14 +73,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   width: 0.8.sw,
                   height: 0.91.sh,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color(0xff000000E6).withOpacity(0.1),
-                        Color(0xff04366BCC).withOpacity(0.8),
-                      ],
-                    ),
+                    gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [
+                      Colors.transparent.withOpacity(0.5),
+                      Color(0xff04366BCC),
+                    ]),
                   ),
                   child: Column(
                     children: [

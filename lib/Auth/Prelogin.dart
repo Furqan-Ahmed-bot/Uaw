@@ -1,9 +1,13 @@
+import 'package:_uaw/Auth/CreateProfile.dart';
 import 'package:_uaw/Auth/Login.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../Controller.dart';
+import '../HomeScreens/NavBar.dart';
 
 class PreloginScreen extends StatefulWidget {
   const PreloginScreen({super.key});
@@ -14,6 +18,7 @@ class PreloginScreen extends StatefulWidget {
 
 class _PreloginScreenState extends State<PreloginScreen> {
   @override
+  final bottomcontroller = Get.put(BottomController());
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: transparentcolor,
@@ -22,9 +27,7 @@ class _PreloginScreenState extends State<PreloginScreen> {
           width: 1.sw,
           height: 1.sh,
           decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/images/Mask Group 3@3x.png"),
-                fit: BoxFit.fill),
+            image: DecorationImage(image: AssetImage("assets/images/Mask Group 3@3x.png"), fit: BoxFit.fill),
           ),
           child: Column(
             children: [
@@ -73,49 +76,83 @@ class _PreloginScreenState extends State<PreloginScreen> {
                           ),
                         ),
                         15.verticalSpace,
-                        PreloginWidget(
-                          containercolor2: Color(0xff5C82E8),
-                          containercolor: Color(0xff3A559F),
-                          containertextcolor: whitecolor,
-                          iconimage:
-                              "assets/images/Icon awesome-facebook-f@3x.png",
-                          containertext: "Login with Facebook",
+                        GestureDetector(
+                          onTap: () {
+                            bottomcontroller.navBarChange(0);
+                            Get.to(
+                              () => NavBarScreen(),
+                              duration: Duration(seconds: 1),
+                              transition: Transition.fadeIn,
+                            );
+                          },
+                          child: PreloginWidget(
+                            containercolor2: Color(0xff5C82E8),
+                            containercolor: Color(0xff3A559F),
+                            containertextcolor: whitecolor,
+                            iconimage: "assets/images/Icon awesome-facebook-f@3x.png",
+                            containertext: "Login with Facebook",
+                          ),
                         ),
                         15.verticalSpace,
-                        PreloginWidget(
-                          containercolor2: Color(0xffFF5C4D),
-                          containercolor: Color(0xffCB3E32),
-                          containertextcolor: whitecolor,
-                          iconimage: "assets/images/Icon simple-google@3x.png",
-                          containertext: "Login with Google",
+                        GestureDetector(
+                          onTap: () {
+                            bottomcontroller.navBarChange(0);
+                            Get.to(
+                              () => NavBarScreen(),
+                              duration: Duration(seconds: 1),
+                              transition: Transition.fadeIn,
+                            );
+                          },
+                          child: PreloginWidget(
+                            containercolor2: Color(0xffFF5C4D),
+                            containercolor: Color(0xffCB3E32),
+                            containertextcolor: whitecolor,
+                            iconimage: "assets/images/Icon simple-google@3x.png",
+                            containertext: "Login with Google",
+                          ),
                         ),
                         15.verticalSpace,
-                        PreloginWidget(
-                          containercolor2: Color(0xff000000),
-                          containercolor: Color(0xff000000),
-                          containertextcolor: whitecolor,
-                          iconimage: "assets/images/Icon awesome-apple@3x.png",
-                          containertext: "Login with Apple",
+                        GestureDetector(
+                          onTap: () {
+                            bottomcontroller.navBarChange(0);
+                            Get.to(
+                              () => NavBarScreen(),
+                              duration: Duration(seconds: 1),
+                              transition: Transition.fadeIn,
+                            );
+                          },
+                          child: PreloginWidget(
+                            containercolor2: Color(0xff000000),
+                            containercolor: Color(0xff000000),
+                            containertextcolor: whitecolor,
+                            iconimage: "assets/images/Icon awesome-apple@3x.png",
+                            containertext: "Login with Apple",
+                          ),
                         ),
                         Spacer(),
                         Center(
-                          child: RichText(
-                            text: TextSpan(
-                              text: "Don't have an account? ",
-                              style: GoogleFonts.roboto(
-                                fontSize: 16.sp,
-                                color: Color(0xff04366B),
-                              ),
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: 'Signup',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16.sp,
-                                    color: Color(0xff04366B),
-                                  ),
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.to(() => CreateProfileScreen());
+                            },
+                            child: RichText(
+                              text: TextSpan(
+                                text: "Don't have an account? ",
+                                style: GoogleFonts.roboto(
+                                  fontSize: 16.sp,
+                                  color: Color(0xff04366B),
                                 ),
-                              ],
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: 'Signup',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16.sp,
+                                      color: Color(0xff04366B),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
