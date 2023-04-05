@@ -125,9 +125,13 @@ class _AttendingEventDetailsScreenState extends State<AttendingEventDetailsScree
                   ),
                   15.horizontalSpace,
                   Text(
-                    tdata,
+                    "03:00 Pm",
                     style: textroboto14blue,
-                  )
+                  ),
+                  // Text(
+                  //   tdata,
+                  //   style: textroboto14blue,
+                  // )
                 ],
               ),
               15.verticalSpace,

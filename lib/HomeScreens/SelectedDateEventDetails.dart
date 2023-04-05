@@ -18,8 +18,7 @@ class _SelectedDateEventDetailsScreenState extends State<SelectedDateEventDetail
   DateTime currentTime = new DateTime.now();
   @override
   Widget build(BuildContext context) {
-    return 
-    Container(
+    return Container(
       width: 1.sw,
       height: 1.sh,
       color: whitish,
@@ -216,6 +215,7 @@ class _SelectedDateEventDetailsScreenState extends State<SelectedDateEventDetail
                                 actions: [
                                   Container(
                                     width: 370.w,
+                                    height: 210.h,
                                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.r), color: Color(0xffFFFFFF)),
                                     child: Column(
                                       children: [
@@ -245,13 +245,16 @@ class _SelectedDateEventDetailsScreenState extends State<SelectedDateEventDetail
                                             )
                                           ],
                                         ),
-                                        30.verticalSpace,
-                                        Text(
-                                          "Are you sure you want to reject?",
-                                          textAlign: TextAlign.center,
-                                          style: txtstyleblue25,
+                                        5.verticalSpace,
+                                        Container(
+                                          width: 0.7.sw,
+                                          child: Text(
+                                            "Are you sure you want to reject?",
+                                            textAlign: TextAlign.center,
+                                            style: txtstyleblue25,
+                                          ),
                                         ),
-                                        30.verticalSpace,
+                                        20.verticalSpace,
                                         Row(
                                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                           children: [
@@ -306,8 +309,6 @@ class _SelectedDateEventDetailsScreenState extends State<SelectedDateEventDetail
                           );
                         },
                       );
-                  
-                  
                     },
                     child: Container(
                       width: 189.w,
@@ -351,7 +352,5 @@ class _SelectedDateEventDetailsScreenState extends State<SelectedDateEventDetail
         ),
       ),
     );
-  
-  
   }
 }

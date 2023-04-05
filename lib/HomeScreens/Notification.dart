@@ -83,7 +83,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           leadingWidth: 70,
           leading: GestureDetector(
             onTap: () {
-              _key.currentState!.openDrawer();
+              Get.to(() => DrawerScreen());
             },
             child: Center(
               child: Container(

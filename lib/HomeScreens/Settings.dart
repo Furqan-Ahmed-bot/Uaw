@@ -70,7 +70,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.r),
-          child: SingleChildScrollView(
+          child: Container(
+            width: 1.sw,
+            height: 1.sh,
             child: Column(
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -241,7 +243,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                   ],
                 ),
-                150.verticalSpace,
+                Spacer(),
                 GestureDetector(
                   onTap: () {
                     showDialog(
@@ -375,6 +377,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                   ),
                 ),
+                20.verticalSpace,
               ],
             ),
           ),

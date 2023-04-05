@@ -1,15 +1,22 @@
+import 'package:_uaw/Global.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:_uaw/HomeScreens/Drawer.dart';
 import 'package:_uaw/HomeScreens/NewsAndEvents.dart';
 import 'package:_uaw/HomeScreens/Notification.dart';
 import 'package:_uaw/HomeScreens/Profile.dart';
+import 'package:_uaw/HomeScreens/SelectedDateEventDetails.dart';
 import 'package:_uaw/HomeScreens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
+import '../Auth/Prelogin.dart';
 import '../Controller.dart';
+import 'Documents.dart';
+import 'DrawerVideoPlayer.dart';
+import 'Magzines.dart';
+import 'Settings.dart';
 
 class NavBarScreen extends StatefulWidget {
   const NavBarScreen({super.key});
@@ -19,7 +26,9 @@ class NavBarScreen extends StatefulWidget {
 }
 
 class _NavBarScreenState extends State<NavBarScreen> with SingleTickerProviderStateMixin {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  int _currentIndex = 0;
+  late PageController _pageController;
+
   late AnimationController _controller;
   late Animation<Offset> _animation;
 
@@ -29,9 +38,11 @@ class _NavBarScreenState extends State<NavBarScreen> with SingleTickerProviderSt
     Offset(1.0, 0.0),
     Offset(1.5, 0.0),
   ];
+  // how to o
   @override
   void initState() {
     super.initState();
+    _pageController = PageController(initialPage: _currentIndex);
     _controller = AnimationController(
       duration: const Duration(milliseconds: 300),
       vsync: this,
@@ -49,7 +60,7 @@ class _NavBarScreenState extends State<NavBarScreen> with SingleTickerProviderSt
 
   final pages = [
     HomeScreen(),
-    NewsAndEventsScreen(value: "null"),
+    selection == true ? SelectedDateEventDetailsScreen() : NewsAndEventsScreen(value: "null"),
     NotificationScreen(),
     UserProfileScreen(),
   ];
@@ -81,6 +92,8 @@ class _NavBarScreenState extends State<NavBarScreen> with SingleTickerProviderSt
       width: double.infinity,
       child: Scaffold(
         extendBody: true,
+        drawer: DrawerScreen(),
+
         backgroundColor: Color.fromARGB(255, 236, 236, 236),
         body: GetBuilder<BottomController>(
           builder: (_) => pages[bottomcontroller.navigationBarIndexValue],

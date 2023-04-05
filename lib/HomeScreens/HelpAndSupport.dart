@@ -79,7 +79,7 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
                     40.verticalSpace,
                     Text(
                       textAlign: TextAlign.center,
-                      "We are here to help so please get in touch with us.",
+                      "We are here to help so, please get in touch with us.",
                       style: txtstyleblack22,
                     ),
                   ],
@@ -261,14 +261,11 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
                               actions: [
                                 Container(
                                   width: 370.w,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15.r),
-                                      color: Color(0xffFFFFFF)),
+                                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.r), color: Color(0xffFFFFFF)),
                                   child: Column(
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                                        mainAxisAlignment: MainAxisAlignment.end,
                                         children: [
                                           GestureDetector(
                                             onTap: () {
@@ -279,10 +276,8 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
                                               height: 35.h,
                                               decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.only(
-                                                  bottomLeft:
-                                                      Radius.circular(15.r),
-                                                  topRight:
-                                                      Radius.circular(15.r),
+                                                  bottomLeft: Radius.circular(15.r),
+                                                  topRight: Radius.circular(15.r),
                                                 ),
                                                 color: bluishshade,
                                               ),
@@ -308,10 +303,13 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
                                         style: txtstyleblack26bold,
                                       ),
                                       20.verticalSpace,
-                                      Text(
-                                        textAlign: TextAlign.center,
-                                        "Lorem ipsum dolor sit amet, consectetur",
-                                        style: textrobotobluishshade22Medium,
+                                      Container(
+                                        width: 0.6.sw,
+                                        child: Text(
+                                          textAlign: TextAlign.center,
+                                          "Lorem ipsum dolor sit amet, consectetur",
+                                          style: textrobotobluishshade22Medium,
+                                        ),
                                       ),
                                       40.verticalSpace,
                                     ],

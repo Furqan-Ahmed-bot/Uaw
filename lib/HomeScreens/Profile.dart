@@ -50,7 +50,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         children: [
                           GestureDetector(
                             onTap: () {
-                              _key.currentState!.openDrawer();
+                              Get.to(() => DrawerScreen());
                             },
                             child: Center(
                               child: Container(

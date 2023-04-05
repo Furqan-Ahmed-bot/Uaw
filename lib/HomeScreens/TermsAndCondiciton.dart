@@ -9,12 +9,10 @@ class TermAndCondicitonScreen extends StatefulWidget {
   const TermAndCondicitonScreen({super.key, required this.value});
 
   @override
-  State<TermAndCondicitonScreen> createState() =>
-      _TermAndCondicitonScreenState();
+  State<TermAndCondicitonScreen> createState() => _TermAndCondicitonScreenState();
 }
 
-class _TermAndCondicitonScreenState extends State<TermAndCondicitonScreen>
-    with SingleTickerProviderStateMixin {
+class _TermAndCondicitonScreenState extends State<TermAndCondicitonScreen> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -42,7 +40,7 @@ class _TermAndCondicitonScreenState extends State<TermAndCondicitonScreen>
             transitionOnUserGestures: true,
             tag: "term",
             child: Text(
-              "TERMS & CONDICITON",
+              "TERMS AND CONDITIONS",
               style: textroboto18,
             ),
           ),

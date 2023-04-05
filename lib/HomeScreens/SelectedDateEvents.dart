@@ -1,3 +1,4 @@
+import 'package:_uaw/Global.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:_uaw/HomeScreens/SelectedDateEventDetails.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,9 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart' as intl;
 
+import '../Controller.dart';
+import 'NavBar.dart';
+
 class SelectedDateEventsScreen extends StatefulWidget {
   const SelectedDateEventsScreen({super.key});
 
@@ -18,6 +22,7 @@ class SelectedDateEventsScreen extends StatefulWidget {
 }
 
 class _SelectedDateEventsScreenState extends State<SelectedDateEventsScreen> {
+  final bottomcontroller = Get.put(BottomController());
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOn; // Can be toggled on/off by longpressing a date
   DateTime _focusedDay = DateTime.now();
@@ -191,9 +196,15 @@ class _SelectedDateEventsScreenState extends State<SelectedDateEventsScreen> {
                                         20.verticalSpace,
                                         SfDateRangePicker(
                                           allowViewNavigation: true,
-                                          // onSelectionChanged: (dateRangePickerSelectionChangedArgs) {
-                                          //   Get.to(() => SelectedDateEventsScreen());
-                                          // },
+                                          onSelectionChanged: (dateRangePickerSelectionChangedArgs) {
+                                            setState() {
+                                              selection = true;
+                                            }
+
+                                            bottomcontroller.navBarChange(1);
+
+                                            Get.to(() => NavBarScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+                                          },
                                           selectionColor: Color(0xffEDEDED),
                                           selectionTextStyle: TextStyle(
                                             color: Colors.black,
@@ -238,8 +249,6 @@ class _SelectedDateEventsScreenState extends State<SelectedDateEventsScreen> {
                             ]);
                       });
                     });
-             
-             
               },
               child: Image.asset(
                 "assets/images/Icon metro-calendar@3x.png",

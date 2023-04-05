@@ -12,8 +12,8 @@ class SetNewPasswordScreen extends StatefulWidget {
 }
 
 class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
-  bool _obscureText = false;
-  bool _obscureText2 = false;
+  bool _obscureText = true;
+  bool _obscureText2 = true;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -159,7 +159,7 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
                                 ),
                                 alignment: Alignment.centerLeft,
                               ),
-                              labelText: "*******",
+                              labelText: "Confirm Password",
                               labelStyle: textroboto15,
                               enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(

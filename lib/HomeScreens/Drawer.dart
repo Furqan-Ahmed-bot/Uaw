@@ -9,6 +9,7 @@ import 'package:_uaw/HomeScreens/Profile.dart';
 import 'package:_uaw/HomeScreens/Settings.dart';
 import 'package:_uaw/HomeScreens/VideosScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -22,11 +23,32 @@ class DrawerScreen extends StatefulWidget {
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
+  bool _isDrawerOpen = false;
+
+  void _toggleDrawer() {
+    setState(() {
+      _isDrawerOpen = !_isDrawerOpen;
+    });
+  }
+
+  void _onDrawerOpened() {
+    setState(() {
+      SystemChrome.setEnabledSystemUIOverlays([]);
+    });
+  }
+
+  void _onDrawerClosed() {
+    setState(() {
+      SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    });
+  }
+
   final bottomcontroller = Get.put(BottomController());
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
+    return Scaffold(
+      backgroundColor: Colors.white.withOpacity(0.5),
+      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         ClipRRect(
           borderRadius: BorderRadius.only(
             topRight: Radius.circular(20.r),
@@ -34,14 +56,14 @@ class _DrawerScreenState extends State<DrawerScreen> {
           ),
           child: Container(
             width: 0.8.sw,
-            height: 0.83.sh,
+            height: 0.91.sh,
             child: Stack(
               clipBehavior: Clip.none,
               alignment: Alignment.center,
               children: [
                 Container(
                   width: 0.8.sw,
-                  height: 0.9.sh,
+                  height: 0.91.sh,
                   child: Image.asset(
                     "assets/images/Rectangle 74@3x.png",
                     fit: BoxFit.fill,
@@ -49,14 +71,14 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 ),
                 Container(
                   width: 0.8.sw,
-                  height: 0.9.sh,
+                  height: 0.91.sh,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Color(0xff04366BCC).withOpacity(0.0),
-                        Color(0xff000000E6).withOpacity(0.5),
+                        Color(0xff000000E6).withOpacity(0.1),
+                        Color(0xff04366BCC).withOpacity(0.8),
                       ],
                     ),
                   ),
@@ -108,147 +130,140 @@ class _DrawerScreenState extends State<DrawerScreen> {
                         padding: EdgeInsets.symmetric(horizontal: 50.r),
                         child: Column(
                           children: [
-                            SizedBox(
-                              height: 400.h,
-                              child: ListView(
+                            GestureDetector(
+                              onTap: () {
+                                if (bottomcontroller.navigationBarIndexValue != 0) {
+                                  bottomcontroller.navBarChange(0);
+                                } else {
+                                  Get.back();
+                                }
+                              },
+                              child: Row(
                                 children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      if (bottomcontroller.navigationBarIndexValue != 0) {
-                                        bottomcontroller.navBarChange(0);
-                                      } else {
-                                        Get.back();
-                                      }
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Image.asset(
-                                          "assets/images/Icon material-rss-feed@3x.png",
-                                          scale: 2,
-                                        ),
-                                        20.horizontalSpace,
-                                        Text(
-                                          "Feed",
-                                          style: medium18white,
-                                        )
-                                      ],
-                                    ),
+                                  Image.asset(
+                                    "assets/images/Icon material-rss-feed@3x.png",
+                                    scale: 2,
                                   ),
-                                  30.verticalSpace,
-                                  GestureDetector(
-                                    onTap: () {
-                                      bottomcontroller.navBarChange(1);
-                                      Get.to(() => NavBarScreen());
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Image.asset(
-                                          "assets/images/Group 60@3x.png",
-                                          scale: 2,
-                                        ),
-                                        20.horizontalSpace,
-                                        Text(
-                                          "Events",
-                                          style: medium18white,
-                                        )
-                                      ],
-                                    ),
+                                  20.horizontalSpace,
+                                  Text(
+                                    "Feed",
+                                    style: medium18white,
+                                  )
+                                ],
+                              ),
+                            ),
+                            30.verticalSpace,
+                            GestureDetector(
+                              onTap: () {
+                                bottomcontroller.navBarChange(1);
+                                Get.to(() => NavBarScreen());
+                              },
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    "assets/images/Group 60@3x.png",
+                                    scale: 2,
                                   ),
-                                  30.verticalSpace,
-                                  GestureDetector(
-                                    onTap: () {
-                                      bottomcontroller.navBarChange(3);
-                                      Get.to(() => NavBarScreen());
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Image.asset(
-                                          "assets/images/Icon feather-user@3x.png",
-                                          scale: 2,
-                                        ),
-                                        20.horizontalSpace,
-                                        Text(
-                                          "Profile",
-                                          style: medium18white,
-                                        )
-                                      ],
-                                    ),
+                                  20.horizontalSpace,
+                                  Text(
+                                    "Events",
+                                    style: medium18white,
+                                  )
+                                ],
+                              ),
+                            ),
+                            30.verticalSpace,
+                            GestureDetector(
+                              onTap: () {
+                                bottomcontroller.navBarChange(3);
+                                Get.to(() => NavBarScreen());
+                              },
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    "assets/images/Icon feather-user@3x.png",
+                                    scale: 2,
                                   ),
-                                  30.verticalSpace,
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.to(() => DocumentsScreen(value: "null"));
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Image.asset(
-                                          "assets/images/Group 169@3x.png",
-                                          scale: 2,
-                                        ),
-                                        20.horizontalSpace,
-                                        Text(
-                                          "Documents",
-                                          style: medium18white,
-                                        )
-                                      ],
-                                    ),
+                                  20.horizontalSpace,
+                                  Text(
+                                    "Profile",
+                                    style: medium18white,
+                                  )
+                                ],
+                              ),
+                            ),
+                            30.verticalSpace,
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(() => DocumentsScreen(value: "null"));
+                              },
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    "assets/images/Group 169@3x.png",
+                                    scale: 2,
                                   ),
-                                  30.verticalSpace,
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.to(() => DrawerVideoPlayerSvreen());
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Image.asset(
-                                          "assets/images/Icon material-slow-motion-video@3x.png",
-                                          scale: 2,
-                                        ),
-                                        20.horizontalSpace,
-                                        Text(
-                                          "Videos",
-                                          style: medium18white,
-                                        )
-                                      ],
-                                    ),
+                                  20.horizontalSpace,
+                                  Text(
+                                    "Documents",
+                                    style: medium18white,
+                                  )
+                                ],
+                              ),
+                            ),
+                            30.verticalSpace,
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(() => DrawerVideoPlayerSvreen());
+                              },
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    "assets/images/Icon material-slow-motion-video@3x.png",
+                                    scale: 2,
                                   ),
-                                  30.verticalSpace,
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.to(() => MagzineScreen(value: "null"));
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Image.asset(
-                                          "assets/images/Group 170@3x.png",
-                                          scale: 2,
-                                        ),
-                                        20.horizontalSpace,
-                                        Text(
-                                          "Magazines",
-                                          style: medium18white,
-                                        )
-                                      ],
-                                    ),
+                                  20.horizontalSpace,
+                                  Text(
+                                    "Videos",
+                                    style: medium18white,
+                                  )
+                                ],
+                              ),
+                            ),
+                            30.verticalSpace,
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(() => MagzineScreen(value: "null"));
+                              },
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    "assets/images/Group 170@3x.png",
+                                    scale: 2,
                                   ),
-                                  30.verticalSpace,
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.to(() => SettingsScreen());
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Image.asset(
-                                          "assets/images/Icon feather-settings@3x.png",
-                                          scale: 2,
-                                        ),
-                                        20.horizontalSpace,
-                                        Text(
-                                          "Settings",
-                                          style: medium18white,
-                                        )
-                                      ],
-                                    ),
+                                  20.horizontalSpace,
+                                  Text(
+                                    "Magazines",
+                                    style: medium18white,
+                                  )
+                                ],
+                              ),
+                            ),
+                            30.verticalSpace,
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(() => SettingsScreen());
+                              },
+                              child: Row(
+                                children: [
+                                  Image.asset(
+                                    "assets/images/Icon feather-settings@3x.png",
+                                    scale: 2,
+                                  ),
+                                  20.horizontalSpace,
+                                  Text(
+                                    "Settings",
+                                    style: medium18white,
                                   )
                                 ],
                               ),
@@ -399,7 +414,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 ),
               ),
             ))
-      ],
+      ]),
     );
   }
 }

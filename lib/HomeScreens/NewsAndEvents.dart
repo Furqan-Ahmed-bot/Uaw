@@ -1,5 +1,7 @@
+import 'package:_uaw/Global.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:_uaw/HomeScreens/NewsAndEventDetails.dart';
+import 'package:_uaw/HomeScreens/SelectedDateEventDetails.dart';
 import 'package:_uaw/HomeScreens/SelectedDateEvents.dart';
 import 'package:_uaw/HomeScreens/home.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +20,9 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart' as intl;
 
+import '../Controller.dart';
 import 'Drawer.dart';
+import 'NavBar.dart';
 
 class NewsAndEventsScreen extends StatefulWidget {
   final String value;
@@ -29,6 +33,7 @@ class NewsAndEventsScreen extends StatefulWidget {
 }
 
 class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
+  final bottomcontroller = Get.put(BottomController());
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOn; // Can be toggled on/off by longpressing a date
@@ -40,6 +45,8 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
   String _dateCount = '';
   String _range = '';
   String _rangeCount = '';
+
+  var selectedvalue;
   final kToday = DateTime.now();
   final kFirstDay = DateTime(DateTime.now().year, DateTime.now().month - 3, DateTime.now().day);
   final kLastDay = DateTime(DateTime.now().year, DateTime.now().month + 3, DateTime.now().day);
@@ -76,6 +83,21 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
   String headerString = '';
 
   String now = DateFormat("yyyy-MM-dd").format(DateTime.now());
+//
+
+  final DateRangePickerController _dateController = DateRangePickerController();
+  String _date = "null";
+  void selectionChanged(DateRangePickerSelectionChangedArgs args) {
+    SchedulerBinding.instance.addPostFrameCallback((duration) {
+      setState(() {
+        _date = DateFormat('dd MMMM yyyy').format(args.value).toString();
+      });
+
+      Get.back();
+    });
+  }
+
+//
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -91,7 +113,7 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
           leadingWidth: 70,
           leading: GestureDetector(
             onTap: () {
-              _key.currentState!.openDrawer();
+              Get.to(() => DrawerScreen());
             },
             child: Center(
               child: Container(
@@ -101,20 +123,30 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                   shape: BoxShape.circle,
                   color: whitecolor,
                 ),
-                child: Image.asset(
-                  "assets/images/Group 1288@3x.png",
-                  scale: 2.5,
-                ),
+                child: _date == "null"
+                    ? Image.asset(
+                        "assets/images/Group 1288@3x.png",
+                        scale: 2.5,
+                      )
+                    : Image.asset(
+                        "assets/images/Group 1430@3x.png",
+                        scale: 2.5,
+                      ),
               ),
             ),
           ),
           title: Hero(
             transitionOnUserGestures: true,
             tag: "newtag",
-            child: Text(
-              "NEWS & EVENTS",
-              style: textroboto18,
-            ),
+            child: _date == "null"
+                ? Text(
+                    "NEWS & EVENTS",
+                    style: textroboto18,
+                  )
+                : Text(
+                    _date.toString(),
+                    style: textroboto18,
+                  ),
           ),
           centerTitle: true,
           actions: [
@@ -136,7 +168,7 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                             actions: [
                               Container(
                                 width: 0.8.sw,
-                                height: 0.5.sh,
+                                height: 0.56.sh,
                                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.r), color: Color(0xffFFFFFF)),
                                 child: Column(
                                   children: [
@@ -180,7 +212,7 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                               onPressed: () {
                                                 setState(
                                                   () {
-                                                    _controller.backward!();
+                                                    _dateController.backward!();
                                                   },
                                                 );
                                               },
@@ -203,7 +235,7 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                             iconSize: 20,
                                             onPressed: () {
                                               setState(() {
-                                                _controller.forward!();
+                                                _dateController.forward!();
                                               });
                                             },
                                           )),
@@ -215,16 +247,40 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                       children: [
                                         20.verticalSpace,
                                         SfDateRangePicker(
+                                          controller: _dateController,
                                           allowViewNavigation: true,
-                                          onSelectionChanged: (dateRangePickerSelectionChangedArgs) {
-                                            Get.to(() => SelectedDateEventsScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
-                                          },
+
+                                          onSelectionChanged: selectionChanged,
+                                          initialSelectedDate: DateTime.now(),
+
+                                          //  (DateRangePickerSelectionChangedArgs args) {
+
+                                          //   // setState(
+                                          //   //   () {
+                                          //   //     selection = true;
+                                          //   //     selectedvalue = args;
+                                          //   //     // DateTime now = selectedvalue;
+                                          //   //     // String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(now);
+
+                                          //   //     print('Current Date ${selectedvalue}');
+                                          //   //   },
+                                          //   // );
+
+                                          //   // setState() {
+                                          //   //   selection = true;
+                                          //   // }
+
+                                          //   // bottomcontroller.navBarChange(1);
+
+                                          //   Get.to(() => SelectedDateEventDetailsScreen(),
+                                          //       duration: Duration(seconds: 1), transition: Transition.fadeIn);
+                                          // },
+
                                           selectionColor: Color(0xffEDEDED),
                                           selectionTextStyle: TextStyle(
                                             color: Colors.black,
                                           ),
                                           backgroundColor: Colors.white,
-                                          controller: _controller,
                                           view: DateRangePickerView.month,
                                           headerHeight: 0,
                                           onViewChanged: viewChanged,

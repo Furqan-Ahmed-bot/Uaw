@@ -270,7 +270,7 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                                   actions: [
                                     Container(
                                       width: 370.w,
-                                      height: 202.h,
+                                      height: 210.h,
                                       decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.r), color: Color(0xffFFFFFF)),
                                       child: Column(
                                         children: [
@@ -305,11 +305,14 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                                               )
                                             ],
                                           ),
-                                          0.verticalSpace,
-                                          Text(
-                                            "Are you sure you want to reject?",
-                                            textAlign: TextAlign.center,
-                                            style: txtstyleblue25,
+                                          5.verticalSpace,
+                                          Container(
+                                            width: 0.7.sw,
+                                            child: Text(
+                                              "Are you sure you want to reject?",
+                                              textAlign: TextAlign.center,
+                                              style: txtstyleblue25,
+                                            ),
                                           ),
                                           20.verticalSpace,
                                           Row(

@@ -18,7 +18,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+import '../Auth/Prelogin.dart';
 import '../Controller.dart';
+import 'DrawerVideoPlayer.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({
@@ -30,6 +32,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool isDrawerOpen = false;
+
+  void toggleDrawer() {
+    setState(() {
+      isDrawerOpen = !isDrawerOpen;
+    });
+  }
+
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   final bottomcontroller = Get.put(BottomController());
   String now = DateFormat("yyyy-MM-dd").format(DateTime.now());
@@ -64,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
           leadingWidth: 70,
           leading: GestureDetector(
             onTap: () {
-              _key.currentState!.openDrawer();
+              Get.to(() => DrawerScreen());
             },
             child: Center(
               child: Container(
@@ -112,33 +122,37 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 20.verticalSpace,
                 Container(
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: white,
-                      suffixIconConstraints: BoxConstraints(minWidth: 50),
-                      suffixIcon: Image.asset(
-                        "assets/images/Group 1290@3x.png",
-                        scale: 3.5,
-                      ),
-                      hintText: "Search here …..",
-                      hintStyle: medium15greywithOpacity,
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.r),
-                        borderSide: BorderSide(
-                          color: transparentcolor,
-                          width: 1.w,
+                  child: Container(
+                    height: 50.h,
+                    width: 1.sw,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: white,
+                        suffixIconConstraints: BoxConstraints(minWidth: 50),
+                        suffixIcon: Image.asset(
+                          "assets/images/Group 1290@3x.png",
+                          scale: 3.5,
+                        ),
+                        hintText: "Search here …..",
+                        hintStyle: medium15greywithOpacity,
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.r),
+                          borderSide: BorderSide(
+                            color: transparentcolor,
+                            width: 1.w,
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.r),
+                          borderSide: BorderSide(
+                            color: transparentcolor,
+                            width: 1.w,
+                          ),
                         ),
                       ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.r),
-                        borderSide: BorderSide(
-                          color: transparentcolor,
-                          width: 1.w,
-                        ),
-                      ),
+                      style: medium18blackwopacity,
                     ),
-                    style: medium18blackwopacity,
                   ),
                 ),
                 20.verticalSpace,
