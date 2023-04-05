@@ -47,9 +47,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(25.r),
-                    bottomRight: Radius.circular(25.r),
-                  ),
+                      // bottomLeft: Radius.circular(25.r),
+                      // bottomRight: Radius.circular(25.r),
+                      ),
                   gradient: SweepGradient(
                     colors: [
                       whitecolor,
@@ -149,6 +149,8 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
             ),
           ),
         ),
+       
+       
         body: SingleChildScrollView(
           child: Column(
             children: [
