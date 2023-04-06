@@ -210,7 +210,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
                             30.verticalSpace,
                             GestureDetector(
                               onTap: () {
-                                Get.to(() => DrawerVideoPlayerSvreen());
+                                Get.to(() => VideoScreen(
+                                      value: "null",
+                                    ));
                               },
                               child: Row(
                                 children: [

@@ -1,12 +1,15 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:_uaw/Helpers.dart';
+import 'package:_uaw/HomeScreens/NavBar.dart';
 import 'package:_uaw/HomeScreens/NewsAndEvents.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:dotted_line/dotted_line.dart';
+
+import '../Controller.dart';
 
 class NewsAndEventsDetailsScreen extends StatefulWidget {
   const NewsAndEventsDetailsScreen({
@@ -18,6 +21,7 @@ class NewsAndEventsDetailsScreen extends StatefulWidget {
 }
 
 class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen> with SingleTickerProviderStateMixin {
+  final bottomcontroller = Get.put(BottomController());
   bool _isTextOnLeft = true;
   final double _textSize = 24.0;
   final String _text1 = 'Flutter';
@@ -344,12 +348,8 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                                               ),
                                               GestureDetector(
                                                 onTap: () {
-                                                  Get.to(
-                                                      () => NewsAndEventsScreen(
-                                                            value: '',
-                                                          ),
-                                                      duration: Duration(seconds: 1),
-                                                      transition: Transition.fadeIn);
+                                                  bottomcontroller.navBarChange(1);
+                                                  Get.to(() => NavBarScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
                                                 },
                                                 child: Container(
                                                   width: 162.w,

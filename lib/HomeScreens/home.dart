@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
           leadingWidth: 70,
           leading: GestureDetector(
             onTap: () {
-              Get.to(() => DrawerScreen());
+              Get.to(() => DrawerScreen(), transition: Transition.leftToRight, duration: Duration(milliseconds: 300));
             },
             child: Center(
               child: Container(

@@ -1,4 +1,5 @@
 import 'package:_uaw/Helpers.dart';
+import 'package:_uaw/HomeScreens/Drawer.dart';
 import 'package:_uaw/HomeScreens/DrawerVideoPlayer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,12 +40,12 @@ class _VideoScreenState extends State<VideoScreen> {
           leading: Center(
             child: GestureDetector(
               onTap: () {
-                bottomcontroller.navBarChange(0);
-                Get.to(
-                  () => NavBarScreen(),
-                  duration: Duration(seconds: 1),
-                  transition: Transition.fadeIn,
-                );
+                Get.back();
+                if (bottomcontroller.navigationBarIndexValue != 0) {
+                  bottomcontroller.navBarChange(0);
+                } else {
+                  Get.to(() => DrawerScreen());
+                }
               },
               child: Image.asset(
                 "assets/images/Group 1430@3x.png",
