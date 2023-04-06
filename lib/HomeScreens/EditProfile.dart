@@ -128,7 +128,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
           ),
           title: Text(
-            'Edit PROFILE',
+            'EDIT PROFILE',
             style: txtstylewhite18,
           ),
           centerTitle: true,
