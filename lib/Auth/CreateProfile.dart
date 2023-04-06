@@ -149,8 +149,6 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
             ),
           ),
         ),
-       
-       
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -247,12 +245,16 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                     ),
                     15.verticalSpace,
                     DropdownButtonFormField(
+                      alignment: Alignment.center,
+                      isDense: true,
                       icon: Image.asset(
                         "assets/images/Icon ionic-ios-arrow-down@3x.png",
                         scale: 2.5,
                         alignment: Alignment.topLeft,
                       ),
                       decoration: InputDecoration(
+                        hintText: "Designation",
+                        hintStyle: medium18blackwopacity,
                         prefixIconConstraints: BoxConstraints(minWidth: 25),
                         prefixIcon: Image.asset(
                           "assets/images/Group 1313@3x.png",
@@ -287,7 +289,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         return DropdownMenuItem(
                           child: new Text(
                             location,
-                            style: medium18blackwopacity,
+                            style: medium16blackwopacity,
                           ),
                           value: location,
                         );

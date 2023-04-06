@@ -128,7 +128,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
           ),
           title: Text(
-            'CREATE PROFILE',
+            'Edit PROFILE',
             style: txtstylewhite18,
           ),
           centerTitle: true,
@@ -436,12 +436,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                     15.verticalSpace,
                     DropdownButtonFormField(
+                      alignment: Alignment.center,
+                      isDense: true,
                       icon: Image.asset(
                         "assets/images/Icon ionic-ios-arrow-down@3x.png",
                         scale: 2.5,
                         alignment: Alignment.topLeft,
                       ),
                       decoration: InputDecoration(
+                        hintText: "Designation",
+                        hintStyle: medium18blackwopacity,
                         prefixIconConstraints: BoxConstraints(minWidth: 25),
                         prefixIcon: Image.asset(
                           "assets/images/Group 1313@3x.png",
@@ -476,7 +480,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         return DropdownMenuItem(
                           child: new Text(
                             location,
-                            style: medium18blackwopacity,
+                            style: medium16blackwopacity,
                           ),
                           value: location,
                         );
