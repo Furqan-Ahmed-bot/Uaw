@@ -52,6 +52,9 @@ dependencies:
   video_player: ^2.6.0
   flutter_slidable: ^2.0.0
   image_picker: ^0.8.7+1
+  geocoding: ^2.1.0
+  geolocator: ^7.1.0
+  location: ^4.4.0
 
 dev_dependencies:
   flutter_test:

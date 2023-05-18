@@ -136,6 +136,8 @@ class _DrawerVideoPlayerSvreenState extends State<DrawerVideoPlayerSvreen> {
                         )
                       : Container(),
                 ))
+            
+            
               ],
             ),
             50.verticalSpace,

@@ -10,18 +10,42 @@ import 'package:get/get.dart';
 import '../Controller.dart';
 
 class CreateAccountScreen extends StatefulWidget {
-  const CreateAccountScreen({super.key});
+  final name;
+  final lat;
+  final long;
+  final phone;
+  final email;
+  final designationID;
+
+  CreateAccountScreen({super.key, this.name, this.lat, this.long, this.phone, this.email, this.designationID});
 
   @override
   State<CreateAccountScreen> createState() => _CreateAccountScreenState();
 }
 
 class _CreateAccountScreenState extends State<CreateAccountScreen> {
+  bool _validatepassword = false;
+  bool _validateconfirmpassword = false;
+
+  TextEditingController password = TextEditingController();
+  TextEditingController confirmPassword = TextEditingController();
   final bottomcontroller = Get.put(BottomController());
+
+  void initState() {
+    super.initState();
+    print(widget.name);
+  }
+
   bool _obscureText = true;
   bool _obscureText2 = true;
   @override
+  void dispose() {
+    password.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
+    print(widget.name);
     return Container(
       decoration: BoxDecoration(
         gradient: SweepGradient(
@@ -118,7 +142,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                             ),
                             alignment: Alignment.centerLeft,
                           ),
-                          labelText: "Jonathonm@exm.com",
+                          labelText: widget.email,
                           labelStyle: textroboto15,
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
@@ -135,9 +159,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       ),
                       30.verticalSpace,
                       TextFormField(
+                        controller: password,
                         obscureText: _obscureText,
                         decoration: InputDecoration(
                           prefixIconConstraints: BoxConstraints(minWidth: 50),
+                          errorText: _validatepassword ? "value can't be null" : null,
                           prefixIcon: Container(
                             width: 50.w,
                             child: Image.asset(
@@ -175,9 +201,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       ),
                       30.verticalSpace,
                       TextFormField(
+                        controller: confirmPassword,
                         obscureText: _obscureText2,
                         decoration: InputDecoration(
                           prefixIconConstraints: BoxConstraints(minWidth: 50),
+                          errorText: _validateconfirmpassword ? "value can't be empty" : null,
                           prefixIcon: Container(
                             width: 50.w,
                             child: Image.asset(
@@ -216,8 +244,20 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       30.verticalSpace,
                       GestureDetector(
                         onTap: () {
-                          bottomcontroller.navBarChange(0);
-                          Get.to(() => NavBarScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+                          var completeProfile = [
+                            widget.name,
+                          ];
+                          setState(() {
+                            password.text.isEmpty ? _validatepassword = true : _validatepassword = false;
+                          });
+                          if (password.text.isEmpty) {
+                            Get.snackbar("Error", "Password field cant be null");
+                          } else if (password != confirmPassword) {
+                            Get.snackbar("Error", "Password and Confirm Password doesnot match");
+                          } else {
+                            bottomcontroller.navBarChange(0);
+                            Get.to(() => NavBarScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+                          }
                         },
                         child: Container(
                           width: 1.sw,
@@ -234,7 +274,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           ),
                         ),
                       ),
-                      200.verticalSpace,
+                      100.verticalSpace,
                     ],
                   ),
                 ),

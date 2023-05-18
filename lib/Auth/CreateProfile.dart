@@ -1,12 +1,20 @@
+import 'dart:convert';
+
+import 'package:_uaw/Global.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:geolocator/geolocator.dart';
 
+import 'APIService/API.dart';
 import 'CreateAccount.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
 import 'dart:io';
+import 'package:geocoding/geocoding.dart';
+import 'package:location/location.dart';
+import 'package:http/http.dart' as http;
 
 class CreateProfileScreen extends StatefulWidget {
   const CreateProfileScreen({super.key});
@@ -16,14 +24,108 @@ class CreateProfileScreen extends StatefulWidget {
 }
 
 class _CreateProfileScreenState extends State<CreateProfileScreen> {
-  File? _image;
+  List designationList = [];
+  var selectedDesignationID;
+
+  dynamic temp;
+  Future getDesignation() async {
+    final uri = Uri.parse("${apiGlobal}/designation");
+
+    http.Response response = await http.get(uri);
+
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+
+      temp = jsonData['data'];
+
+      for (var i = 0; i < temp.length; i++) {
+        designationList.add(temp[i]['title']);
+      }
+      print('designationList ${designationList}');
+
+      print(temp);
+    }
+  }
+
+  bool location = false;
+  TextEditingController controllerLatLong = TextEditingController();
+  TextEditingController controllerFullName = TextEditingController();
+  TextEditingController controllerPhoneNum = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentPosition();
+    getDesignation();
+  }
+
+  var dropdownvalue;
+
+  String? _currentAddress;
+  Position? _currentPosition;
+
+  Future<bool> _handleLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Location services are disabled. Please enable the services')));
+      return false;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Location permissions are denied')));
+        return false;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Location permissions are permanently denied, we cannot request permissions.')));
+      return false;
+    }
+    return true;
+  }
+
+  Future<void> _getCurrentPosition() async {
+    final hasPermission = await _handleLocationPermission();
+
+    if (!hasPermission) return;
+    await Geolocator.getCurrentPosition().then((Position position) {
+      setState(() {
+        _currentPosition = position;
+
+        var lat = _currentPosition!.latitude;
+        var lng = _currentPosition!.longitude;
+      });
+
+      _getAddressFromLatLng(_currentPosition!);
+    }).catchError((e) {
+      debugPrint(e);
+    });
+  }
+
+  Future<void> _getAddressFromLatLng(Position position) async {
+    await placemarkFromCoordinates(_currentPosition!.latitude, _currentPosition!.longitude).then((List<Placemark> placemarks) {
+      Placemark place = placemarks[0];
+      setState(() {
+        _currentAddress = '${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
+      });
+    }).catchError((e) {
+      debugPrint(e);
+    });
+  }
+
+  File? imageFile;
   final picker = ImagePicker();
 
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     setState(() {
       if (pickedFile != null) {
-        _image = File(pickedFile.path);
+        imageFile = File(pickedFile.path);
       } else {
         print('No image selected.');
       }
@@ -75,9 +177,14 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         width: 5.w,
                         color: Color(0xff00000026),
                       ),
-                      image: DecorationImage(
-                        image: AssetImage("assets/images/Group 1433@3x.png"),
-                      ),
+                      image: imageFile == null
+                          ? DecorationImage(
+                              image: AssetImage("assets/images/Group 1433@3x.png"),
+                            )
+                          : DecorationImage(
+                              image: FileImage(imageFile!),
+                              fit: BoxFit.fill,
+                            ),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -158,6 +265,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                 child: Column(
                   children: [
                     TextFormField(
+                      controller: controllerFullName,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: white,
@@ -187,6 +295,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                     ),
                     15.verticalSpace,
                     TextFormField(
+                      controller: controllerPhoneNum,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: white,
@@ -216,7 +325,12 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                     ),
                     15.verticalSpace,
                     TextFormField(
+                      controller: controllerLatLong,
                       decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          icon: Icon(Icons.search),
+                          onPressed: _getCurrentPosition,
+                        ),
                         filled: true,
                         fillColor: white,
                         prefixIconConstraints: BoxConstraints(minWidth: 50),
@@ -224,7 +338,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                           "assets/images/Group 1313@3x.png",
                           scale: 3.5,
                         ),
-                        hintText: "Location",
+                        hintText: "${_currentAddress ?? ""}",
                         hintStyle: medium18blackwopacity,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
@@ -279,26 +393,105 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         fillColor: white,
                       ),
                       dropdownColor: white,
-                      value: _propertytype,
-                      onChanged: (newValue) {
-                        setState(() {
-                          _propertytype = newValue!;
-                        });
-                      },
-                      items: _locations.map((location) {
+                      items: designationList.map((item) {
                         return DropdownMenuItem(
                           child: new Text(
-                            location,
+                            item.toString(),
                             style: medium16blackwopacity,
                           ),
-                          value: location,
+                          value: item.toString(),
                         );
                       }).toList(),
+                      onChanged: (newValue) {
+                        setState(() {
+                          dropdownvalue = newValue;
+                          temp.forEach((element) {
+                            if (newValue == element["title"]) {
+                              selectedDesignationID = element["_id"];
+                            }
+                          });
+                        });
+                      },
                     ),
+
+                    // DropdownButtonFormField(
+                    //   alignment: Alignment.center,
+                    //   isDense: true,
+                    //   icon: Image.asset(
+                    //     "assets/images/Icon ionic-ios-arrow-down@3x.png",
+                    //     scale: 2.5,
+                    //     alignment: Alignment.topLeft,
+                    //   ),
+                    //   decoration: InputDecoration(
+                    //     hintText: "Designation",
+                    //     hintStyle: medium18blackwopacity,
+                    //     prefixIconConstraints: BoxConstraints(minWidth: 25),
+                    //     prefixIcon: Image.asset(
+                    //       "assets/images/Group 1313@3x.png",
+                    //       color: transparentcolor,
+                    //       scale: 3.5,
+                    //     ),
+                    //     focusedBorder: OutlineInputBorder(
+                    //       borderRadius: BorderRadius.circular(10.r),
+                    //       borderSide: BorderSide(
+                    //         color: transparentcolor,
+                    //         width: 1.w,
+                    //       ),
+                    //     ),
+                    //     enabledBorder: OutlineInputBorder(
+                    //       borderRadius: BorderRadius.circular(10.r),
+                    //       borderSide: BorderSide(
+                    //         color: transparentcolor,
+                    //         width: 1.w,
+                    //       ),
+                    //     ),
+                    //     filled: true,
+                    //     fillColor: white,
+                    //   ),
+                    //   dropdownColor: white,
+                    //   value: dropdownvalue,
+                    //   onChanged: (newValue) {
+                    //     setState(() {
+                    //       dropdownvalue = newValue;
+                    //     });
+                    //   },
+                    //   items: designationList.map((item) {
+                    //     return DropdownMenuItem(
+                    //       child: new Text(
+                    //         item.toString(),
+                    //         style: medium16blackwopacity,
+                    //       ),
+                    //       value: item.toString(),
+                    //     );
+                    //   }).toList(),
+                    // ),
+
                     30.verticalSpace,
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => CreateAccountScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+                        var createProfiledata = {
+                          "name": controllerFullName.text,
+                          "lat": _currentPosition!.latitude,
+                          "long": _currentPosition!.longitude,
+                          "phone": controllerPhoneNum.text,
+                          "email": uniqieemail.toString(),
+                          "DesignationID": selectedDesignationID.toString(),
+                        };
+                        if (imageFile == null) {
+                          Get.snackbar("Error", "Please upload your image");
+                        }
+                        print(createProfiledata);
+                        Get.to(
+                            () => CreateAccountScreen(
+                                  name: controllerFullName.text,
+                                  lat: _currentPosition!.latitude,
+                                  long: _currentPosition!.longitude,
+                                  phone: controllerPhoneNum.text,
+                                  email: uniqieemail.toString(),
+                                  designationID: selectedDesignationID.toString(),
+                                ),
+                            duration: Duration(seconds: 1),
+                            transition: Transition.fadeIn);
                       },
                       child: Container(
                         width: 1.sw,

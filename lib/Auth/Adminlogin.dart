@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import 'APIService/API.dart';
 import 'TermsOfServices.dart';
 
 class AdminLogin extends StatefulWidget {
@@ -13,10 +14,10 @@ class AdminLogin extends StatefulWidget {
 }
 
 class _AdminLoginState extends State<AdminLogin> {
+  TextEditingController uniqueId = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return 
-    Scaffold(
+    return Scaffold(
       backgroundColor: transparentcolor,
       body: SingleChildScrollView(
         child: Container(
@@ -66,6 +67,7 @@ class _AdminLoginState extends State<AdminLogin> {
                         ),
                         40.verticalSpace,
                         TextFormField(
+                          controller: uniqueId,
                           decoration: InputDecoration(
                             prefixIconConstraints: BoxConstraints(minWidth: 40),
                             focusedBorder: UnderlineInputBorder(
@@ -92,11 +94,18 @@ class _AdminLoginState extends State<AdminLogin> {
                         30.verticalSpace,
                         GestureDetector(
                           onTap: () {
-                            Get.to(
-                              () => TermsOfServices(),
-                              duration: Duration(seconds: 1),
-                              transition: Transition.fadeIn,
-                            );
+
+                            var data = {
+                              "email": uniqueId.text,
+                            };
+                            print(data);
+                            if(uniqueId == null){
+                              Get.snackbar("Error", "Please enter UniqueID");
+                            }
+                            else{
+                             ApiService().uniqueID(context, data);  
+                            }
+                           
                           },
                           child: Hero(
                             transitionOnUserGestures: true,
@@ -130,7 +139,5 @@ class _AdminLoginState extends State<AdminLogin> {
         ),
       ),
     );
- 
- 
   }
 }
