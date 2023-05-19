@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../Controller.dart';
+import 'APIService/API.dart';
 
 class CreateAccountScreen extends StatefulWidget {
   final name;
@@ -16,8 +17,9 @@ class CreateAccountScreen extends StatefulWidget {
   final phone;
   final email;
   final designationID;
+  final imagepath;
 
-  CreateAccountScreen({super.key, this.name, this.lat, this.long, this.phone, this.email, this.designationID});
+  CreateAccountScreen({super.key, this.name, this.lat, this.long, this.phone, this.email, this.designationID, this.imagepath});
 
   @override
   State<CreateAccountScreen> createState() => _CreateAccountScreenState();
@@ -45,7 +47,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   }
 
   Widget build(BuildContext context) {
-    print(widget.name);
+    widget.imagepath;
     return Container(
       decoration: BoxDecoration(
         gradient: SweepGradient(
@@ -244,19 +246,27 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       30.verticalSpace,
                       GestureDetector(
                         onTap: () {
-                          var completeProfile = [
-                            widget.name,
-                          ];
+                          var completeProfile = {
+                            "phone": widget.phone,
+                            "long": widget.long.toString(),
+                            "lat": widget.lat.toString(),
+                            "password": password.text,
+                            "name": widget.name,
+                            "email": widget.email,
+                            "designation": widget.designationID.toString(),
+                            "deviceToken": "android",
+                            "deviceToken": "abc",
+                          };
+
                           setState(() {
                             password.text.isEmpty ? _validatepassword = true : _validatepassword = false;
                           });
                           if (password.text.isEmpty) {
                             Get.snackbar("Error", "Password field cant be null");
-                          } else if (password != confirmPassword) {
+                          } else if (password.text != confirmPassword.text) {
                             Get.snackbar("Error", "Password and Confirm Password doesnot match");
                           } else {
-                            bottomcontroller.navBarChange(0);
-                            Get.to(() => NavBarScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+                            ApiService().CreateProfile(context, completeProfile, widget.imagepath);
                           }
                         },
                         child: Container(

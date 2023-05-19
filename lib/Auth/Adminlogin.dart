@@ -94,18 +94,15 @@ class _AdminLoginState extends State<AdminLogin> {
                         30.verticalSpace,
                         GestureDetector(
                           onTap: () {
-
                             var data = {
                               "email": uniqueId.text,
                             };
                             print(data);
-                            if(uniqueId == null){
+                            if (uniqueId == null) {
                               Get.snackbar("Error", "Please enter UniqueID");
+                            } else {
+                              ApiService().uniqueID(context, data);
                             }
-                            else{
-                             ApiService().uniqueID(context, data);  
-                            }
-                           
                           },
                           child: Hero(
                             transitionOnUserGestures: true,

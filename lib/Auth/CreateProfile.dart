@@ -126,6 +126,8 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
     setState(() {
       if (pickedFile != null) {
         imageFile = File(pickedFile.path);
+
+        print("Picture" + imageFile.toString());
       } else {
         print('No image selected.');
       }
@@ -483,13 +485,13 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         print(createProfiledata);
                         Get.to(
                             () => CreateAccountScreen(
-                                  name: controllerFullName.text,
-                                  lat: _currentPosition!.latitude,
-                                  long: _currentPosition!.longitude,
-                                  phone: controllerPhoneNum.text,
-                                  email: uniqieemail.toString(),
-                                  designationID: selectedDesignationID.toString(),
-                                ),
+                                name: controllerFullName.text,
+                                lat: _currentPosition!.latitude,
+                                long: _currentPosition!.longitude,
+                                phone: controllerPhoneNum.text,
+                                email: uniqieemail.toString(),
+                                designationID: selectedDesignationID.toString(),
+                                imagepath: imageFile!.path),
                             duration: Duration(seconds: 1),
                             transition: Transition.fadeIn);
                       },

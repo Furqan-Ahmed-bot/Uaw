@@ -1,3 +1,4 @@
+import 'package:_uaw/Auth/APIService/API.dart';
 import 'package:_uaw/Auth/ForgotPassword.dart';
 import 'package:_uaw/Controller.dart';
 import 'package:_uaw/Helpers.dart';
@@ -16,6 +17,10 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _obscureText = true;
+  bool _validatepassword = false;
+
+  TextEditingController userEmail = TextEditingController();
+  TextEditingController userPassword = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final bottomcontroller = Get.put(BottomController());
@@ -98,6 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           40.verticalSpace,
                           TextFormField(
+                            controller: userEmail,
                             decoration: InputDecoration(
                               prefixIconConstraints: BoxConstraints(minWidth: 40),
                               focusedBorder: UnderlineInputBorder(
@@ -123,8 +129,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           30.verticalSpace,
                           TextFormField(
+                            controller: userPassword,
                             obscureText: _obscureText,
                             decoration: InputDecoration(
+                              errorText: _validatepassword ? "value can't be null" : null,
                               prefixIconConstraints: BoxConstraints(minWidth: 50),
                               prefixIcon: Container(
                                 width: 50.w,
@@ -164,12 +172,21 @@ class _LoginScreenState extends State<LoginScreen> {
                           30.verticalSpace,
                           GestureDetector(
                             onTap: () {
-                              bottomcontroller.navBarChange(0);
-                              Get.to(
-                                () => NavBarScreen(),
-                                duration: Duration(seconds: 1),
-                                transition: Transition.fadeIn,
-                              );
+                              var loginData = {
+                                "useremail": userEmail.text,
+                                "userPassword": userPassword.text,
+                                "deviceType": "android",
+                                "deviceToken": "abc",
+                              };
+
+                              setState(() {
+                                userPassword.text.isEmpty ? _validatepassword = true : _validatepassword = false;
+                              });
+                              if (userPassword.text.isEmpty) {
+                                Get.snackbar("Error", "Password field cant be null");
+                              } else {
+                                ApiService().loginAPI(context, loginData);
+                              }
                             },
                             child: Container(
                               width: 345.w,
