@@ -254,7 +254,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                             "name": widget.name,
                             "email": widget.email,
                             "designation": widget.designationID.toString(),
-                            "deviceToken": "android",
+                            "deviceType": "android",
                             "deviceToken": "abc",
                           };
 

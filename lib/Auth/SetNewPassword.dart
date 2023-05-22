@@ -1,4 +1,6 @@
+import 'package:_uaw/Auth/APIService/API.dart';
 import 'package:_uaw/Auth/Login.dart';
+import 'package:_uaw/Global.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,8 +14,12 @@ class SetNewPasswordScreen extends StatefulWidget {
 }
 
 class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
+  TextEditingController newPassword = TextEditingController();
+  TextEditingController confirmPassword = TextEditingController();
   bool _obscureText = true;
   bool _obscureText2 = true;
+  bool _validatepassword = false;
+  bool _validateconfirmpassword = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -107,8 +113,10 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
                           ),
                           50.verticalSpace,
                           TextFormField(
+                            controller: newPassword,
                             obscureText: _obscureText,
                             decoration: InputDecoration(
+                              errorText: _validatepassword ? "value can't be null" : null,
                               prefixIconConstraints: BoxConstraints(minWidth: 50),
                               prefixIcon: Container(
                                 width: 50.w,
@@ -147,8 +155,10 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
                           ),
                           30.verticalSpace,
                           TextFormField(
+                            controller: confirmPassword,
                             obscureText: _obscureText2,
                             decoration: InputDecoration(
+                              errorText: _validateconfirmpassword ? "value can't be empty" : null,
                               prefixIconConstraints: BoxConstraints(minWidth: 50),
                               prefixIcon: Container(
                                 width: 50.w,
@@ -188,7 +198,21 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
                           30.verticalSpace,
                           GestureDetector(
                             onTap: () {
-                              Get.to(() => LoginScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+                              var newPasswordData = {
+                                "password": newPassword.text,
+                               
+                              };
+                              setState(() {
+                                newPassword.text.isEmpty ? _validatepassword = true : _validatepassword = false;
+                              });
+                              if (newPassword.text.isEmpty) {
+                                Get.snackbar("Error", "Password field cant be null");
+                              } else if (newPassword.text != confirmPassword.text) {
+                                Get.snackbar("Error", "Password and Confirm Password doesnot match");
+                              } else {
+                                ApiService().ResetPassword(context, newPasswordData);
+                              }
+                              // Get.to(() => LoginScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
                             },
                             child: Container(
                               width: 1.sw,

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "131281061651",
+    "project_id": "uawdev",
+    "storage_bucket": "uawdev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:131281061651:android:48edcd7d3776f4a2877ce6",
+        "android_client_info": {
+          "package_name": "com.example.u_uaw"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "131281061651-3d5fg9jd5j7t9hphti31boe5fm20j5gh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClMrDwNDoWGobYuYxv8rY-gmqw5giSOJE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "131281061651-3d5fg9jd5j7t9hphti31boe5fm20j5gh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

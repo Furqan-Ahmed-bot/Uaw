@@ -1,3 +1,4 @@
+import 'package:_uaw/Auth/APIService/API.dart';
 import 'package:_uaw/Auth/SetNewPassword.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,9 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+  TextEditingController forgotPassword = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -97,38 +101,53 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             style: textroboto16,
                           ),
                           40.verticalSpace,
-                          TextFormField(
-                            decoration: InputDecoration(
-                              prefixIconConstraints: BoxConstraints(minWidth: 40),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: bluishshadewith40),
+                          Form(
+                            key: _formKey,
+                            child: TextFormField(
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your email address';
+                                }
+                                return null;
+                              },
+                              controller: forgotPassword,
+                              decoration: InputDecoration(
+                                prefixIconConstraints: BoxConstraints(minWidth: 40),
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: bluishshadewith40),
+                                ),
+                                disabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: bluishshadewith40),
+                                ),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: bluishshadewith40),
+                                ),
+                                border: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: bluishshadewith40),
+                                ),
+                                prefixIcon: Image.asset(
+                                  "assets/images/Icon ionic-ios-email@3x.png",
+                                  scale: 3.5,
+                                  alignment: Alignment.centerLeft,
+                                ),
+                                labelText: "Jonathonm@exm.com",
+                                labelStyle: textroboto15,
                               ),
-                              disabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: bluishshadewith40),
-                              ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: bluishshadewith40),
-                              ),
-                              border: UnderlineInputBorder(
-                                borderSide: BorderSide(color: bluishshadewith40),
-                              ),
-                              prefixIcon: Image.asset(
-                                "assets/images/Icon ionic-ios-email@3x.png",
-                                scale: 3.5,
-                                alignment: Alignment.centerLeft,
-                              ),
-                              labelText: "Jonathonm@exm.com",
-                              labelStyle: textroboto15,
                             ),
                           ),
                           30.verticalSpace,
                           GestureDetector(
                             onTap: () {
-                              Get.to(
-                                () => SetNewPasswordScreen(),
-                                duration: Duration(seconds: 1),
-                                transition: Transition.fadeIn,
-                              );
+                              var forgotpassdata = {
+                                "email": forgotPassword.text,
+                              };
+                              if (_formKey.currentState!.validate()) {
+                                ApiService().forgotPassword(context, forgotpassdata);
+
+                             
+                              } else {
+                                Get.snackbar("Error", "PLease enter your email address");
+                              }
                             },
                             child: Container(
                               width: 345.w,
@@ -156,5 +175,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         ),
       ),
     );
+ 
+ 
   }
 }
