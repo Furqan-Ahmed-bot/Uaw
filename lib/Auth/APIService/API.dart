@@ -17,6 +17,7 @@ import '../SetNewPassword.dart';
 import '../TermsOfServices.dart';
 import 'dart:io';
 import 'package:http_parser/src/media_type.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 String apiGlobal = "https://uaw-api.thesuitchstaging.com:3090/api/v1";
 final bottomcontroller = Get.put(BottomController());
@@ -24,6 +25,15 @@ final usercontroller = Get.put(UserController());
 
 class ApiService {
   uniqueID(context, data) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return SpinKitRotatingCircle(
+            color: Colors.white,
+            size: 50.0,
+          );
+        });
     final uri = Uri.parse("${apiGlobal}/verifyuniqueid");
 
     final body = {
@@ -37,12 +47,15 @@ class ApiService {
 
     if (res_data['status'] == true) {
       uniqieemail = data['email'];
+      Get.back();
+
       Get.to(
         () => TermsOfServices(),
         duration: Duration(seconds: 1),
         transition: Transition.fadeIn,
       );
     } else {
+      Get.back();
       Get.snackbar("Error", res_data['message']);
     }
     ;
@@ -51,6 +64,15 @@ class ApiService {
   }
 
   loginAPI(context, loginData) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return SpinKitRotatingCircle(
+            color: Colors.white,
+            size: 50.0,
+          );
+        });
     final uri = Uri.parse("${apiGlobal}/login");
     final headers = {'Content-Type': 'application/json'};
 
@@ -67,15 +89,26 @@ class ApiService {
     var res_data = json.decode(response.body.toString());
 
     if (res_data["status"] == true) {
+      Get.back();
       Get.snackbar("Message", res_data["message"]);
       bottomcontroller.navBarChange(0);
       Get.to(() => NavBarScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
     } else {
+      Get.back();
       Get.snackbar("Error", res_data["message"]);
     }
   }
 
   forgotPassword(context, forgotpassdata) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return SpinKitRotatingCircle(
+            color: Colors.white,
+            size: 50.0,
+          );
+        });
     final uri = Uri.parse("${apiGlobal}/forgetpassword");
     final headers = {'Content-Type': 'application/json'};
 
@@ -87,6 +120,7 @@ class ApiService {
     var res_data = json.decode(response.body.toString());
     if (res_data["status"] == true) {
       AuthToken = res_data["data"]["token"].toString();
+      Get.back();
       Get.snackbar("Message", res_data["message"]);
       Get.to(
         () => OTPVerificationScreen(),
@@ -94,11 +128,21 @@ class ApiService {
         transition: Transition.fadeIn,
       );
     } else {
+      Get.back();
       Get.snackbar("Error", res_data["message"]);
     }
   }
 
   OTPVerification(context, OTPdata) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return SpinKitRotatingCircle(
+            color: Colors.white,
+            size: 50.0,
+          );
+        });
     final uri = Uri.parse("${apiGlobal}/user/Verify");
     Map<String, String> headers = {
       'Content-Type': 'application/json',
@@ -119,6 +163,7 @@ class ApiService {
     var res_data = json.decode(response.body.toString());
     if (res_data["status"] == true) {
       ResetToken = res_data["data"]["token"].toString();
+      Get.back();
       Get.snackbar("Message", res_data["message"]);
       Get.to(
         () => SetNewPasswordScreen(),
@@ -126,11 +171,21 @@ class ApiService {
         transition: Transition.fadeIn,
       );
     } else {
+      Get.back();
       Get.snackbar("Error", res_data["message"]);
     }
   }
 
   ResetPassword(context, newPasswordData) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return SpinKitRotatingCircle(
+            color: Colors.white,
+            size: 50.0,
+          );
+        });
     final uri = Uri.parse("${apiGlobal}/user/resetpassword");
 
     Map<String, String> headers = {
@@ -152,6 +207,7 @@ class ApiService {
     );
     var res_data = json.decode(response.body.toString());
     if (res_data["status"] == true) {
+      Get.back();
       Get.snackbar("Message", res_data["message"]);
       Get.to(
         () => LoginScreen(),
@@ -159,11 +215,21 @@ class ApiService {
         transition: Transition.fadeIn,
       );
     } else {
+      Get.back();
       Get.snackbar("Error", res_data["message"]);
     }
   }
 
   CreateProfile(context, completeProfile, profileimage) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return SpinKitRotatingCircle(
+            color: Colors.white,
+            size: 50.0,
+          );
+        });
     final uri = Uri.parse("${apiGlobal}/profile");
 
     final headers = {'Content-Type': 'application/json'};
@@ -193,10 +259,13 @@ class ApiService {
 
     if (_profileData["status"] == true) {
       usercontroller.User(userModel.fromJson(_profileData));
+
+      Get.back();
       Get.snackbar("Message", _profileData['message']);
       bottomcontroller.navBarChange(0);
       Get.to(() => NavBarScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
     } else {
+      Get.back();
       Get.snackbar("Error", _profileData['message']);
     }
   }

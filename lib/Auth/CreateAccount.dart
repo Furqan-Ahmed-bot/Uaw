@@ -133,6 +133,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       ),
                       50.verticalSpace,
                       TextFormField(
+                        enabled: false,
                         decoration: InputDecoration(
                           prefixIconConstraints: BoxConstraints(minWidth: 50),
                           prefixIcon: Container(

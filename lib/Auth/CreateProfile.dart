@@ -15,6 +15,7 @@ import 'dart:io';
 import 'package:geocoding/geocoding.dart';
 import 'package:location/location.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class CreateProfileScreen extends StatefulWidget {
   const CreateProfileScreen({super.key});
@@ -24,6 +25,8 @@ class CreateProfileScreen extends StatefulWidget {
 }
 
 class _CreateProfileScreenState extends State<CreateProfileScreen> {
+  TextEditingController dropdown = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   List designationList = [];
   var selectedDesignationID;
 
@@ -259,261 +262,292 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
           ),
         ),
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              100.verticalSpace,
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.r),
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: controllerFullName,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: white,
-                        prefixIconConstraints: BoxConstraints(minWidth: 50),
-                        prefixIcon: Image.asset(
-                          "assets/images/Icon feather-user@3x3.png",
-                          scale: 3.5,
-                        ),
-                        hintText: "Full Name",
-                        hintStyle: medium18blackwopacity,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.r),
-                          borderSide: BorderSide(
-                            color: transparentcolor,
-                            width: 1.w,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                100.verticalSpace,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.r),
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        validator: (value) {
+                          if (value == '') {
+                            return 'please enter your Full Name';
+                          } else {
+                            return null;
+                          }
+                        },
+                        controller: controllerFullName,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: white,
+                          prefixIconConstraints: BoxConstraints(minWidth: 50),
+                          prefixIcon: Image.asset(
+                            "assets/images/Icon feather-user@3x3.png",
+                            scale: 3.5,
+                          ),
+                          hintText: "Full Name",
+                          hintStyle: medium18blackwopacity,
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r),
+                            borderSide: BorderSide(
+                              color: transparentcolor,
+                              width: 1.w,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r),
+                            borderSide: BorderSide(
+                              color: transparentcolor,
+                              width: 1.w,
+                            ),
                           ),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.r),
-                          borderSide: BorderSide(
-                            color: transparentcolor,
-                            width: 1.w,
-                          ),
-                        ),
+                        style: medium18blackwopacity,
                       ),
-                      style: medium18blackwopacity,
-                    ),
-                    15.verticalSpace,
-                    TextFormField(
-                      controller: controllerPhoneNum,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: white,
-                        prefixIconConstraints: BoxConstraints(minWidth: 50),
-                        prefixIcon: Image.asset(
-                          "assets/images/Icon feather-phone-call@3x.png",
-                          scale: 3.5,
-                        ),
-                        hintText: "Phone Number",
-                        hintStyle: medium18blackwopacity,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.r),
-                          borderSide: BorderSide(
-                            color: transparentcolor,
-                            width: 1.w,
+                      15.verticalSpace,
+                      TextFormField(
+                        validator: (value) {
+                          if (value == '') {
+                            return 'please enter your Contact Number';
+                          } else {
+                            return null;
+                          }
+                        },
+                        controller: controllerPhoneNum,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: white,
+                          prefixIconConstraints: BoxConstraints(minWidth: 50),
+                          prefixIcon: Image.asset(
+                            "assets/images/Icon feather-phone-call@3x.png",
+                            scale: 3.5,
+                          ),
+                          hintText: "Phone Number",
+                          hintStyle: medium18blackwopacity,
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r),
+                            borderSide: BorderSide(
+                              color: transparentcolor,
+                              width: 1.w,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r),
+                            borderSide: BorderSide(
+                              color: transparentcolor,
+                              width: 1.w,
+                            ),
                           ),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.r),
-                          borderSide: BorderSide(
-                            color: transparentcolor,
-                            width: 1.w,
-                          ),
-                        ),
+                        style: medium18blackwopacity,
                       ),
-                      style: medium18blackwopacity,
-                    ),
-                    15.verticalSpace,
-                    TextFormField(
-                      controller: controllerLatLong,
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          icon: Icon(Icons.search),
-                          onPressed: _getCurrentPosition,
-                        ),
-                        filled: true,
-                        fillColor: white,
-                        prefixIconConstraints: BoxConstraints(minWidth: 50),
-                        prefixIcon: Image.asset(
-                          "assets/images/Group 1313@3x.png",
-                          scale: 3.5,
-                        ),
-                        hintText: "${_currentAddress ?? ""}",
-                        hintStyle: medium18blackwopacity,
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.r),
-                          borderSide: BorderSide(
-                            color: transparentcolor,
-                            width: 1.w,
+                      15.verticalSpace,
+                      TextFormField(
+                        enabled: false,
+                        controller: controllerLatLong,
+                        decoration: InputDecoration(
+                          hintMaxLines: 2,
+                          // suffixIconConstraints: BoxConstraints(maxWidth: 35),
+                          suffixIcon: IconButton(
+                            icon: Icon(Icons.search),
+                            onPressed: _getCurrentPosition,
+                          ),
+                          filled: true,
+                          fillColor: white,
+                          prefixIconConstraints: BoxConstraints(minWidth: 50),
+                          prefixIcon: Image.asset(
+                            "assets/images/Group 1313@3x.png",
+                            scale: 3.5,
+                          ),
+                          hintText: "${_currentAddress ?? ""}",
+                          hintStyle: medium18blackwopacity,
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r),
+                            borderSide: BorderSide(
+                              color: transparentcolor,
+                              width: 1.w,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r),
+                            borderSide: BorderSide(
+                              color: transparentcolor,
+                              width: 1.w,
+                            ),
                           ),
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.r),
-                          borderSide: BorderSide(
-                            color: transparentcolor,
-                            width: 1.w,
-                          ),
-                        ),
+                        style: medium18blackwopacity,
                       ),
-                      style: medium18blackwopacity,
-                    ),
-                    15.verticalSpace,
-                    DropdownButtonFormField(
-                      alignment: Alignment.center,
-                      isDense: true,
-                      icon: Image.asset(
-                        "assets/images/Icon ionic-ios-arrow-down@3x.png",
-                        scale: 2.5,
-                        alignment: Alignment.topLeft,
-                      ),
-                      decoration: InputDecoration(
-                        hintText: "Designation",
-                        hintStyle: medium18blackwopacity,
-                        prefixIconConstraints: BoxConstraints(minWidth: 25),
-                        prefixIcon: Image.asset(
-                          "assets/images/Group 1313@3x.png",
-                          color: transparentcolor,
-                          scale: 3.5,
+                      15.verticalSpace,
+                      DropdownButtonFormField(
+                        value: dropdownvalue,
+                        validator: (value) {
+                          if (value == null) {
+                            return 'please select a Designation';
+                          } else {
+                            return null;
+                          }
+                        },
+                        alignment: Alignment.center,
+                        isDense: true,
+                        icon: Image.asset(
+                          "assets/images/Icon ionic-ios-arrow-down@3x.png",
+                          scale: 2.5,
+                          alignment: Alignment.topLeft,
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.r),
-                          borderSide: BorderSide(
+                        decoration: InputDecoration(
+                          hintText: "Designation",
+                          hintStyle: medium18blackwopacity,
+                          prefixIconConstraints: BoxConstraints(minWidth: 25),
+                          prefixIcon: Image.asset(
+                            "assets/images/Group 1313@3x.png",
                             color: transparentcolor,
-                            width: 1.w,
+                            scale: 3.5,
                           ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r),
+                            borderSide: BorderSide(
+                              color: transparentcolor,
+                              width: 1.w,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r),
+                            borderSide: BorderSide(
+                              color: transparentcolor,
+                              width: 1.w,
+                            ),
+                          ),
+                          filled: true,
+                          fillColor: white,
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.r),
-                          borderSide: BorderSide(
-                            color: transparentcolor,
-                            width: 1.w,
-                          ),
-                        ),
-                        filled: true,
-                        fillColor: white,
-                      ),
-                      dropdownColor: white,
-                      items: designationList.map((item) {
-                        return DropdownMenuItem(
-                          child: new Text(
-                            item.toString(),
-                            style: medium16blackwopacity,
-                          ),
-                          value: item.toString(),
-                        );
-                      }).toList(),
-                      onChanged: (newValue) {
-                        setState(() {
-                          dropdownvalue = newValue;
-                          temp.forEach((element) {
-                            if (newValue == element["title"]) {
-                              selectedDesignationID = element["_id"];
-                            }
+                        dropdownColor: white,
+                        items: designationList.map((item) {
+                          return DropdownMenuItem(
+                            child: new Text(
+                              item.toString(),
+                              style: medium16blackwopacity,
+                            ),
+                            value: item.toString(),
+                          );
+                        }).toList(),
+                        onChanged: (newValue) {
+                          setState(() {
+                            dropdownvalue = newValue;
+                            temp.forEach((element) {
+                              if (newValue == element["title"]) {
+                                selectedDesignationID = element["_id"];
+                              }
+                            });
                           });
-                        });
-                      },
-                    ),
+                        },
+                      ),
 
-                    // DropdownButtonFormField(
-                    //   alignment: Alignment.center,
-                    //   isDense: true,
-                    //   icon: Image.asset(
-                    //     "assets/images/Icon ionic-ios-arrow-down@3x.png",
-                    //     scale: 2.5,
-                    //     alignment: Alignment.topLeft,
-                    //   ),
-                    //   decoration: InputDecoration(
-                    //     hintText: "Designation",
-                    //     hintStyle: medium18blackwopacity,
-                    //     prefixIconConstraints: BoxConstraints(minWidth: 25),
-                    //     prefixIcon: Image.asset(
-                    //       "assets/images/Group 1313@3x.png",
-                    //       color: transparentcolor,
-                    //       scale: 3.5,
-                    //     ),
-                    //     focusedBorder: OutlineInputBorder(
-                    //       borderRadius: BorderRadius.circular(10.r),
-                    //       borderSide: BorderSide(
-                    //         color: transparentcolor,
-                    //         width: 1.w,
-                    //       ),
-                    //     ),
-                    //     enabledBorder: OutlineInputBorder(
-                    //       borderRadius: BorderRadius.circular(10.r),
-                    //       borderSide: BorderSide(
-                    //         color: transparentcolor,
-                    //         width: 1.w,
-                    //       ),
-                    //     ),
-                    //     filled: true,
-                    //     fillColor: white,
-                    //   ),
-                    //   dropdownColor: white,
-                    //   value: dropdownvalue,
-                    //   onChanged: (newValue) {
-                    //     setState(() {
-                    //       dropdownvalue = newValue;
-                    //     });
-                    //   },
-                    //   items: designationList.map((item) {
-                    //     return DropdownMenuItem(
-                    //       child: new Text(
-                    //         item.toString(),
-                    //         style: medium16blackwopacity,
-                    //       ),
-                    //       value: item.toString(),
-                    //     );
-                    //   }).toList(),
-                    // ),
+                      // DropdownButtonFormField(
+                      //   alignment: Alignment.center,
+                      //   isDense: true,
+                      //   icon: Image.asset(
+                      //     "assets/images/Icon ionic-ios-arrow-down@3x.png",
+                      //     scale: 2.5,
+                      //     alignment: Alignment.topLeft,
+                      //   ),
+                      //   decoration: InputDecoration(
+                      //     hintText: "Designation",
+                      //     hintStyle: medium18blackwopacity,
+                      //     prefixIconConstraints: BoxConstraints(minWidth: 25),
+                      //     prefixIcon: Image.asset(
+                      //       "assets/images/Group 1313@3x.png",
+                      //       color: transparentcolor,
+                      //       scale: 3.5,
+                      //     ),
+                      //     focusedBorder: OutlineInputBorder(
+                      //       borderRadius: BorderRadius.circular(10.r),
+                      //       borderSide: BorderSide(
+                      //         color: transparentcolor,
+                      //         width: 1.w,
+                      //       ),
+                      //     ),
+                      //     enabledBorder: OutlineInputBorder(
+                      //       borderRadius: BorderRadius.circular(10.r),
+                      //       borderSide: BorderSide(
+                      //         color: transparentcolor,
+                      //         width: 1.w,
+                      //       ),
+                      //     ),
+                      //     filled: true,
+                      //     fillColor: white,
+                      //   ),
+                      //   dropdownColor: white,
+                      //   value: dropdownvalue,
+                      //   onChanged: (newValue) {
+                      //     setState(() {
+                      //       dropdownvalue = newValue;
+                      //     });
+                      //   },
+                      //   items: designationList.map((item) {
+                      //     return DropdownMenuItem(
+                      //       child: new Text(
+                      //         item.toString(),
+                      //         style: medium16blackwopacity,
+                      //       ),
+                      //       value: item.toString(),
+                      //     );
+                      //   }).toList(),
+                      // ),
 
-                    30.verticalSpace,
-                    GestureDetector(
-                      onTap: () {
-                        var createProfiledata = {
-                          "name": controllerFullName.text,
-                          "lat": _currentPosition!.latitude,
-                          "long": _currentPosition!.longitude,
-                          "phone": controllerPhoneNum.text,
-                          "email": uniqieemail.toString(),
-                          "DesignationID": selectedDesignationID.toString(),
-                        };
-                        if (imageFile == null) {
-                          Get.snackbar("Error", "Please upload your image");
-                        }
-                        print(createProfiledata);
-                        Get.to(
-                            () => CreateAccountScreen(
-                                name: controllerFullName.text,
-                                lat: _currentPosition!.latitude,
-                                long: _currentPosition!.longitude,
-                                phone: controllerPhoneNum.text,
-                                email: uniqieemail.toString(),
-                                designationID: selectedDesignationID.toString(),
-                                imagepath: imageFile!.path),
-                            duration: Duration(seconds: 1),
-                            transition: Transition.fadeIn);
-                      },
-                      child: Container(
-                        width: 1.sw,
-                        height: 55.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.r),
-                          color: bluishshade,
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Next",
-                            style: txtstylewhite20,
+                      30.verticalSpace,
+                      GestureDetector(
+                        onTap: () {
+                          var createProfiledata = {
+                            "name": controllerFullName.text,
+                            "lat": _currentPosition!.latitude,
+                            "long": _currentPosition!.longitude,
+                            "phone": controllerPhoneNum.text,
+                            "email": uniqieemail.toString(),
+                            "DesignationID": selectedDesignationID.toString(),
+                          };
+                          if (imageFile != null) {
+                            print(createProfiledata);
+                            if (_formKey.currentState!.validate()) {
+                              Get.to(
+                                  () => CreateAccountScreen(
+                                      name: controllerFullName.text,
+                                      lat: _currentPosition!.latitude,
+                                      long: _currentPosition!.longitude,
+                                      phone: controllerPhoneNum.text,
+                                      email: uniqieemail.toString(),
+                                      designationID: selectedDesignationID.toString(),
+                                      imagepath: imageFile!.path),
+                                  duration: Duration(seconds: 1),
+                                  transition: Transition.fadeIn);
+                            }
+                          } else {
+                            Get.snackbar("Error", "Please upload your image");
+                          }
+                        },
+                        child: Container(
+                          width: 1.sw,
+                          height: 55.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.r),
+                            color: bluishshade,
+                          ),
+                          child: Center(
+                            child: Text(
+                              "Next",
+                              style: txtstylewhite20,
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ));
   }
