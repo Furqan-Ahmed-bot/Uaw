@@ -19,6 +19,7 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
+  TextEditingController Locationcontroller = TextEditingController();
   final UserDetails = Get.put(UserController());
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   @override
@@ -74,7 +75,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           Spacer(),
                           GestureDetector(
                             onTap: () {
-                           
                               Get.to(() => EditProfileScreen());
                             },
                             child: Image.asset(
@@ -113,7 +113,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           color: Color(0xff00000026),
                         ),
                         image: DecorationImage(
-                            image: NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file.toString()}'),
+                            image: NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file}'),
                             fit: BoxFit.fill),
                       ),
                       child: Row(
@@ -233,6 +233,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     TextFormField(
                       enabled: false,
                       decoration: InputDecoration(
+                        hintMaxLines: 2,
                         filled: true,
                         fillColor: white,
                         prefixIconConstraints: BoxConstraints(minWidth: 50),

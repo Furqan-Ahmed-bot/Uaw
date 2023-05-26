@@ -13,6 +13,7 @@ import 'package:http/http.dart' as http;
 import '../../Controller.dart';
 import '../../Global.dart';
 import '../../HomeScreens/NavBar.dart';
+import '../Prelogin.dart';
 import '../SetNewPassword.dart';
 import '../TermsOfServices.dart';
 import 'dart:io';
@@ -24,6 +25,39 @@ final bottomcontroller = Get.put(BottomController());
 final usercontroller = Get.put(UserController());
 
 class ApiService {
+  logoutAPI(context) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return SpinKitRotatingCircle(
+            color: Colors.white,
+            size: 50.0,
+          );
+        });
+    final uri = Uri.parse("${apiGlobal}/user/logout");
+    final headers = {
+      'Authorization': 'Bearer ${AuthToken}',
+    };
+    final body = {
+      "deviceType": "android",
+      "deviceToken": deviceToken,
+    };
+    http.Response response = await http.post(
+      uri,
+      headers: headers,
+      body: body,
+    );
+    var res_data = json.decode(response.body.toString());
+    if (res_data["status"] == true) {
+      Get.snackbar("Message", res_data["message"]);
+      Get.to(() => PreloginScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+    } else {
+      Get.back();
+      Get.snackbar("Error", res_data['message']);
+    }
+  }
+
   uniqueID(context, data) async {
     showDialog(
         context: context,
@@ -89,6 +123,8 @@ class ApiService {
     var res_data = json.decode(response.body.toString());
 
     if (res_data["status"] == true) {
+      usercontroller.User(userModel.fromJson(res_data));
+      AuthToken = res_data["data"]["token"].toString();
       Get.back();
       Get.snackbar("Message", res_data["message"]);
       bottomcontroller.navBarChange(0);
@@ -258,11 +294,71 @@ class ApiService {
     var _profileData = json.decode(res.body.toString());
 
     if (_profileData["status"] == true) {
+      AuthToken = _profileData["data"]["token"].toString();
       usercontroller.User(userModel.fromJson(_profileData));
 
       Get.back();
       Get.snackbar("Message", _profileData['message']);
       bottomcontroller.navBarChange(0);
+      Get.to(() => NavBarScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+    } else {
+      Get.back();
+      Get.snackbar("Error", _profileData['message']);
+    }
+  }
+
+  UpdateProfile(context, updateProfiledata, {UserProfileImage}) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return SpinKitRotatingCircle(
+            color: Colors.white,
+            size: 50.0,
+          );
+        });
+    final uri = Uri.parse("${apiGlobal}/user/update");
+
+    final headers = {
+      'Authorization': 'Bearer ${AuthToken}',
+      'Content-Type': 'application/json',
+    };
+    var MyFilename;
+    if (UserProfileImage != null) {
+      MyFilename = path.basename(UserProfileImage);
+    }
+    // var MyFilename = path.basename(UserProfileImage);
+    var request = http.MultipartRequest('POST', uri);
+
+    request.fields['name'] = updateProfiledata['name'];
+    request.fields['lat'] = updateProfiledata['lat'];
+    request.fields['long'] = updateProfiledata['long'];
+    request.fields['phone'] = updateProfiledata['phone'];
+    // request.fields['email'] = updateProfiledata['email'];
+    request.fields['password'] = updateProfiledata['password'];
+    request.fields['designation'] = updateProfiledata['designation'];
+    if (UserProfileImage != null) {
+      var multipartFile = await http.MultipartFile.fromPath('file', UserProfileImage, filename: MyFilename, contentType: MediaType("image", "jpg"));
+      request.files.add(multipartFile);
+    }
+
+    // var multipartFile = await http.MultipartFile.fromPath('file', UserProfileImage, filename: MyFilename, contentType: MediaType("image", "jpg"));
+
+    request.headers.addAll(headers);
+
+    var res_data = json.encode(request.fields);
+    var response = await request.send();
+    final res = await http.Response.fromStream(response);
+    log("res print" + res.body.toString());
+    var _profileData = json.decode(res.body.toString());
+
+    if (_profileData["status"] == true) {
+      usercontroller.User(userModel.fromJson(_profileData));
+
+      Get.back();
+      Get.snackbar("Message", _profileData['message']);
+
+      bottomcontroller.navBarChange(3);
       Get.to(() => NavBarScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
     } else {
       Get.back();

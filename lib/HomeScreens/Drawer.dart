@@ -1,3 +1,4 @@
+import 'package:_uaw/Auth/APIService/API.dart';
 import 'package:_uaw/Auth/Prelogin.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:_uaw/HomeScreens/Documents.dart';
@@ -367,7 +368,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                         ),
                                         GestureDetector(
                                           onTap: () {
-                                            Get.to(() => PreloginScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+                                            ApiService().logoutAPI(context);
                                           },
                                           child: Container(
                                             width: 162.w,
