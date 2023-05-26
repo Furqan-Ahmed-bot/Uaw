@@ -8,16 +8,20 @@ import '../Helpers.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_field_style.dart';
 import 'package:otp_text_field/style.dart';
+import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 
 class OTPVerificationScreen extends StatefulWidget {
-  const OTPVerificationScreen({super.key});
+  final email;
+  OTPVerificationScreen({super.key, this.email});
 
   @override
   State<OTPVerificationScreen> createState() => _OTPVerificationScreenState();
 }
 
 class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
+  CountDownController _CountDownController = CountDownController();
   final _formKey = GlobalKey<FormState>();
+  var resend;
 
   // TextEditingController otpController = OtpField();
   String OTPvalue = "";
@@ -206,6 +210,51 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                               ),
                             ),
                           ),
+                          CircularCountDownTimer(
+                            duration: 10,
+                            initialDuration: 0,
+                            controller: _CountDownController,
+                            width: MediaQuery.of(context).size.width / 8,
+                            height: MediaQuery.of(context).size.height / 8,
+                            ringColor: Colors.transparent,
+                            ringGradient: null,
+                            fillColor: Color(0xff04366B),
+                            fillGradient: null,
+                            backgroundGradient: null,
+                            strokeWidth: 3.0,
+                            strokeCap: StrokeCap.round,
+                            textStyle: TextStyle(fontSize: 12.0, color: Color(0xff04366B), fontWeight: FontWeight.bold),
+                            textFormat: CountdownTextFormat.MM_SS,
+                            isReverse: true,
+                            isReverseAnimation: true,
+                            isTimerTextShown: true,
+                            autoStart: true,
+                            onStart: () {
+                              print('Countdown Started');
+                            },
+                            onComplete: () {
+                              setState(() {
+                                resend = 1;
+                              });
+                            },
+                          ),
+                          resend == 1
+                              ? TextButton(
+                                  onPressed: () {
+                                    var forgotpassdata = {
+                                      "email": userEmailforOTP,
+                                    };
+                                    ApiService().forgotPassword(context, forgotpassdata);
+
+                                    resend = 2;
+                                  },
+                                  child: Center(
+                                    child: Text(
+                                      "Resend ",
+                                      style: TextStyle(fontSize: 18.sp, color: Color(0xff04366B)),
+                                    ),
+                                  ))
+                              : Container()
                         ],
                       ),
                     ),

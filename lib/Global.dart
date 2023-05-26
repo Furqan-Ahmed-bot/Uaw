@@ -4,3 +4,6 @@ var uniqieemail;
 var deviceToken;
 var AuthToken;
 var ResetToken;
+var userEmailforOTP;
+var lat;
+String? currentAddress;

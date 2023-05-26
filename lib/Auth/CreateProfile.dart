@@ -64,7 +64,6 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
 
   var dropdownvalue;
 
-  String? _currentAddress;
   Position? _currentPosition;
 
   Future<bool> _handleLocationPermission() async {
@@ -114,7 +113,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
     await placemarkFromCoordinates(_currentPosition!.latitude, _currentPosition!.longitude).then((List<Placemark> placemarks) {
       Placemark place = placemarks[0];
       setState(() {
-        _currentAddress = '${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
+        currentAddress = '${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
       });
     }).catchError((e) {
       debugPrint(e);
@@ -362,7 +361,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                             "assets/images/Group 1313@3x.png",
                             scale: 3.5,
                           ),
-                          hintText: "${_currentAddress ?? ""}",
+                          hintText: "${currentAddress ?? ""}",
                           hintStyle: medium18blackwopacity,
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.r),

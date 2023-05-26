@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../Global.dart';
+
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
 
@@ -138,8 +140,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           30.verticalSpace,
                           GestureDetector(
                             onTap: () {
+                              userEmailforOTP = forgotPassword.text;
                               var forgotpassdata = {
                                 "email": forgotPassword.text,
+                               
                               };
                               if (_formKey.currentState!.validate()) {
                                 ApiService().forgotPassword(context, forgotpassdata);

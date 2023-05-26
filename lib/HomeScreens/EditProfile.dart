@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:_uaw/Auth/APIService/API.dart';
+import 'package:_uaw/Controllers/usercontroller.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +9,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'dart:async';
+import 'package:http/http.dart' as http;
+import '../Global.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -14,13 +20,48 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
+  bool _editable = false;
+  initState() {
+    super.initState();
+
+    getDesignation();
+  }
+
+  dynamic temp;
+  List designationList = [];
+  var selectedDesignationID;
+  var dropdownvalue;
+
+  Future getDesignation() async {
+    final uri = Uri.parse("${apiGlobal}/designation");
+
+    http.Response response = await http.get(uri);
+
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+
+      temp = jsonData['data'];
+
+      for (var i = 0; i < temp.length; i++) {
+        designationList.add(temp[i]['title']);
+      }
+      print('designationList ${designationList}');
+
+      print(temp);
+    }
+  }
+
+  dynamic UserProfileImage;
   List<String> _locations = ['Designation-1', 'Designation-2', 'Designation-3', 'Designation-4'];
+  final UserDetails = Get.put(UserController());
   var _propertytype;
   final picker = ImagePicker();
 
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
     setState(() {
+      UserProfileImage = pickedFile;
       if (pickedFile != null) {
       } else {
         print('No image selected.');
@@ -65,16 +106,31 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   child: Container(
                     width: 140.w,
                     height: 140.h,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        width: 5.w,
-                        color: Color(0xff00000026),
-                      ),
-                      image: DecorationImage(
-                        image: AssetImage("assets/images/Group 1443@3x.png"),
-                      ),
-                    ),
+                    decoration: UserProfileImage == null
+                        ? BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              width: 5.w,
+                              color: Color(0xff00000026),
+                            ),
+                            image: DecorationImage(
+                              image: NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file.toString()}'),
+                              fit: BoxFit.fill,
+                            ),
+                          )
+                        : BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              width: 5.w,
+                              color: Color(0xff00000026),
+                            ),
+                            image: DecorationImage(
+                              image: FileImage(
+                                File(UserProfileImage!.path),
+                              ),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -248,12 +304,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
               80.verticalSpace,
               Text(
-                "John Doe",
+                UserController.user.data!.name.toString(),
                 style: textroboto20,
               ),
               5.verticalSpace,
               Text(
-                "johndoe@gmail.com",
+                UserController.user.data!.email.toString(),
                 style: txtstyleblack14WO,
               ),
               20.verticalSpace,
@@ -276,7 +332,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           "assets/images/Icon feather-user@3x3.png",
                           scale: 3.5,
                         ),
-                        hintText: "jason.martin@domain.com",
+                        hintText: UserController.user.data!.name.toString(),
                         hintStyle: medium18blackwopacity,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
@@ -311,7 +367,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           scale: 3.5,
                           color: black,
                         ),
-                        hintText: "email@domain.com",
+                        hintText: UserController.user.data!.email.toString(),
                         hintStyle: medium18blackwopacity,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
@@ -337,6 +393,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                     5.verticalSpace,
                     TextFormField(
+                      enabled: _editable,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: white,
@@ -346,7 +403,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           scale: 3.5,
                           color: black,
                         ),
-                        hintText: "........",
+                        hintText: "****",
                         hintStyle: medium18blackwopacity,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
@@ -365,6 +422,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ),
                       style: medium18blackwopacity,
                     ),
+                    10.verticalSpace,
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _editable = !_editable;
+                        });
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            "Change Password",
+                            style: txtstyleblack14WO,
+                          )
+                        ],
+                      ),
+                    ),
                     15.verticalSpace,
                     Text(
                       "Phone Number",
@@ -381,7 +455,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           scale: 3.5,
                           color: black,
                         ),
-                        hintText: "123 456 7890",
+                        hintText: UserController.user.data!.phone.toString(),
                         hintStyle: medium18blackwopacity,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
@@ -415,7 +489,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           "assets/images/Group 1313@3x.png",
                           scale: 3.5,
                         ),
-                        hintText: "Lorem ipsum dolor sit amet,",
+                        hintText: currentAddress,
                         hintStyle: medium18blackwopacity,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
@@ -436,6 +510,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                     15.verticalSpace,
                     DropdownButtonFormField(
+                      value: dropdownvalue,
                       alignment: Alignment.center,
                       isDense: true,
                       icon: Image.asset(
@@ -444,7 +519,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         alignment: Alignment.topLeft,
                       ),
                       decoration: InputDecoration(
-                        hintText: "Designation",
+                        hintText: UserController.user.data!.designation!.title.toString(),
                         hintStyle: medium18blackwopacity,
                         prefixIconConstraints: BoxConstraints(minWidth: 25),
                         prefixIcon: Image.asset(
@@ -470,19 +545,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         fillColor: white,
                       ),
                       dropdownColor: white,
-                      value: _propertytype,
                       onChanged: (newValue) {
                         setState(() {
-                          _propertytype = newValue!;
+                          dropdownvalue = newValue;
+                          temp.forEach((element) {
+                            if (newValue == element["title"]) {
+                              selectedDesignationID = element["_id"];
+                            }
+                          });
                         });
                       },
-                      items: _locations.map((location) {
+                      items: designationList.map((item) {
                         return DropdownMenuItem(
                           child: new Text(
-                            location,
+                            item.toString(),
                             style: medium16blackwopacity,
                           ),
-                          value: location,
+                          value: item.toString(),
                         );
                       }).toList(),
                     ),

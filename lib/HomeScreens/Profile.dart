@@ -1,3 +1,4 @@
+import 'package:_uaw/Controllers/usercontroller.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:_uaw/HomeScreens/AttendingEvent.dart';
 import 'package:_uaw/HomeScreens/Drawer.dart';
@@ -7,6 +8,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:flutter/widgets.dart' as widgets;
+import 'package:_uaw/Global.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
@@ -16,6 +19,7 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
+  final UserDetails = Get.put(UserController());
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
@@ -70,6 +74,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           Spacer(),
                           GestureDetector(
                             onTap: () {
+                           
                               Get.to(() => EditProfileScreen());
                             },
                             child: Image.asset(
@@ -108,8 +113,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           color: Color(0xff00000026),
                         ),
                         image: DecorationImage(
-                          image: AssetImage("assets/images/Group 1443@3x.png"),
-                        ),
+                            image: NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file.toString()}'),
+                            fit: BoxFit.fill),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -136,12 +141,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               ),
               100.verticalSpace,
               Text(
-                "John Doe",
+                UserController.user.data!.name.toString(),
                 style: textroboto20,
               ),
               5.verticalSpace,
               Text(
-                "johndoe@gmail.com",
+                UserController.user.data!.email.toString(),
                 style: txtstyleblack14WO,
               ),
               40.verticalSpace,
@@ -156,6 +161,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     ),
                     5.verticalSpace,
                     TextFormField(
+                      enabled: false,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: white,
@@ -164,7 +170,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         //   "assets/images/Icon feather-user@3x3.png",
                         //   scale: 3.5,
                         // ),
-                        hintText: "Lorem ipsum",
+                        hintText: UserController.user.data!.designation!.title.toString(),
                         hintStyle: txtstyleblack14WO,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
@@ -190,6 +196,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     ),
                     5.verticalSpace,
                     TextFormField(
+                      enabled: false,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: white,
@@ -198,7 +205,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           "assets/images/Icon feather-phone-call@3x.png",
                           scale: 3.5,
                         ),
-                        hintText: "123 456 7890",
+                        hintText: UserController.user.data!.phone.toString(),
                         hintStyle: medium18blackwopacity,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
@@ -224,6 +231,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     ),
                     5.verticalSpace,
                     TextFormField(
+                      enabled: false,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: white,
@@ -232,7 +240,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           "assets/images/Group 1313@3x.png",
                           scale: 3.5,
                         ),
-                        hintText: "Lorem ipsum dolor sit amet,",
+                        hintText: currentAddress,
                         hintStyle: medium18blackwopacity,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
