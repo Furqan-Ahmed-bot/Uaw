@@ -7,3 +7,4 @@ var ResetToken;
 var userEmailforOTP;
 var lat;
 String? currentAddress;
+var completeAddress;

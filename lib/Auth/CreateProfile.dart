@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
 
+import '../Controllers/usercontroller.dart';
 import 'APIService/API.dart';
 import 'CreateAccount.dart';
 import 'package:image_picker/image_picker.dart';
@@ -380,8 +381,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         ),
                         style: medium18blackwopacity,
                       ),
-                    
-                    
+
                       15.verticalSpace,
                       DropdownButtonFormField(
                         value: dropdownvalue,

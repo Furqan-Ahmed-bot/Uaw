@@ -5,6 +5,7 @@ import 'package:_uaw/HomeScreens/Drawer.dart';
 import 'package:_uaw/HomeScreens/EditProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/get_core.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
@@ -24,6 +25,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
+    completeAddress;
+
     return Scaffold(
         key: _key,
         backgroundColor: whitish,
@@ -120,19 +123,19 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Container(
-                            width: 40.w,
-                            height: 40.h,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: bluishshade,
-                            ),
-                            child: Icon(
-                              Icons.camera_alt,
-                              color: whitecolor,
-                              size: 20,
-                            ),
-                          )
+                          // Container(
+                          //   width: 40.w,
+                          //   height: 40.h,
+                          //   decoration: BoxDecoration(
+                          //     shape: BoxShape.circle,
+                          //     color: bluishshade,
+                          //   ),
+                          //   child: Icon(
+                          //     Icons.camera_alt,
+                          //     color: whitecolor,
+                          //     size: 20,
+                          //   ),
+                          // )
                         ],
                       ),
                     ),
@@ -241,7 +244,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           "assets/images/Group 1313@3x.png",
                           scale: 3.5,
                         ),
-                        hintText: currentAddress,
+                        hintText: completeAddress,
                         hintStyle: medium18blackwopacity,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),

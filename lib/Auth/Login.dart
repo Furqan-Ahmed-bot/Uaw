@@ -6,7 +6,11 @@ import 'package:_uaw/HomeScreens/NavBar.dart';
 import 'package:_uaw/HomeScreens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
+
+import '../Controllers/usercontroller.dart';
+import '../Global.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

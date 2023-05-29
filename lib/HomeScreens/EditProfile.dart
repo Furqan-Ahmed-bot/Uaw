@@ -38,6 +38,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     _getCurrentPosition();
 
     getDesignation();
+    fullnameController.text = UserController.user.data!.name.toString();
+    // passwordController.text = UserController.user.data!.password.toString();
+    phonenumberController.text = UserController.user.data!.phone.toString();
   }
 
   var dropdownvalue;
@@ -69,6 +72,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return true;
   }
 
+  // Future<String> getAddressFromLatLng() async {
+  //   longitude = UserController.user.data!.location!.coordinates![0];
+  //   latitude = UserController.user.data!.location!.coordinates![1];
+  //   final placemarks = await placemarkFromCoordinates(latitude, longitude);
+  //   if (placemarks != null && placemarks.isNotEmpty) {
+  //     final placemark = placemarks[0];
+  //     completeAddress =
+  //         '${placemark.street},${placemark.subLocality},${placemark.locality}, ${placemark.administrativeArea} ${placemark.postalCode}, ${placemark.country}';
+  //     return '${placemark.street}, ${placemark.locality}, ${placemark.administrativeArea} ${placemark.postalCode}, ${placemark.country}';
+  //   }
+  //   return "Unable to get address";
+  // }
+
   Future<void> _getCurrentPosition() async {
     final hasPermission = await _handleLocationPermission();
 
@@ -77,8 +93,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       setState(() {
         _currentPosition = position;
 
-        var lat = _currentPosition!.latitude;
-        var lng = _currentPosition!.longitude;
+        var lat = UserController.user.data!.location!.coordinates![0];
+        var lng = UserController.user.data!.location!.coordinates![1];
       });
 
       _getAddressFromLatLng(_currentPosition!);
@@ -557,15 +573,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       ),
                       5.verticalSpace,
                       TextFormField(
-                        enabled: false,
                         controller: locationController,
+                        onChanged: (value) async {
+                          final List<double>? latlng = await getLatLong(value);
+                          if (latlng != null) {
+                            latitude = latlng[0];
+                            longitude = latlng[1];
+                            print('Latitude: $latitude, Longitude: $longitude');
+                          } else {
+                            print('Invalid address');
+                          }
+                        },
                         decoration: InputDecoration(
                           hintMaxLines: 2,
                           // suffixIconConstraints: BoxConstraints(maxWidth: 35),
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.search),
-                            onPressed: _getCurrentPosition,
-                          ),
+                          suffixIcon: (Icon(
+                            Icons.search,
+                          )),
                           filled: true,
                           fillColor: white,
                           prefixIconConstraints: BoxConstraints(minWidth: 50),
@@ -573,7 +597,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             "assets/images/Group 1313@3x.png",
                             scale: 3.5,
                           ),
-                          hintText: "${currentAddress ?? ""}",
+                          hintText: completeAddress,
                           hintStyle: medium18blackwopacity,
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.r),
@@ -667,6 +691,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       //   ),
                       //   style: medium18blackwopacity,
                       // ),
+
                       15.verticalSpace,
                       DropdownButtonFormField(
                         value: dropdownvalue,
@@ -731,8 +756,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             "name": fullnameController.text,
                             "password": passwordController.text,
                             "phone": phonenumberController.text,
-                            "lat": _currentPosition!.latitude.toString(),
-                            "long": _currentPosition!.longitude.toString(),
+                            "lat": latitude.toString(),
+                            "long": longitude.toString(),
                             "designation": selectedDesignationID.toString(),
                             // "email": uniqieemail.toString(),
                           };
@@ -766,5 +791,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
           )),
     );
+  }
+
+  Future<List<double>?> getLatLong(String address) async {
+    final List<Location> locations = await locationFromAddress(address);
+    if (locations.isNotEmpty) {
+      final Location location = locations.first;
+      final List<double> latlong = [location.latitude, location.longitude];
+      return latlong;
+    } else {
+      return null;
+    }
   }
 }

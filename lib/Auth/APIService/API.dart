@@ -6,6 +6,7 @@ import 'package:_uaw/Auth/OTPVerification.dart';
 import 'package:_uaw/Controllers/usercontroller.dart';
 import 'package:_uaw/Models/usermodel.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:path/path.dart' as path;
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -125,6 +126,7 @@ class ApiService {
     if (res_data["status"] == true) {
       usercontroller.User(userModel.fromJson(res_data));
       AuthToken = res_data["data"]["token"].toString();
+      getAddressFromLatLng();
       Get.back();
       Get.snackbar("Message", res_data["message"]);
       bottomcontroller.navBarChange(0);
@@ -296,6 +298,7 @@ class ApiService {
     if (_profileData["status"] == true) {
       AuthToken = _profileData["data"]["token"].toString();
       usercontroller.User(userModel.fromJson(_profileData));
+      getAddressFromLatLng();
 
       Get.back();
       Get.snackbar("Message", _profileData['message']);
@@ -354,8 +357,8 @@ class ApiService {
 
     if (_profileData["status"] == true) {
       usercontroller.User(userModel.fromJson(_profileData));
+      getAddressFromLatLng();
 
-      Get.back();
       Get.snackbar("Message", _profileData['message']);
 
       bottomcontroller.navBarChange(3);
@@ -364,5 +367,18 @@ class ApiService {
       Get.back();
       Get.snackbar("Error", _profileData['message']);
     }
+  }
+
+  getAddressFromLatLng() async {
+    dynamic longitude = UserController.user.data!.location!.coordinates![0];
+    dynamic latitude = UserController.user.data!.location!.coordinates![1];
+    final placemarks = await placemarkFromCoordinates(latitude, longitude);
+    if (placemarks != null && placemarks.isNotEmpty) {
+      final placemark = placemarks[0];
+      completeAddress =
+          '${placemark.street},${placemark.subLocality},${placemark.locality}, ${placemark.administrativeArea} ${placemark.postalCode}, ${placemark.country}';
+      return '${placemark.street}, ${placemark.locality}, ${placemark.administrativeArea} ${placemark.postalCode}, ${placemark.country}';
+    }
+    return "Unable to get address";
   }
 }
