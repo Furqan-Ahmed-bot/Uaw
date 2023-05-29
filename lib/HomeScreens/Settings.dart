@@ -1,3 +1,4 @@
+import 'package:_uaw/Auth/APIService/API.dart';
 import 'package:_uaw/Auth/Adminlogin.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:_uaw/HomeScreens/AboutApp.dart';
@@ -324,7 +325,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           ),
                                           GestureDetector(
                                             onTap: () {
-                                              Get.to(() => PreloginScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+                                              ApiService().logoutAPI(context);
                                             },
                                             child: Container(
                                               width: 162.w,
