@@ -91,7 +91,12 @@ class ApiService {
       );
     } else {
       Get.back();
-      Get.snackbar("Error", res_data['message']);
+      Get.snackbar("Error", "",
+          backgroundColor: Colors.grey,
+          messageText: Text(
+            res_data['message'],
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ));
     }
     ;
 
@@ -292,7 +297,7 @@ class ApiService {
     var res_data = json.encode(request.fields);
     var response = await request.send();
     final res = await http.Response.fromStream(response);
-    log("res print" + res.body.toString());
+    log("res print" + res.body.toString());                                                                                                                                                      
     var _profileData = json.decode(res.body.toString());
 
     if (_profileData["status"] == true) {

@@ -22,7 +22,7 @@ class NavBarScreen extends StatefulWidget {
   const NavBarScreen({super.key});
 
   @override
-  State<NavBarScreen> createState() => _NavBarScreenState();
+  State<NavBarScreen> createState() => _NavBarScreenState();      
 }
 
 class _NavBarScreenState extends State<NavBarScreen> with SingleTickerProviderStateMixin {

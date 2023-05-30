@@ -6,17 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 
-import '../Controllers/usercontroller.dart';
 import 'APIService/API.dart';
 import 'CreateAccount.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:async';
 import 'dart:io';
-import 'package:geocoding/geocoding.dart';
-import 'package:location/location.dart';
+
 import 'package:http/http.dart' as http;
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class CreateProfileScreen extends StatefulWidget {
   const CreateProfileScreen({super.key});
@@ -26,6 +24,10 @@ class CreateProfileScreen extends StatefulWidget {
 }
 
 class _CreateProfileScreenState extends State<CreateProfileScreen> {
+  TextEditingController locationController = TextEditingController();
+  late double latitude;
+  late double longitude;
+
   TextEditingController dropdown = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   List designationList = [];
@@ -309,6 +311,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       ),
                       15.verticalSpace,
                       TextFormField(
+                        keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value == '') {
                             return 'please enter your Contact Number';
@@ -346,15 +349,23 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       ),
                       15.verticalSpace,
                       TextFormField(
-                        enabled: false,
-                        controller: controllerLatLong,
+                        controller: locationController,
+                        onChanged: (value) async {
+                          final List<double>? latlng = await getLatLong(value);
+                          if (latlng != null) {
+                            latitude = latlng[0];
+                            longitude = latlng[1];
+                            print('Latitude: $latitude, Longitude: $longitude');
+                          } else {
+                            print('Invalid address');
+                          }
+                        },
                         decoration: InputDecoration(
                           hintMaxLines: 2,
                           // suffixIconConstraints: BoxConstraints(maxWidth: 35),
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.search),
-                            onPressed: _getCurrentPosition,
-                          ),
+                          suffixIcon: (Icon(
+                            Icons.search,
+                          )),
                           filled: true,
                           fillColor: white,
                           prefixIconConstraints: BoxConstraints(minWidth: 50),
@@ -362,7 +373,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                             "assets/images/Group 1313@3x.png",
                             scale: 3.5,
                           ),
-                          hintText: "${currentAddress ?? ""}",
+                          hintText: "Enter your address",
                           hintStyle: medium18blackwopacity,
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.r),
@@ -381,7 +392,6 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         ),
                         style: medium18blackwopacity,
                       ),
-
                       15.verticalSpace,
                       DropdownButtonFormField(
                         value: dropdownvalue,
@@ -446,66 +456,13 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                           });
                         },
                       ),
-
-                      // DropdownButtonFormField(
-                      //   alignment: Alignment.center,
-                      //   isDense: true,
-                      //   icon: Image.asset(
-                      //     "assets/images/Icon ionic-ios-arrow-down@3x.png",
-                      //     scale: 2.5,
-                      //     alignment: Alignment.topLeft,
-                      //   ),
-                      //   decoration: InputDecoration(
-                      //     hintText: "Designation",
-                      //     hintStyle: medium18blackwopacity,
-                      //     prefixIconConstraints: BoxConstraints(minWidth: 25),
-                      //     prefixIcon: Image.asset(
-                      //       "assets/images/Group 1313@3x.png",
-                      //       color: transparentcolor,
-                      //       scale: 3.5,
-                      //     ),
-                      //     focusedBorder: OutlineInputBorder(
-                      //       borderRadius: BorderRadius.circular(10.r),
-                      //       borderSide: BorderSide(
-                      //         color: transparentcolor,
-                      //         width: 1.w,
-                      //       ),
-                      //     ),
-                      //     enabledBorder: OutlineInputBorder(
-                      //       borderRadius: BorderRadius.circular(10.r),
-                      //       borderSide: BorderSide(
-                      //         color: transparentcolor,
-                      //         width: 1.w,
-                      //       ),
-                      //     ),
-                      //     filled: true,
-                      //     fillColor: white,
-                      //   ),
-                      //   dropdownColor: white,
-                      //   value: dropdownvalue,
-                      //   onChanged: (newValue) {
-                      //     setState(() {
-                      //       dropdownvalue = newValue;
-                      //     });
-                      //   },
-                      //   items: designationList.map((item) {
-                      //     return DropdownMenuItem(
-                      //       child: new Text(
-                      //         item.toString(),
-                      //         style: medium16blackwopacity,
-                      //       ),
-                      //       value: item.toString(),
-                      //     );
-                      //   }).toList(),
-                      // ),
-
                       30.verticalSpace,
                       GestureDetector(
                         onTap: () {
                           var createProfiledata = {
                             "name": controllerFullName.text,
-                            "lat": _currentPosition!.latitude,
-                            "long": _currentPosition!.longitude,
+                            "lat": latitude.toString(),
+                            "long": longitude.toString(),
                             "phone": controllerPhoneNum.text,
                             "email": uniqieemail.toString(),
                             "DesignationID": selectedDesignationID.toString(),
@@ -516,8 +473,8 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                               Get.to(
                                   () => CreateAccountScreen(
                                       name: controllerFullName.text,
-                                      lat: _currentPosition!.latitude,
-                                      long: _currentPosition!.longitude,
+                                      lat: latitude.toString(),
+                                      long: longitude.toString(),
                                       phone: controllerPhoneNum.text,
                                       email: uniqieemail.toString(),
                                       designationID: selectedDesignationID.toString(),
@@ -551,5 +508,16 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
             ),
           ),
         ));
+  }
+
+  Future<List<double>?> getLatLong(String address) async {
+    final List<Location> locations = await locationFromAddress(address);
+    if (locations.isNotEmpty) {
+      final Location location = locations.first;
+      final List<double> latlong = [location.latitude, location.longitude];
+      return latlong;
+    } else {
+      return null;
+    }
   }
 }
