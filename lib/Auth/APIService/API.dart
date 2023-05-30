@@ -51,11 +51,21 @@ class ApiService {
     );
     var res_data = json.decode(response.body.toString());
     if (res_data["status"] == true) {
-      Get.snackbar("Message", res_data["message"]);
+      Get.snackbar("Message", "",
+          backgroundColor: Colors.grey,
+          messageText: Text(
+            res_data['message'],
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ));
       Get.to(() => PreloginScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
     } else {
       Get.back();
-      Get.snackbar("Error", res_data['message']);
+      Get.snackbar("Error", "",
+          backgroundColor: Colors.grey,
+          messageText: Text(
+            res_data['message'],
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ));
     }
   }
 
@@ -133,12 +143,23 @@ class ApiService {
       AuthToken = res_data["data"]["token"].toString();
       getAddressFromLatLng();
       Get.back();
-      Get.snackbar("Message", res_data["message"]);
+
+      Get.snackbar("Message", "",
+          backgroundColor: Colors.grey,
+          messageText: Text(
+            res_data['message'],
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ));
       bottomcontroller.navBarChange(0);
       Get.to(() => NavBarScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
     } else {
       Get.back();
-      Get.snackbar("Error", res_data["message"]);
+      Get.snackbar("Error", "",
+          backgroundColor: Colors.grey,
+          messageText: Text(
+            res_data['message'],
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ));
     }
   }
 
@@ -164,7 +185,13 @@ class ApiService {
     if (res_data["status"] == true) {
       AuthToken = res_data["data"]["token"].toString();
       Get.back();
-      Get.snackbar("Message", res_data["message"]);
+
+      Get.snackbar("Message", "",
+          backgroundColor: Colors.grey,
+          messageText: Text(
+            res_data['message'],
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ));
       Get.to(
         () => OTPVerificationScreen(),
         duration: Duration(seconds: 1),
@@ -172,7 +199,12 @@ class ApiService {
       );
     } else {
       Get.back();
-      Get.snackbar("Error", res_data["message"]);
+      Get.snackbar("Error", "",
+          backgroundColor: Colors.grey,
+          messageText: Text(
+            res_data['message'],
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ));
     }
   }
 
@@ -207,7 +239,13 @@ class ApiService {
     if (res_data["status"] == true) {
       ResetToken = res_data["data"]["token"].toString();
       Get.back();
-      Get.snackbar("Message", res_data["message"]);
+
+      Get.snackbar("Message", "",
+          backgroundColor: Colors.grey,
+          messageText: Text(
+            res_data['message'],
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ));
       Get.to(
         () => SetNewPasswordScreen(),
         duration: Duration(seconds: 1),
@@ -215,7 +253,12 @@ class ApiService {
       );
     } else {
       Get.back();
-      Get.snackbar("Error", res_data["message"]);
+      Get.snackbar("Error", "",
+          backgroundColor: Colors.grey,
+          messageText: Text(
+            res_data['message'],
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ));
     }
   }
 
@@ -251,7 +294,13 @@ class ApiService {
     var res_data = json.decode(response.body.toString());
     if (res_data["status"] == true) {
       Get.back();
-      Get.snackbar("Message", res_data["message"]);
+
+      Get.snackbar("Message", "",
+          backgroundColor: Colors.grey,
+          messageText: Text(
+            res_data['message'],
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ));
       Get.to(
         () => LoginScreen(),
         duration: Duration(seconds: 1),
@@ -259,7 +308,12 @@ class ApiService {
       );
     } else {
       Get.back();
-      Get.snackbar("Error", res_data["message"]);
+      Get.snackbar("Error", "",
+          backgroundColor: Colors.grey,
+          messageText: Text(
+            res_data['message'],
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ));
     }
   }
 
@@ -297,7 +351,7 @@ class ApiService {
     var res_data = json.encode(request.fields);
     var response = await request.send();
     final res = await http.Response.fromStream(response);
-    log("res print" + res.body.toString());                                                                                                                                                      
+    log("res print" + res.body.toString());
     var _profileData = json.decode(res.body.toString());
 
     if (_profileData["status"] == true) {
@@ -306,12 +360,23 @@ class ApiService {
       getAddressFromLatLng();
 
       Get.back();
-      Get.snackbar("Message", _profileData['message']);
+
+      Get.snackbar("Message", "",
+          backgroundColor: Colors.grey,
+          messageText: Text(
+            _profileData['message'],
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ));
       bottomcontroller.navBarChange(0);
       Get.to(() => NavBarScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
     } else {
       Get.back();
-      Get.snackbar("Error", _profileData['message']);
+      Get.snackbar("Error", "",
+          backgroundColor: Colors.grey,
+          messageText: Text(
+            _profileData['message'],
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ));
     }
   }
 
@@ -364,13 +429,23 @@ class ApiService {
       usercontroller.User(userModel.fromJson(_profileData));
       getAddressFromLatLng();
 
-      Get.snackbar("Message", _profileData['message']);
+      Get.snackbar("Message", "",
+          backgroundColor: Colors.grey,
+          messageText: Text(
+            _profileData['message'],
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ));
 
       bottomcontroller.navBarChange(3);
       Get.to(() => NavBarScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
     } else {
       Get.back();
-      Get.snackbar("Error", _profileData['message']);
+      Get.snackbar("Error", "",
+          backgroundColor: Colors.grey,
+          messageText: Text(
+            _profileData['message'],
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ));
     }
   }
 

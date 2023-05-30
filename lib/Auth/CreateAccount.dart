@@ -27,7 +27,39 @@ class CreateAccountScreen extends StatefulWidget {
 
 class _CreateAccountScreenState extends State<CreateAccountScreen> {
   final _formKey = GlobalKey<FormState>();
- 
+
+  RegExp pass_valid = RegExp(r"(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)");
+  double password_strength = 0;
+
+  bool validatePassword(String pass) {
+    String _password = pass.trim();
+    if (_password.isEmpty) {
+      setState(() {
+        password_strength = 0;
+      });
+    } else if (_password.length < 6) {
+      setState(() {
+        password_strength = 1 / 4;
+      });
+    } else if (_password.length < 8) {
+      setState(() {
+        password_strength = 2 / 4;
+      });
+    } else {
+      if (pass_valid.hasMatch(_password)) {
+        setState(() {
+          password_strength = 4 / 4;
+        });
+        return true;
+      } else {
+        setState(() {
+          password_strength = 3 / 4;
+        });
+        return false;
+      }
+    }
+    return false;
+  }
 
   bool _validatepassword = false;
   bool _validateconfirmpassword = false;
@@ -99,7 +131,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
             ),
           ),
           body: Form(
-           
+            key: _formKey,
             child: ListView(
               children: [
                 50.verticalSpace,
@@ -167,11 +199,23 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         ),
                         30.verticalSpace,
                         TextFormField(
+                          validator: (value) {
+                            if (value == '') {
+                              return 'please enter new password';
+                            } else if (!(value!.length >= 6)) {
+                              return 'password should be greater than 6 characters';
+                            } else {
+                              return null;
+                            }
+                          },
+                          onChanged: (value) {
+                            _formKey.currentState!.validate();
+                          },
                           controller: password,
                           obscureText: _obscureText,
                           decoration: InputDecoration(
                             prefixIconConstraints: BoxConstraints(minWidth: 50),
-                            errorText: _validatepassword ? "value can't be null" : null,
+                            // errorText: _validatepassword ? "value can't be null" : null,
                             prefixIcon: Container(
                               width: 50.w,
                               child: Image.asset(
@@ -209,11 +253,23 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         ),
                         30.verticalSpace,
                         TextFormField(
+                          validator: (value) {
+                            if (value == '') {
+                              return 'please confirm password';
+                            } else if (!(value!.length >= 6)) {
+                              return 'password should be same';
+                            } else {
+                              return null;
+                            }
+                          },
+                          onChanged: (value) {
+                            _formKey.currentState!.validate();
+                          },
                           controller: confirmPassword,
                           obscureText: _obscureText2,
                           decoration: InputDecoration(
                             prefixIconConstraints: BoxConstraints(minWidth: 50),
-                            errorText: _validateconfirmpassword ? "value can't be empty" : null,
+                            // errorText: _validateconfirmpassword ? "value can't be empty" : null,
                             prefixIcon: Container(
                               width: 50.w,
                               child: Image.asset(
@@ -251,7 +307,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         ),
                         30.verticalSpace,
                         GestureDetector(
-                          onTap: () {
+                          onTap: () async {
                             var completeProfile = {
                               "phone": widget.phone,
                               "long": widget.long.toString(),
@@ -264,16 +320,17 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                               "deviceToken": "abc",
                             };
 
-                            setState(() {
-                              password.text.isEmpty ? _validatepassword = true : _validatepassword = false;
-                            });
+                            // setState(() {
+                            //   password.text.isEmpty ? _validatepassword = true : _validatepassword = false;
+                            // });
 
-                            if (password.text.isEmpty) {
-                              Get.snackbar("Error", "Password field cant be null");
-                            } else if (password.text != confirmPassword.text) {
-                              Get.snackbar("Error", "Password and Confirm Password doesnot match");
-                            } else {
-                              ApiService().CreateProfile(context, completeProfile, widget.imagepath);
+                            if (_formKey.currentState!.validate()) {
+                              // if (password.text.isEmpty) {
+                              //   Get.snackbar("Error", "Password field cant be null");
+                              // } else if (password.text != confirmPassword.text) {
+                              //   Get.snackbar("Error", "Password and Confirm Password doesnot match");
+                              // } else {
+                               ApiService().CreateProfile(context, completeProfile, widget.imagepath);
                             }
                           },
                           child: Container(
@@ -301,6 +358,4 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
           )),
     );
   }
-
- 
 }

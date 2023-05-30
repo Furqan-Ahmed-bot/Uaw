@@ -5,6 +5,7 @@ import 'package:_uaw/Welcome.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geolocator/geolocator.dart';
 
 import 'Global.dart';
 
@@ -27,6 +28,8 @@ class _SplashScreenState extends State<SplashScreen> {
       print('DEVICE TOKEN: $deviceToken');
     });
   }
+   
+
 
   startTimer() async {
     var duration = Duration(seconds: 3);
