@@ -50,15 +50,17 @@ class _AttendingEventScreenState extends State<AttendingEventScreen> {
               children: [
                 15.verticalSpace,
                 ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: 3,
                     itemBuilder: (BuildContext contex, i) {
                       return GestureDetector(
                           onTap: () {
-                            Get.to(() => AttendingEventDetailsScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+                            Get.to(() => const AttendingEventDetailsScreen(),
+                                duration: const Duration(seconds: 1),
+                                transition: Transition.fadeIn);
                           },
-                          child: Newsandeventswidget());
+                          child: const Newsandeventswidget());
                     })
               ],
             ),
@@ -95,7 +97,7 @@ class Newsandeventswidget extends StatelessWidget {
                     Container(
                       width: 60.h,
                       height: 60.h,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           image: AssetImage(
@@ -123,7 +125,7 @@ class Newsandeventswidget extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Image.asset(
                       "assets/images/Group 1333@3x.png",
                       scale: 3.5,
@@ -147,7 +149,10 @@ class Newsandeventswidget extends StatelessWidget {
                             topLeft: Radius.circular(10.r),
                           ),
                           color: black,
-                          image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                          image: const DecorationImage(
+                              image:
+                                  AssetImage("assets/images/Group 1440@3x.png"),
+                              fit: BoxFit.fill),
                         ),
                       ),
                     ),
@@ -157,8 +162,11 @@ class Newsandeventswidget extends StatelessWidget {
                       child: Container(
                         width: 115.w,
                         height: 135.h,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              image:
+                                  AssetImage("assets/images/Group 1440@3x.png"),
+                              fit: BoxFit.fill),
                           color: black,
                         ),
                       ),
@@ -174,7 +182,10 @@ class Newsandeventswidget extends StatelessWidget {
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(10.r),
                           ),
-                          image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                          image: const DecorationImage(
+                              image:
+                                  AssetImage("assets/images/Group 1440@3x.png"),
+                              fit: BoxFit.fill),
                         ),
                       ),
                     ),
@@ -191,7 +202,10 @@ class Newsandeventswidget extends StatelessWidget {
                                 bottomLeft: Radius.circular(10.r),
                               ),
                               color: black,
-                              image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                              image: const DecorationImage(
+                                  image: AssetImage(
+                                      "assets/images/Group 1440@3x.png"),
+                                  fit: BoxFit.fill),
                             ),
                           ),
                           Container(
@@ -201,7 +215,10 @@ class Newsandeventswidget extends StatelessWidget {
                                 bottomRight: Radius.circular(10.r),
                               ),
                               color: black,
-                              image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                              image: const DecorationImage(
+                                  image: AssetImage(
+                                      "assets/images/Group 1440@3x.png"),
+                                  fit: BoxFit.fill),
                             ),
                           ),
                         ],
