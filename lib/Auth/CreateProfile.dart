@@ -24,6 +24,7 @@ class CreateProfileScreen extends StatefulWidget {
 }
 
 class _CreateProfileScreenState extends State<CreateProfileScreen> {
+  bool forloaction = false;
   TextEditingController locationController = TextEditingController();
   late double latitude;
   late double longitude;
@@ -102,8 +103,8 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
       setState(() {
         _currentPosition = position;
 
-        var lat = _currentPosition!.latitude;
-        var lng = _currentPosition!.longitude;
+        latitude = _currentPosition!.latitude;
+        longitude = _currentPosition!.longitude;
       });
 
       _getAddressFromLatLng(_currentPosition!);
@@ -349,6 +350,13 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                       ),
                       15.verticalSpace,
                       TextFormField(
+                        validator: (value) {
+                          if (value == '') {
+                            return 'please enter your Address';
+                          } else {
+                            return null;
+                          }
+                        },
                         controller: locationController,
                         onChanged: (value) async {
                           final List<double>? latlng = await getLatLong(value);
@@ -363,9 +371,18 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         decoration: InputDecoration(
                           hintMaxLines: 2,
                           // suffixIconConstraints: BoxConstraints(maxWidth: 35),
-                          suffixIcon: (Icon(
-                            Icons.search,
-                          )),
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                forloaction = !forloaction;
+                              });
+                              _getCurrentPosition();
+                              locationController.text = currentAddress.toString();
+                            },
+                            child: (Icon(
+                              Icons.search,
+                            )),
+                          ),
                           filled: true,
                           fillColor: white,
                           prefixIconConstraints: BoxConstraints(minWidth: 50),
@@ -373,7 +390,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                             "assets/images/Group 1313@3x.png",
                             scale: 3.5,
                           ),
-                          hintText: "Enter your address",
+                          hintText: forloaction == true ? currentAddress.toString() : "Enter your address",
                           hintStyle: medium18blackwopacity,
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.r),

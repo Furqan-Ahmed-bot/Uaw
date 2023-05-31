@@ -461,4 +461,23 @@ class ApiService {
     }
     return "Unable to get address";
   }
+
+  GetPrivacy(context) async {
+    final uri = Uri.parse("${apiGlobal}/privacy");
+    http.Response response = await http.get(uri);
+    var res_data = json.decode(response.body);
+    if (res_data["status"] == true) {
+      return res_data;
+    }
+  }
+
+  getTerms() async {
+    final uri = Uri.parse("${apiGlobal}/terms");
+    http.Response response = await http.get(uri);
+    var res_data = jsonDecode(response.body);
+    if (res_data["status"] == true) {
+      print(res_data["data"]);
+      return res_data["data"];
+    }
+  }
 }
