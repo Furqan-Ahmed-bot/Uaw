@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:_uaw/Auth/Prelogin.dart';
 import 'package:_uaw/Welcome.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   loginRoute() {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => WelcomeScreen()));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PreloginScreen()));
   }
 
   Widget build(BuildContext context) {

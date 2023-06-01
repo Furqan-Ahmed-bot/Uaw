@@ -1,6 +1,8 @@
 import 'package:_uaw/Auth/CreateProfile.dart';
 import 'package:_uaw/Auth/Login.dart';
 import 'package:_uaw/Helpers.dart';
+import 'package:_uaw/HomeScreens/testing.dart';
+import 'package:_uaw/Welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -133,7 +135,7 @@ class _PreloginScreenState extends State<PreloginScreen> {
                         Center(
                           child: GestureDetector(
                             onTap: () {
-                              Get.to(() => CreateProfileScreen());
+                              Get.to(() => WelcomeScreen());
                             },
                             child: RichText(
                               text: TextSpan(

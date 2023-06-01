@@ -32,20 +32,22 @@ class Data {
   String? title;
   List<File>? file;
   User? user;
-  List<String>? eventusers;
   String? createdAt;
   String? updatedAt;
   int? iV;
+  String? description;
+  String? date;
 
   Data(
       {this.sId,
       this.title,
       this.file,
       this.user,
-      this.eventusers,
       this.createdAt,
       this.updatedAt,
-      this.iV});
+      this.iV,
+      this.description,
+      this.date});
 
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -57,10 +59,11 @@ class Data {
       });
     }
     user = json['user'] != null ? User.fromJson(json['user']) : null;
-    eventusers = json['eventusers'].cast<String>();
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     iV = json['__v'];
+    description = json['description'];
+    date = json['date'];
   }
 
   Map<String, dynamic> toJson() {
@@ -73,10 +76,11 @@ class Data {
     if (user != null) {
       data['user'] = user!.toJson();
     }
-    data['eventusers'] = eventusers;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     data['__v'] = iV;
+    data['description'] = description;
+    data['date'] = date;
     return data;
   }
 }

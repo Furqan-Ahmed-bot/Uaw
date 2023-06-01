@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:_uaw/Global.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:_uaw/HomeScreens/NewsAndEventDetails.dart';
@@ -20,7 +22,9 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart' as intl;
 
+import '../Auth/APIService/API.dart';
 import '../Controller.dart';
+import '../Controllers/eventcontroller.dart';
 import 'Drawer.dart';
 import 'NavBar.dart';
 
@@ -35,9 +39,10 @@ class NewsAndEventsScreen extends StatefulWidget {
 class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
   final bottomcontroller = Get.put(BottomController());
   final GlobalKey<ScaffoldState> _key = GlobalKey();
-  CalendarFormat _calendarFormat = CalendarFormat.month;
-  RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOn; // Can be toggled on/off by longpressing a date
-  DateTime _focusedDay = DateTime.now();
+  final CalendarFormat _calendarFormat = CalendarFormat.month;
+  final RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
+      .toggledOn; // Can be toggled on/off by longpressing a date
+  final DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
@@ -48,8 +53,10 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
 
   var selectedvalue;
   final kToday = DateTime.now();
-  final kFirstDay = DateTime(DateTime.now().year, DateTime.now().month - 3, DateTime.now().day);
-  final kLastDay = DateTime(DateTime.now().year, DateTime.now().month + 3, DateTime.now().day);
+  final kFirstDay = DateTime(
+      DateTime.now().year, DateTime.now().month - 3, DateTime.now().day);
+  final kLastDay = DateTime(
+      DateTime.now().year, DateTime.now().month + 3, DateTime.now().day);
   double pad = 23.0;
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     setState(() {
@@ -70,12 +77,12 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
   void viewChanged(DateRangePickerViewChangedArgs args) {
     final DateTime visibleStartDate = args.visibleDateRange.startDate!;
     final DateTime visibleEndDate = args.visibleDateRange.endDate!;
-    final int totalVisibleDays = (visibleStartDate.difference(visibleEndDate).inDays);
-    final DateTime midDate = visibleStartDate.add(Duration(days: totalVisibleDays ~/ 2));
+    final int totalVisibleDays =
+        (visibleStartDate.difference(visibleEndDate).inDays);
+    final DateTime midDate =
+        visibleStartDate.add(Duration(days: totalVisibleDays ~/ 2));
     headerString = intl.DateFormat('MMMM yyyy').format(midDate).toString();
-    SchedulerBinding.instance!.addPostFrameCallback((duration) {
-      setState(() {});
-    });
+    SchedulerBinding.instance.addPostFrameCallback((duration) {});
   }
 
   bool timezone = false;
@@ -97,7 +104,15 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
     });
   }
 
-//
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ApiService().Events(context);
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -113,13 +128,15 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
           leadingWidth: 70,
           leading: GestureDetector(
             onTap: () {
-              Get.to(() => DrawerScreen(), transition: Transition.leftToRight, duration: Duration(milliseconds: 300));
+              Get.to(() => const DrawerScreen(),
+                  transition: Transition.leftToRight,
+                  duration: const Duration(milliseconds: 300));
             },
             child: Center(
               child: Container(
                 width: 55.w,
                 height: 55.h,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: whitecolor,
                 ),
@@ -155,21 +172,24 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                 showDialog(
                     context: context,
                     builder: (context) {
-                      return StatefulBuilder(builder: (BuildContext context, setState) {
+                      return StatefulBuilder(
+                          builder: (BuildContext context, setState) {
                         return AlertDialog(
                             insetPadding: EdgeInsets.zero,
                             scrollable: true,
-                            backgroundColor: Color(0xff000000B8),
+                            backgroundColor: const Color(0xff000000b8),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20.0.r),
                             ),
-                            contentPadding: EdgeInsets.all(0),
-                            actionsPadding: EdgeInsets.all(0),
+                            contentPadding: const EdgeInsets.all(0),
+                            actionsPadding: const EdgeInsets.all(0),
                             actions: [
                               Container(
                                 width: 0.8.sw,
                                 height: 0.56.sh,
-                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.r), color: Color(0xffFFFFFF)),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20.r),
+                                    color: const Color(0xffFFFFFF)),
                                 child: Column(
                                   children: [
                                     Row(
@@ -184,12 +204,13 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                             height: 35.h,
                                             decoration: BoxDecoration(
                                               borderRadius: BorderRadius.only(
-                                                bottomLeft: Radius.circular(20.r),
+                                                bottomLeft:
+                                                    Radius.circular(20.r),
                                                 topRight: Radius.circular(20.r),
                                               ),
                                               color: bluishshade,
                                             ),
-                                            child: Icon(
+                                            child: const Icon(
                                               Icons.close,
                                               color: white,
                                               size: 25,
@@ -200,13 +221,16 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                     ),
                                     10.verticalSpace,
                                     Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: 0),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 0),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Container(
                                             child: IconButton(
-                                              icon: Icon(Icons.arrow_back_ios),
+                                              icon: const Icon(
+                                                  Icons.arrow_back_ios),
                                               color: Colors.black,
                                               iconSize: 20,
                                               onPressed: () {
@@ -221,14 +245,14 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                           Container(
                                             child: Text(headerString,
                                                 textAlign: TextAlign.center,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                   fontSize: 25,
                                                   color: Colors.black,
                                                 )),
                                           ),
                                           Container(
                                               child: IconButton(
-                                            icon: Icon(
+                                            icon: const Icon(
                                               Icons.arrow_forward_ios,
                                             ),
                                             color: Colors.black,
@@ -276,36 +300,41 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                           //       duration: Duration(seconds: 1), transition: Transition.fadeIn);
                                           // },
 
-                                          selectionColor: Color(0xffEDEDED),
-                                          selectionTextStyle: TextStyle(
+                                          selectionColor:
+                                              const Color(0xffEDEDED),
+                                          selectionTextStyle: const TextStyle(
                                             color: Colors.black,
                                           ),
                                           backgroundColor: Colors.white,
                                           view: DateRangePickerView.month,
                                           headerHeight: 0,
                                           onViewChanged: viewChanged,
-                                          monthCellStyle: DateRangePickerMonthCellStyle(
-                                            weekendTextStyle: TextStyle(color: Colors.red),
+                                          monthCellStyle:
+                                              DateRangePickerMonthCellStyle(
+                                            weekendTextStyle: const TextStyle(
+                                                color: Colors.red),
                                             todayCellDecoration: BoxDecoration(
                                                 border: Border.all(
                                               width: 1.w,
                                               color: Colors.transparent,
                                             )),
-                                            todayTextStyle: TextStyle(
+                                            todayTextStyle: const TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.w500,
                                               color: Color(0xffEDEDED),
                                             ),
-                                            textStyle: TextStyle(
+                                            textStyle: const TextStyle(
                                               fontWeight: FontWeight.w400,
                                               fontSize: 15,
                                               color: Colors.black,
                                               backgroundColor: Colors.white,
                                             ),
                                           ),
-                                          monthViewSettings: DateRangePickerMonthViewSettings(
+                                          monthViewSettings:
+                                              const DateRangePickerMonthViewSettings(
                                             firstDayOfWeek: DateTime.monday,
-                                            viewHeaderStyle: DateRangePickerViewHeaderStyle(
+                                            viewHeaderStyle:
+                                                DateRangePickerViewHeaderStyle(
                                               textStyle: TextStyle(
                                                 color: Colors.black,
                                               ),
@@ -328,28 +357,214 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
             )
           ],
         ),
-        drawer: DrawerScreen(),
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.r),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                15.verticalSpace,
-                ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: 3,
-                    itemBuilder: (BuildContext contex, i) {
-                      return GestureDetector(
+        drawer: const DrawerScreen(),
+        body: GetBuilder<EventController>(builder: (eventController) {
+          return (eventController.isLoding
+              ? const Center(child: CircularProgressIndicator())
+              : ListView.builder(
+                  itemCount: eventController.EventsData.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        GestureDetector(
                           onTap: () {
-                            Get.to(() => NewsAndEventsDetailsScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+                            Get.to(
+                                () => NewsAndEventsDetailsScreen(
+                                      name: eventController.EventsData[index]
+                                          ['user']['name'],
+                                      date: eventController.EventsData[index]
+                                              ['createdAt']
+                                          .toString(),
+                                      description: eventController
+                                          .EventsData[index]['description'],
+                                      timee: eventController.EventsData[index]
+                                              ['createdAt']
+                                          .toString(),
+                                      title: eventController.EventsData[index]
+                                          ['title'],
+                                      location: eventController
+                                          .EventsData[index]['location']
+                                          .toString(),
+                                      eventimage: eventController
+                                          .EventsData[index]['file'][0]['file'],
+                                      eventid: eventController.EventsData[index]
+                                          ['_id'],
+                                    ),
+                                duration: Duration(seconds: 1),
+                                transition: Transition.fadeIn);
                           },
-                          child: Newsandeventswidget());
-                    })
-              ],
-            ),
-          ),
-        ),
+                          child: Container(
+                            width: 1.sw,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.r),
+                              color: white,
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20.r),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  20.verticalSpace,
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 60.h,
+                                        height: 60.h,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                            image:
+
+                                                //  AssetImage(
+                                                //   "assets/images/Ellipse 68-1@3x.png",
+                                                // ),
+
+                                                NetworkImage(
+                                              "https://uaw-api.thesuitchstaging.com:3090/${eventController.EventsData[index]['file'][0]['file']}",
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      10.horizontalSpace,
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            eventController.EventsData[index]
+                                                ['user']['name'],
+                                            style: txtstyleblue17,
+                                          ),
+                                          5.verticalSpace,
+                                          Text(
+                                            eventController.EventsData[index]
+                                                    ['createdAt']
+                                                .toString(),
+                                            style: textroboto12,
+                                          ),
+                                        ],
+                                      ),
+                                      const Spacer(),
+                                      Image.asset(
+                                        "assets/images/Group 1333@3x.png",
+                                        scale: 3.5,
+                                      )
+                                    ],
+                                  ),
+                                  15.verticalSpace,
+                                  StaggeredGrid.count(
+                                    crossAxisCount: 3,
+                                    mainAxisSpacing: 5,
+                                    crossAxisSpacing: 5,
+                                    children: [
+                                      StaggeredGridTile.count(
+                                        crossAxisCellCount: 1,
+                                        mainAxisCellCount: 1,
+                                        child: Container(
+                                          width: 115.w,
+                                          height: 135.h,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(10.r),
+                                            ),
+                                            color: black,
+                                            image: const DecorationImage(
+                                                image: AssetImage(
+                                                    "assets/images/Group 1440@3x.png"),
+                                                fit: BoxFit.fill),
+                                          ),
+                                        ),
+                                      ),
+                                      StaggeredGridTile.count(
+                                        crossAxisCellCount: 1,
+                                        mainAxisCellCount: 1,
+                                        child: Container(
+                                          width: 115.w,
+                                          height: 135.h,
+                                          decoration: const BoxDecoration(
+                                            image: DecorationImage(
+                                                image: AssetImage(
+                                                    "assets/images/Group 1440@3x.png"),
+                                                fit: BoxFit.fill),
+                                            color: black,
+                                          ),
+                                        ),
+                                      ),
+                                      StaggeredGridTile.count(
+                                        crossAxisCellCount: 1,
+                                        mainAxisCellCount: 1,
+                                        child: Container(
+                                          width: 115.w,
+                                          height: 135.h,
+                                          decoration: BoxDecoration(
+                                            color: black,
+                                            borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(10.r),
+                                            ),
+                                            image: const DecorationImage(
+                                                image: AssetImage(
+                                                    "assets/images/Group 1440@3x.png"),
+                                                fit: BoxFit.fill),
+                                          ),
+                                        ),
+                                      ),
+                                      StaggeredGridTile.count(
+                                        crossAxisCellCount: 5,
+                                        mainAxisCellCount: 1,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Container(
+                                              width: 170.w,
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.only(
+                                                  bottomLeft:
+                                                      Radius.circular(10.r),
+                                                ),
+                                                color: black,
+                                                image: const DecorationImage(
+                                                    image: AssetImage(
+                                                        "assets/images/Group 1440@3x.png"),
+                                                    fit: BoxFit.fill),
+                                              ),
+                                            ),
+                                            Container(
+                                              width: 170.w,
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.only(
+                                                  bottomRight:
+                                                      Radius.circular(10.r),
+                                                ),
+                                                color: black,
+                                                image: const DecorationImage(
+                                                    image: AssetImage(
+                                                        "assets/images/Group 1440@3x.png"),
+                                                    fit: BoxFit.fill),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  10.verticalSpace,
+                                  Text(
+                                    eventController.EventsData[index]['title']
+                                        .toString(),
+                                    style: textroboto15,
+                                  ),
+                                  20.verticalSpace,
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  }));
+        }),
       ),
     );
   }
@@ -381,7 +596,7 @@ class Newsandeventswidget extends StatelessWidget {
                     Container(
                       width: 60.h,
                       height: 60.h,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           image: AssetImage(
@@ -409,7 +624,7 @@ class Newsandeventswidget extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Image.asset(
                       "assets/images/Group 1333@3x.png",
                       scale: 3.5,
@@ -433,7 +648,10 @@ class Newsandeventswidget extends StatelessWidget {
                             topLeft: Radius.circular(10.r),
                           ),
                           color: black,
-                          image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                          image: const DecorationImage(
+                              image:
+                                  AssetImage("assets/images/Group 1440@3x.png"),
+                              fit: BoxFit.fill),
                         ),
                       ),
                     ),
@@ -443,8 +661,11 @@ class Newsandeventswidget extends StatelessWidget {
                       child: Container(
                         width: 115.w,
                         height: 135.h,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              image:
+                                  AssetImage("assets/images/Group 1440@3x.png"),
+                              fit: BoxFit.fill),
                           color: black,
                         ),
                       ),
@@ -460,7 +681,10 @@ class Newsandeventswidget extends StatelessWidget {
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(10.r),
                           ),
-                          image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                          image: const DecorationImage(
+                              image:
+                                  AssetImage("assets/images/Group 1440@3x.png"),
+                              fit: BoxFit.fill),
                         ),
                       ),
                     ),
@@ -477,7 +701,10 @@ class Newsandeventswidget extends StatelessWidget {
                                 bottomLeft: Radius.circular(10.r),
                               ),
                               color: black,
-                              image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                              image: const DecorationImage(
+                                  image: AssetImage(
+                                      "assets/images/Group 1440@3x.png"),
+                                  fit: BoxFit.fill),
                             ),
                           ),
                           Container(
@@ -487,7 +714,10 @@ class Newsandeventswidget extends StatelessWidget {
                                 bottomRight: Radius.circular(10.r),
                               ),
                               color: black,
-                              image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                              image: const DecorationImage(
+                                  image: AssetImage(
+                                      "assets/images/Group 1440@3x.png"),
+                                  fit: BoxFit.fill),
                             ),
                           ),
                         ],

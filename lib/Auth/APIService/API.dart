@@ -12,9 +12,10 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../../Controller.dart';
+import '../../Controllers/eventcontroller.dart';
 import '../../Global.dart';
 import '../../HomeScreens/NavBar.dart';
-import '../../Models/eventmodel.dart';
+import '../../HomeScreens/NewsAndEvents.dart';
 import '../Prelogin.dart';
 import '../SetNewPassword.dart';
 import '../TermsOfServices.dart';
@@ -92,7 +93,12 @@ class ApiService {
       );
     } else {
       Get.back();
-      Get.snackbar("Error", resData['message']);
+      Get.snackbar("Error", "",
+          backgroundColor: Colors.grey,
+          messageText: Text(
+            resData['message'],
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ));
     }
 
     return resData;
@@ -126,6 +132,8 @@ class ApiService {
     if (resData["status"] == true) {
       usercontroller.User(userModel.fromJson(resData));
       AuthToken = resData["data"]["token"].toString();
+      userid = resData["data"]["_id"].toString();
+
       getAddressFromLatLng();
       Get.back();
       Get.snackbar("Message", resData["message"]);
@@ -172,12 +180,17 @@ class ApiService {
     }
   }
 
-  Events() async {
-    final uri = Uri.parse("$apiGlobal/forgetpassword");
-    http.Response response = await http.get(uri);
+  Events(context) async {
+    final eventcontroller = Get.put(EventController());
+    eventcontroller.setLoading(true);
+    final uri = Uri.parse("$apiGlobal/user/getnewevents");
+    var header = {'Authorization': 'Bearer $AuthToken'};
+    http.Response response = await http.get(uri, headers: header);
     var resData = json.decode(response.body.toString());
     if (resData['status'] == true) {
-      usercontroller.Events(EventModel.fromJson(resData));
+      eventcontroller.setLoading(false);
+      // usercontroller.Events(EventModel.fromJson(resData));
+      eventcontroller.getEventsData(resData['data']);
     }
   }
 
@@ -381,6 +394,40 @@ class ApiService {
     } else {
       Get.back();
       Get.snackbar("Error", profileData['message']);
+    }
+  }
+
+  joinEvent(eventid, context) async {
+    final uri = Uri.parse("$apiGlobal/joinevent/$eventid");
+    var data = {'uid': userid};
+    http.Response response = await http.patch(
+      uri,
+      body: data,
+    );
+    var resData = json.decode(response.body.toString());
+    if (resData['status'] == true) {
+      // Get.snackbar('Message', resData['message']);
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const NewsAndEventsScreen(
+                value: '',
+              )));
+      // Get.to(const NewsAndEventsScreen(
+      //   value: '',
+      // ));
+    }
+  }
+
+  geteventbyuser() async {
+    final eventcontroller = Get.put(EventController());
+    eventcontroller.setLoading(true);
+    final uri = Uri.parse("$apiGlobal/user/getmyevents");
+    var headers = {'Authorization': 'Bearer $AuthToken'};
+    http.Response response = await http.get(uri, headers: headers);
+    var resData = json.decode(response.body.toString());
+
+    if (resData['status'] == true) {
+      eventcontroller.setLoading(false);
+      eventcontroller.getMyEvents(resData['data']);
     }
   }
 
