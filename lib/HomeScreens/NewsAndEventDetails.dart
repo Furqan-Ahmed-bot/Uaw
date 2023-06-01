@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:_uaw/Auth/APIService/API.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:_uaw/HomeScreens/NavBar.dart';
 import 'package:_uaw/HomeScreens/NewsAndEvents.dart';
@@ -12,17 +13,35 @@ import 'package:dotted_line/dotted_line.dart';
 import '../Controller.dart';
 
 class NewsAndEventsDetailsScreen extends StatefulWidget {
+  final eventid;
+  final name;
+  final timee;
+  final date;
+  final title;
+  final description;
+  final location;
+  final eventimage;
   const NewsAndEventsDetailsScreen({
+    required this.eventid,
+    required this.name,
+    required this.timee,
+    required this.date,
+    required this.title,
+    required this.description,
+    required this.location,
+    this.eventimage,
     super.key,
   });
 
   @override
-  State<NewsAndEventsDetailsScreen> createState() => _NewsAndEventsDetailsScreenState();
+  State<NewsAndEventsDetailsScreen> createState() =>
+      _NewsAndEventsDetailsScreenState();
 }
 
-class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen> with SingleTickerProviderStateMixin {
+class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
+    with SingleTickerProviderStateMixin {
   final bottomcontroller = Get.put(BottomController());
-  bool _isTextOnLeft = true;
+  final bool _isTextOnLeft = true;
   final double _textSize = 24.0;
   final String _text1 = 'Flutter';
   final String _text2 = 'Dart';
@@ -54,11 +73,13 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
   }
 
   void _animate() {
-    _controller.status == AnimationStatus.completed ? _controller.reverse() : _controller.forward();
+    _controller.status == AnimationStatus.completed
+        ? _controller.reverse()
+        : _controller.forward();
   }
 
   String tdata = DateFormat("HH:mm a").format(DateTime.now());
-  DateTime currentTime = new DateTime.now();
+  DateTime currentTime = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -118,12 +139,12 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Admin",
+                        widget.name,
                         style: txtstyleblue17,
                       ),
                       5.verticalSpace,
                       Text(
-                        "July 17,2023",
+                        widget.date,
                         style: textroboto12,
                       ),
                       // Text(
@@ -163,15 +184,21 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                 height: 328.h,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.r),
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/Group 1440@3x.png"),
-                    fit: BoxFit.fill,
-                  ),
+                  image: widget.eventimage == null
+                      ? DecorationImage(
+                          image: AssetImage("assets/images/Group 1440@3x.png"),
+                          fit: BoxFit.fill,
+                        )
+                      : DecorationImage(
+                          image: NetworkImage(
+                              'https://uaw-api.thesuitchstaging.com:3090/${widget.eventimage}'),
+                          fit: BoxFit.fill,
+                        ),
                 ),
               ),
               15.verticalSpace,
               Text(
-                "Lorem ipsum dolor sit amet, consectetur",
+                widget.title,
                 style: txtstyleblue24,
               ),
               15.verticalSpace,
@@ -195,7 +222,7 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                   ),
                   15.horizontalSpace,
                   Text(
-                    "03:00 Pm",
+                    widget.timee,
                     style: textroboto14blue,
                   ),
                   // Text(
@@ -225,7 +252,7 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                   ),
                   15.horizontalSpace,
                   Text(
-                    "Lorem Ipsum Dolor Sitamet,",
+                    widget.location,
                     style: textroboto14blue,
                   )
                 ],
@@ -244,7 +271,7 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
               ),
               15.verticalSpace,
               Text(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae vulputate velit. Nulla facilisi. Fusce interdum ornare arcu, quis",
+                widget.description ?? '',
                 style: textroboto15black,
               ),
               Spacer(),
@@ -265,7 +292,7 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                               builder: (BuildContext context, setState) {
                                 return AlertDialog(
                                   insetPadding: EdgeInsets.zero,
-                                  backgroundColor: Color(0xff000000B8),
+                                  backgroundColor: Color(0xff000000b8),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15.0.r),
                                   ),
@@ -275,11 +302,15 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                                     Container(
                                       width: 370.w,
                                       height: 210.h,
-                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.r), color: Color(0xffFFFFFF)),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15.r),
+                                          color: Color(0xffFFFFFF)),
                                       child: Column(
                                         children: [
                                           Row(
-                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
                                             children: [
                                               GestureDetector(
                                                 onTap: () {
@@ -294,9 +325,12 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                                                   width: 35.w,
                                                   height: 35.h,
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.only(
-                                                      bottomLeft: Radius.circular(15.r),
-                                                      topRight: Radius.circular(15.r),
+                                                    borderRadius:
+                                                        BorderRadius.only(
+                                                      bottomLeft:
+                                                          Radius.circular(15.r),
+                                                      topRight:
+                                                          Radius.circular(15.r),
                                                     ),
                                                     color: bluishshade,
                                                   ),
@@ -310,7 +344,7 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                                             ],
                                           ),
                                           5.verticalSpace,
-                                          Container(
+                                          SizedBox(
                                             width: 0.7.sw,
                                             child: Text(
                                               "Are you sure you want to reject?",
@@ -320,7 +354,8 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                                           ),
                                           20.verticalSpace,
                                           Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
                                             children: [
                                               GestureDetector(
                                                 onTap: () {
@@ -335,7 +370,9 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                                                   width: 162.w,
                                                   height: 55.h,
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(10.r),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.r),
                                                     color: redishcolor,
                                                   ),
                                                   child: Center(
@@ -348,14 +385,21 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                                               ),
                                               GestureDetector(
                                                 onTap: () {
-                                                  bottomcontroller.navBarChange(1);
-                                                  Get.to(() => NavBarScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+                                                  bottomcontroller
+                                                      .navBarChange(1);
+                                                  Get.to(() => NavBarScreen(),
+                                                      duration:
+                                                          Duration(seconds: 1),
+                                                      transition:
+                                                          Transition.fadeIn);
                                                 },
                                                 child: Container(
                                                   width: 162.w,
                                                   height: 55.h,
                                                   decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(10.r),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.r),
                                                     color: bluishshade,
                                                   ),
                                                   child: Center(
@@ -399,7 +443,11 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                     position: _offsetAnimation[1],
                     child: GestureDetector(
                       onTap: () {
-                        Get.back();
+                        var data =
+                            ApiService().joinEvent(widget.eventid, context);
+                        if (data['status'] == true) {
+                          Get.to(NewsAndEventsScreen(value: ''));
+                        }
                       },
                       child: Container(
                         width: 189.w,

@@ -12,12 +12,13 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../../Controller.dart';
+import '../../Controllers/eventcontroller.dart';
 import '../../Global.dart';
 import '../../HomeScreens/NavBar.dart';
+import '../../HomeScreens/NewsAndEvents.dart';
 import '../Prelogin.dart';
 import '../SetNewPassword.dart';
 import '../TermsOfServices.dart';
-import 'dart:io';
 import 'package:http_parser/src/media_type.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -31,14 +32,14 @@ class ApiService {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          return SpinKitRotatingCircle(
+          return const SpinKitRotatingCircle(
             color: Colors.white,
             size: 50.0,
           );
         });
-    final uri = Uri.parse("${apiGlobal}/user/logout");
+    final uri = Uri.parse("$apiGlobal/user/logout");
     final headers = {
-      'Authorization': 'Bearer ${AuthToken}',
+      'Authorization': 'Bearer $AuthToken',
     };
     final body = {
       "deviceType": "android",
@@ -49,23 +50,14 @@ class ApiService {
       headers: headers,
       body: body,
     );
-    var res_data = json.decode(response.body.toString());
-    if (res_data["status"] == true) {
-      Get.snackbar("Message", "",
-          backgroundColor: Colors.grey,
-          messageText: Text(
-            res_data['message'],
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ));
-      Get.to(() => PreloginScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+    var resData = json.decode(response.body.toString());
+    if (resData["status"] == true) {
+      Get.snackbar("Message", resData["message"]);
+      Get.to(() => const PreloginScreen(),
+          duration: const Duration(seconds: 1), transition: Transition.fadeIn);
     } else {
       Get.back();
-      Get.snackbar("Error", "",
-          backgroundColor: Colors.grey,
-          messageText: Text(
-            res_data['message'],
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ));
+      Get.snackbar("Error", resData['message']);
     }
   }
 
@@ -74,12 +66,12 @@ class ApiService {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          return SpinKitRotatingCircle(
+          return const SpinKitRotatingCircle(
             color: Colors.white,
             size: 50.0,
           );
         });
-    final uri = Uri.parse("${apiGlobal}/verifyuniqueid");
+    final uri = Uri.parse("$apiGlobal/verifyuniqueid");
 
     final body = {
       'email': data['email'],
@@ -88,15 +80,15 @@ class ApiService {
       uri,
       body: body,
     );
-    var res_data = json.decode(response.body.toString());
+    var resData = json.decode(response.body.toString());
 
-    if (res_data['status'] == true) {
+    if (resData['status'] == true) {
       uniqieemail = data['email'];
       Get.back();
 
       Get.to(
-        () => TermsOfServices(),
-        duration: Duration(seconds: 1),
+        () => const TermsOfServices(),
+        duration: const Duration(seconds: 1),
         transition: Transition.fadeIn,
       );
     } else {
@@ -104,13 +96,12 @@ class ApiService {
       Get.snackbar("Error", "",
           backgroundColor: Colors.grey,
           messageText: Text(
-            res_data['message'],
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            resData['message'],
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ));
     }
-    ;
 
-    return res_data;
+    return resData;
   }
 
   loginAPI(context, loginData) async {
@@ -118,12 +109,12 @@ class ApiService {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          return SpinKitRotatingCircle(
+          return const SpinKitRotatingCircle(
             color: Colors.white,
             size: 50.0,
           );
         });
-    final uri = Uri.parse("${apiGlobal}/login");
+    final uri = Uri.parse("$apiGlobal/login");
     final headers = {'Content-Type': 'application/json'};
 
     final body = {
@@ -136,30 +127,22 @@ class ApiService {
       uri,
       body: body,
     );
-    var res_data = json.decode(response.body.toString());
+    var resData = json.decode(response.body.toString());
 
-    if (res_data["status"] == true) {
-      usercontroller.User(userModel.fromJson(res_data));
-      AuthToken = res_data["data"]["token"].toString();
+    if (resData["status"] == true) {
+      usercontroller.User(userModel.fromJson(resData));
+      AuthToken = resData["data"]["token"].toString();
+      userid = resData["data"]["_id"].toString();
+
       getAddressFromLatLng();
       Get.back();
-
-      Get.snackbar("Message", "",
-          backgroundColor: Colors.grey,
-          messageText: Text(
-            res_data['message'],
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ));
+      Get.snackbar("Message", resData["message"]);
       bottomcontroller.navBarChange(0);
-      Get.to(() => NavBarScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+      Get.to(() => const NavBarScreen(),
+          duration: const Duration(seconds: 1), transition: Transition.fadeIn);
     } else {
       Get.back();
-      Get.snackbar("Error", "",
-          backgroundColor: Colors.grey,
-          messageText: Text(
-            res_data['message'],
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ));
+      Get.snackbar("Error", resData["message"]);
     }
   }
 
@@ -168,12 +151,12 @@ class ApiService {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          return SpinKitRotatingCircle(
+          return const SpinKitRotatingCircle(
             color: Colors.white,
             size: 50.0,
           );
         });
-    final uri = Uri.parse("${apiGlobal}/forgetpassword");
+    final uri = Uri.parse("$apiGlobal/forgetpassword");
     final headers = {'Content-Type': 'application/json'};
 
     final body = {
@@ -181,30 +164,33 @@ class ApiService {
     };
     http.Response response = await http.post(uri, body: body);
 
-    var res_data = json.decode(response.body.toString());
-    if (res_data["status"] == true) {
-      AuthToken = res_data["data"]["token"].toString();
+    var resData = json.decode(response.body.toString());
+    if (resData["status"] == true) {
+      AuthToken = resData["data"]["token"].toString();
       Get.back();
-
-      Get.snackbar("Message", "",
-          backgroundColor: Colors.grey,
-          messageText: Text(
-            res_data['message'],
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ));
+      Get.snackbar("Message", resData["message"]);
       Get.to(
         () => OTPVerificationScreen(),
-        duration: Duration(seconds: 1),
+        duration: const Duration(seconds: 1),
         transition: Transition.fadeIn,
       );
     } else {
       Get.back();
-      Get.snackbar("Error", "",
-          backgroundColor: Colors.grey,
-          messageText: Text(
-            res_data['message'],
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ));
+      Get.snackbar("Error", resData["message"]);
+    }
+  }
+
+  Events(context) async {
+    final eventcontroller = Get.put(EventController());
+    eventcontroller.setLoading(true);
+    final uri = Uri.parse("$apiGlobal/user/getnewevents");
+    var header = {'Authorization': 'Bearer $AuthToken'};
+    http.Response response = await http.get(uri, headers: header);
+    var resData = json.decode(response.body.toString());
+    if (resData['status'] == true) {
+      eventcontroller.setLoading(false);
+      // usercontroller.Events(EventModel.fromJson(resData));
+      eventcontroller.getEventsData(resData['data']);
     }
   }
 
@@ -213,15 +199,15 @@ class ApiService {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          return SpinKitRotatingCircle(
+          return const SpinKitRotatingCircle(
             color: Colors.white,
             size: 50.0,
           );
         });
-    final uri = Uri.parse("${apiGlobal}/user/Verify");
+    final uri = Uri.parse("$apiGlobal/user/Verify");
     Map<String, String> headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${AuthToken}',
+      'Authorization': 'Bearer $AuthToken',
     };
     final data = {
       "otp": OTPdata["otp"],
@@ -235,30 +221,19 @@ class ApiService {
       headers: headers,
       body: jsonbody,
     );
-    var res_data = json.decode(response.body.toString());
-    if (res_data["status"] == true) {
-      ResetToken = res_data["data"]["token"].toString();
+    var resData = json.decode(response.body.toString());
+    if (resData["status"] == true) {
+      ResetToken = resData["data"]["token"].toString();
       Get.back();
-
-      Get.snackbar("Message", "",
-          backgroundColor: Colors.grey,
-          messageText: Text(
-            res_data['message'],
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ));
+      Get.snackbar("Message", resData["message"]);
       Get.to(
-        () => SetNewPasswordScreen(),
-        duration: Duration(seconds: 1),
+        () => const SetNewPasswordScreen(),
+        duration: const Duration(seconds: 1),
         transition: Transition.fadeIn,
       );
     } else {
       Get.back();
-      Get.snackbar("Error", "",
-          backgroundColor: Colors.grey,
-          messageText: Text(
-            res_data['message'],
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ));
+      Get.snackbar("Error", resData["message"]);
     }
   }
 
@@ -267,15 +242,15 @@ class ApiService {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          return SpinKitRotatingCircle(
+          return const SpinKitRotatingCircle(
             color: Colors.white,
             size: 50.0,
           );
         });
-    final uri = Uri.parse("${apiGlobal}/user/resetpassword");
+    final uri = Uri.parse("$apiGlobal/user/resetpassword");
 
     Map<String, String> headers = {
-      "Authorization": 'Bearer ${ResetToken}',
+      "Authorization": 'Bearer $ResetToken',
       'Content-Type': 'application/json',
     };
 
@@ -291,29 +266,18 @@ class ApiService {
       headers: headers,
       body: jsonbody,
     );
-    var res_data = json.decode(response.body.toString());
-    if (res_data["status"] == true) {
+    var resData = json.decode(response.body.toString());
+    if (resData["status"] == true) {
       Get.back();
-
-      Get.snackbar("Message", "",
-          backgroundColor: Colors.grey,
-          messageText: Text(
-            res_data['message'],
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ));
+      Get.snackbar("Message", resData["message"]);
       Get.to(
-        () => LoginScreen(),
-        duration: Duration(seconds: 1),
+        () => const LoginScreen(),
+        duration: const Duration(seconds: 1),
         transition: Transition.fadeIn,
       );
     } else {
       Get.back();
-      Get.snackbar("Error", "",
-          backgroundColor: Colors.grey,
-          messageText: Text(
-            res_data['message'],
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ));
+      Get.snackbar("Error", resData["message"]);
     }
   }
 
@@ -322,12 +286,12 @@ class ApiService {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          return SpinKitRotatingCircle(
+          return const SpinKitRotatingCircle(
             color: Colors.white,
             size: 50.0,
           );
         });
-    final uri = Uri.parse("${apiGlobal}/profile");
+    final uri = Uri.parse("$apiGlobal/profile");
 
     final headers = {'Content-Type': 'application/json'};
     var MyFilename = path.basename(profileimage);
@@ -343,40 +307,31 @@ class ApiService {
     request.fields['deviceType'] = "android";
     request.fields['deviceToken'] = "abc";
 
-    var multipartFile = await http.MultipartFile.fromPath('file', profileimage, filename: MyFilename, contentType: MediaType("image", "jpg"));
+    var multipartFile = await http.MultipartFile.fromPath('file', profileimage,
+        filename: MyFilename, contentType: MediaType("image", "jpg"));
 
     request.files.add(multipartFile);
     request.headers.addAll(headers);
 
-    var res_data = json.encode(request.fields);
+    var resData = json.encode(request.fields);
     var response = await request.send();
     final res = await http.Response.fromStream(response);
-    log("res print" + res.body.toString());
-    var _profileData = json.decode(res.body.toString());
+    log("res print${res.body}");
+    var profileData = json.decode(res.body.toString());
 
-    if (_profileData["status"] == true) {
-      AuthToken = _profileData["data"]["token"].toString();
-      usercontroller.User(userModel.fromJson(_profileData));
+    if (profileData["status"] == true) {
+      AuthToken = profileData["data"]["token"].toString();
+      usercontroller.User(userModel.fromJson(profileData));
       getAddressFromLatLng();
 
       Get.back();
-
-      Get.snackbar("Message", "",
-          backgroundColor: Colors.grey,
-          messageText: Text(
-            _profileData['message'],
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ));
+      Get.snackbar("Message", profileData['message']);
       bottomcontroller.navBarChange(0);
-      Get.to(() => NavBarScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+      Get.to(() => const NavBarScreen(),
+          duration: const Duration(seconds: 1), transition: Transition.fadeIn);
     } else {
       Get.back();
-      Get.snackbar("Error", "",
-          backgroundColor: Colors.grey,
-          messageText: Text(
-            _profileData['message'],
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ));
+      Get.snackbar("Error", profileData['message']);
     }
   }
 
@@ -385,18 +340,18 @@ class ApiService {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) {
-          return SpinKitRotatingCircle(
+          return const SpinKitRotatingCircle(
             color: Colors.white,
             size: 50.0,
           );
         });
-    final uri = Uri.parse("${apiGlobal}/user/update");
+    final uri = Uri.parse("$apiGlobal/user/update");
 
     final headers = {
-      'Authorization': 'Bearer ${AuthToken}',
+      'Authorization': 'Bearer $AuthToken',
       'Content-Type': 'application/json',
     };
-    var MyFilename;
+    dynamic MyFilename;
     if (UserProfileImage != null) {
       MyFilename = path.basename(UserProfileImage);
     }
@@ -411,7 +366,9 @@ class ApiService {
     request.fields['password'] = updateProfiledata['password'];
     request.fields['designation'] = updateProfiledata['designation'];
     if (UserProfileImage != null) {
-      var multipartFile = await http.MultipartFile.fromPath('file', UserProfileImage, filename: MyFilename, contentType: MediaType("image", "jpg"));
+      var multipartFile = await http.MultipartFile.fromPath(
+          'file', UserProfileImage,
+          filename: MyFilename, contentType: MediaType("image", "jpg"));
       request.files.add(multipartFile);
     }
 
@@ -419,33 +376,58 @@ class ApiService {
 
     request.headers.addAll(headers);
 
-    var res_data = json.encode(request.fields);
+    var resData = json.encode(request.fields);
     var response = await request.send();
     final res = await http.Response.fromStream(response);
-    log("res print" + res.body.toString());
-    var _profileData = json.decode(res.body.toString());
+    log("res print${res.body}");
+    var profileData = json.decode(res.body.toString());
 
-    if (_profileData["status"] == true) {
-      usercontroller.User(userModel.fromJson(_profileData));
+    if (profileData["status"] == true) {
+      usercontroller.User(userModel.fromJson(profileData));
       getAddressFromLatLng();
 
-      Get.snackbar("Message", "",
-          backgroundColor: Colors.grey,
-          messageText: Text(
-            _profileData['message'],
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ));
+      Get.snackbar("Message", profileData['message']);
 
       bottomcontroller.navBarChange(3);
-      Get.to(() => NavBarScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+      Get.to(() => const NavBarScreen(),
+          duration: const Duration(seconds: 1), transition: Transition.fadeIn);
     } else {
       Get.back();
-      Get.snackbar("Error", "",
-          backgroundColor: Colors.grey,
-          messageText: Text(
-            _profileData['message'],
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ));
+      Get.snackbar("Error", profileData['message']);
+    }
+  }
+
+  joinEvent(eventid, context) async {
+    final uri = Uri.parse("$apiGlobal/joinevent/$eventid");
+    var data = {'uid': userid};
+    http.Response response = await http.patch(
+      uri,
+      body: data,
+    );
+    var resData = json.decode(response.body.toString());
+    if (resData['status'] == true) {
+      Get.snackbar('Message', resData['message']);
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const NewsAndEventsScreen(
+                value: '',
+              )));
+      // Get.to(const NewsAndEventsScreen(
+      //   value: '',
+      // ));
+    }
+  }
+
+  geteventbyuser() async {
+    final eventcontroller = Get.put(EventController());
+    eventcontroller.setLoading(true);
+    final uri = Uri.parse("$apiGlobal/user/getmyevents");
+    var headers = {'Authorization': 'Bearer $AuthToken'};
+    http.Response response = await http.get(uri, headers: headers);
+    var resData = json.decode(response.body.toString());
+
+    if (resData['status'] == true) {
+      eventcontroller.setLoading(false);
+      eventcontroller.getMyEvents(resData['data']);
     }
   }
 
@@ -453,7 +435,7 @@ class ApiService {
     dynamic longitude = UserController.user.data!.location!.coordinates![0];
     dynamic latitude = UserController.user.data!.location!.coordinates![1];
     final placemarks = await placemarkFromCoordinates(latitude, longitude);
-    if (placemarks != null && placemarks.isNotEmpty) {
+    if (placemarks.isNotEmpty) {
       final placemark = placemarks[0];
       completeAddress =
           '${placemark.street},${placemark.subLocality},${placemark.locality}, ${placemark.administrativeArea} ${placemark.postalCode}, ${placemark.country}';
@@ -462,42 +444,31 @@ class ApiService {
     return "Unable to get address";
   }
 
-  GetPrivacy(context) async {
-    final uri = Uri.parse("${apiGlobal}/privacy");
-    http.Response response = await http.get(uri);
-    var res_data = json.decode(response.body);
-    if (res_data["status"] == true) {
-      return res_data;
-    }
-  }
-
   getTerms() async {
-    final uri = Uri.parse("${apiGlobal}/terms");
+    final uri = Uri.parse("$apiGlobal/terms");
     http.Response response = await http.get(uri);
-    var res_data = jsonDecode(response.body);
-    if (res_data["status"] == true) {
-      print(res_data["data"]);
-      return res_data["data"];
+    var resData = jsonDecode(response.body);
+    if (resData["status"] == true) {
+      print(resData["data"]);
+      return resData["data"];
     }
   }
 
   getAbout() async {
-    final uri = Uri.parse("${apiGlobal}/about");
+    final uri = Uri.parse("$apiGlobal/about");
     http.Response response = await http.get(uri);
-    var res_data = jsonDecode(response.body);
-    if (res_data["status"] == true) {
-      return res_data;
+    var resData = jsonDecode(response.body);
+    if (resData["status"] == true) {
+      return resData;
     }
   }
 
-  getDocuments() async {
-    final uri = Uri.parse("${apiGlobal}/document");
+  GetPrivacy(context) async {
+    final uri = Uri.parse("$apiGlobal/privacy");
     http.Response response = await http.get(uri);
-    var res_data = jsonDecode(response.body);
-    if (res_data["status"] == true) {
-      print(res_data);
-
-      return res_data;
+    var resData = json.decode(response.body);
+    if (resData["status"] == true) {
+      return resData;
     }
   }
 }

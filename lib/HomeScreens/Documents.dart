@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:_uaw/Helpers.dart';
 import 'package:_uaw/HomeScreens/NavBar.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +17,8 @@ class DocumentsScreen extends StatefulWidget {
   State<DocumentsScreen> createState() => _DocumentsScreenState();
 }
 
-class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProviderStateMixin {
-
-
-  
+class _DocumentsScreenState extends State<DocumentsScreen>
+    with SingleTickerProviderStateMixin {
   final bottomcontroller = Get.put(BottomController());
   String now = DateFormat("yyyy-MM-dd").format(DateTime.now());
   List DocumentDetails = [
@@ -71,7 +71,7 @@ class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProv
               children: [
                 35.verticalSpace,
                 ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: DocumentDetails.length,
                     itemBuilder: (BuildContext context, i) {
@@ -152,7 +152,7 @@ class DocumentWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.r),
                     color: whitecolor,
-                    image: DecorationImage(
+                    image: const DecorationImage(
                       image: AssetImage("assets/images/Rectangle 179@3x.png"),
                       fit: BoxFit.fill,
                     ),
