@@ -1,3 +1,4 @@
+import 'package:_uaw/Auth/APIService/API.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,8 +13,25 @@ class PrivicyAndPolicyScreen extends StatefulWidget {
   State<PrivicyAndPolicyScreen> createState() => _PrivicyAndPolicyScreenState();
 }
 
-class _PrivicyAndPolicyScreenState extends State<PrivicyAndPolicyScreen>
-    with SingleTickerProviderStateMixin {
+class _PrivicyAndPolicyScreenState extends State<PrivicyAndPolicyScreen> with SingleTickerProviderStateMixin {
+  late final PrivacyPolicy;
+  bool _isLoading = false;
+  getPrivacyPolicy() async {
+    PrivacyPolicy = await ApiService().GetPrivacy(context);
+    print("privacy ${PrivacyPolicy}");
+    setState(() {
+      _isLoading = true;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    getPrivacyPolicy();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,31 +68,24 @@ class _PrivicyAndPolicyScreenState extends State<PrivicyAndPolicyScreen>
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.r),
           child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                40.verticalSpace,
-                Text(
-                  "Nullam Porta Diam Id Dolor",
-                  style: txtstyleblack20Bold,
-                ),
-                20.verticalSpace,
-                Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae vulputate velit. Nulla facilisi. Fusce interdum ornare arcu, quis accumsan sapien tincidunt vel. Donec tempus nibh a lectus eleifend, at aliquam quam pharetra. Aliquam blandit risus nunc, viverra porttitor ex mattis et. Maecenas accumsan felis et sem pellentesque faucibus. Aliquam facilisis facilisis est, vitae ultricies tortor auctor eget. Aenean ac metus porttitor, interdum mauris iaculis, commodo erat.",
-                  style: txtstyleblack15regular,
-                ),
-                20.verticalSpace,
-                Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae vulputate velit. Nulla facilisi. Fusce interdum ornare arcu, quis accumsan sapien tincidunt vel. Donec tempus nibh a lectus eleifend, at aliquam quam pharetra. Aliquam blandit risus nunc, viverra porttitor ex mattis et. Maecenas accumsan felis et sem pellentesque faucibus. Aliquam facilisis facilisis est, vitae ultricies tortor auctor eget. Aenean ac metus porttitor, interdum mauris iaculis, commodo erat.",
-                  style: txtstyleblack15regular,
-                ),
-                20.verticalSpace,
-                Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae vulputate velit. Nulla facilisi. Fusce interdum ornare arcu, quis accumsan sapien tincidunt vel. Donec tempus nibh a lectus eleifend, at aliquam quam pharetra. Aliquam blandit risus nunc, viverra porttitor ex mattis et. Maecenas accumsan felis et sem pellentesque faucibus. Aliquam facilisis facilisis est, vitae ultricies tortor auctor eget. Aenean ac metus porttitor, interdum mauris iaculis, commodo erat.",
-                  style: txtstyleblack15regular,
-                ),
-              ],
-            ),
+            child: _isLoading == false
+                ? Center(child: CircularProgressIndicator())
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      40.verticalSpace,
+                      Text(
+                        PrivacyPolicy["data"][0]["contentType"].toString(),
+                        style: txtstyleblack20Bold,
+                      ),
+                      20.verticalSpace,
+                      Text(
+                        PrivacyPolicy["data"][0]["title"].toString(),
+                        style: txtstyleblack15regular,
+                      ),
+                      50.verticalSpace,
+                    ],
+                  ),
           ),
         ),
       ),

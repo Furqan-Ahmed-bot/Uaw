@@ -406,7 +406,7 @@ class ApiService {
     );
     var resData = json.decode(response.body.toString());
     if (resData['status'] == true) {
-      // Get.snackbar('Message', resData['message']);
+      Get.snackbar('Message', resData['message']);
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => const NewsAndEventsScreen(
                 value: '',
@@ -442,5 +442,33 @@ class ApiService {
       return '${placemark.street}, ${placemark.locality}, ${placemark.administrativeArea} ${placemark.postalCode}, ${placemark.country}';
     }
     return "Unable to get address";
+  }
+
+  getTerms() async {
+    final uri = Uri.parse("$apiGlobal/terms");
+    http.Response response = await http.get(uri);
+    var resData = jsonDecode(response.body);
+    if (resData["status"] == true) {
+      print(resData["data"]);
+      return resData["data"];
+    }
+  }
+
+  getAbout() async {
+    final uri = Uri.parse("$apiGlobal/about");
+    http.Response response = await http.get(uri);
+    var resData = jsonDecode(response.body);
+    if (resData["status"] == true) {
+      return resData;
+    }
+  }
+
+  GetPrivacy(context) async {
+    final uri = Uri.parse("$apiGlobal/privacy");
+    http.Response response = await http.get(uri);
+    var resData = json.decode(response.body);
+    if (resData["status"] == true) {
+      return resData;
+    }
   }
 }
