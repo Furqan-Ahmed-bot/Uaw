@@ -480,4 +480,24 @@ class ApiService {
       return res_data["data"];
     }
   }
+
+  getAbout() async {
+    final uri = Uri.parse("${apiGlobal}/about");
+    http.Response response = await http.get(uri);
+    var res_data = jsonDecode(response.body);
+    if (res_data["status"] == true) {
+      return res_data;
+    }
+  }
+
+  getDocuments() async {
+    final uri = Uri.parse("${apiGlobal}/document");
+    http.Response response = await http.get(uri);
+    var res_data = jsonDecode(response.body);
+    if (res_data["status"] == true) {
+      print(res_data);
+
+      return res_data;
+    }
+  }
 }
