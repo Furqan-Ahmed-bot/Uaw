@@ -18,7 +18,7 @@ class DocumentsScreen extends StatefulWidget {
 class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProviderStateMixin {
 
 
-  list 
+  
   final bottomcontroller = Get.put(BottomController());
   String now = DateFormat("yyyy-MM-dd").format(DateTime.now());
   List DocumentDetails = [
