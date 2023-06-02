@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:_uaw/Auth/Login.dart';
 import 'package:_uaw/Auth/Prelogin.dart';
 import 'package:_uaw/Welcome.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -28,8 +29,6 @@ class _SplashScreenState extends State<SplashScreen> {
       print('DEVICE TOKEN: $deviceToken');
     });
   }
-   
-
 
   startTimer() async {
     var duration = Duration(seconds: 3);
@@ -37,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   loginRoute() {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => PreloginScreen()));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
   }
 
   Widget build(BuildContext context) {

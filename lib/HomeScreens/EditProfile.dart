@@ -43,6 +43,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     fullnameController.text = UserController.user.data!.name.toString();
     // passwordController.text = UserController.user.data!.password.toString();
     phonenumberController.text = UserController.user.data!.phone.toString();
+    locationController.text = UserController.user.data!.location.toString();
   }
 
   var dropdownvalue;
@@ -590,17 +591,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                         5.verticalSpace,
                         TextFormField(
+                          minLines: 1,
+                          maxLines: null,
                           controller: locationController,
-                          onChanged: (value) async {
-                            final List<double>? latlng = await getLatLong(value);
-                            if (latlng != null) {
-                              latitude = latlng[0];
-                              longitude = latlng[1];
-                              print('Latitude: $latitude, Longitude: $longitude');
-                            } else {
-                              print('Invalid address');
-                            }
-                          },
+                          // onChanged: (value) async {
+                          //   final List<double>? latlng = await getLatLong(value);
+                          //   if (latlng != null) {
+                          //     latitude = latlng[0];
+                          //     longitude = latlng[1];
+                          //     print('Latitude: $latitude, Longitude: $longitude');
+                          //   } else {
+                          //     print('Invalid address');
+                          //   }
+                          // },
                           decoration: InputDecoration(
                             hintMaxLines: 2,
                             // suffixIconConstraints: BoxConstraints(maxWidth: 35),
@@ -794,8 +797,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               "name": fullnameController.text,
                               "password": passwordController.text,
                               "phone": phonenumberController.text,
-                              "lat": latitude.toString(),
-                              "long": longitude.toString(),
+                              "location": locationController.text,
+                              // "lat": latitude.toString(),
+                              // "long": longitude.toString(),
                               "designation": selectedDesignationID.toString(),
                               // "email": uniqieemail.toString(),
                             };
@@ -832,14 +836,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 
-  Future<List<double>?> getLatLong(String address) async {
-    final List<Location> locations = await locationFromAddress(address);
-    if (locations.isNotEmpty) {
-      final Location location = locations.first;
-      final List<double> latlong = [location.latitude, location.longitude];
-      return latlong;
-    } else {
-      return null;
-    }
-  }
+  // Future<List<double>?> getLatLong(String address) async {
+  //   final List<Location> locations = await locationFromAddress(address);
+  //   if (locations.isNotEmpty) {
+  //     final Location location = locations.first;
+  //     final List<double> latlong = [location.latitude, location.longitude];
+  //     return latlong;
+  //   } else {
+  //     return null;
+  //   }
+  // }
 }

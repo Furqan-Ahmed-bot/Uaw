@@ -3,6 +3,8 @@ import 'dart:developer';
 
 import 'package:_uaw/Auth/Login.dart';
 import 'package:_uaw/Auth/OTPVerification.dart';
+import 'package:_uaw/Controllers/documentscontroller.dart';
+import 'package:_uaw/Controllers/magazinecontroller.dart';
 import 'package:_uaw/Controllers/usercontroller.dart';
 import 'package:_uaw/Models/usermodel.dart';
 import 'package:flutter/material.dart';
@@ -53,8 +55,7 @@ class ApiService {
     var resData = json.decode(response.body.toString());
     if (resData["status"] == true) {
       Get.snackbar("Message", resData["message"]);
-      Get.to(() => const PreloginScreen(),
-          duration: const Duration(seconds: 1), transition: Transition.fadeIn);
+      Get.to(() => const PreloginScreen(), duration: const Duration(seconds: 1), transition: Transition.fadeIn);
     } else {
       Get.back();
       Get.snackbar("Error", resData['message']);
@@ -134,12 +135,11 @@ class ApiService {
       AuthToken = resData["data"]["token"].toString();
       userid = resData["data"]["_id"].toString();
 
-      getAddressFromLatLng();
+      // getAddressFromLatLng();
       Get.back();
       Get.snackbar("Message", resData["message"]);
       bottomcontroller.navBarChange(0);
-      Get.to(() => const NavBarScreen(),
-          duration: const Duration(seconds: 1), transition: Transition.fadeIn);
+      Get.to(() => const NavBarScreen(), duration: const Duration(seconds: 1), transition: Transition.fadeIn);
     } else {
       Get.back();
       Get.snackbar("Error", resData["message"]);
@@ -298,8 +298,9 @@ class ApiService {
     var request = http.MultipartRequest('POST', uri);
 
     request.fields['name'] = completeProfile['name'];
-    request.fields['lat'] = completeProfile['lat'];
-    request.fields['long'] = completeProfile['long'];
+    request.fields["location"] = completeProfile["location"];
+    // request.fields['lat'] = completeProfile['lat'];
+    // request.fields['long'] = completeProfile['long'];
     request.fields['phone'] = completeProfile['phone'];
     request.fields['email'] = completeProfile['email'];
     request.fields['password'] = completeProfile['password'];
@@ -307,8 +308,7 @@ class ApiService {
     request.fields['deviceType'] = "android";
     request.fields['deviceToken'] = "abc";
 
-    var multipartFile = await http.MultipartFile.fromPath('file', profileimage,
-        filename: MyFilename, contentType: MediaType("image", "jpg"));
+    var multipartFile = await http.MultipartFile.fromPath('file', profileimage, filename: MyFilename, contentType: MediaType("image", "jpg"));
 
     request.files.add(multipartFile);
     request.headers.addAll(headers);
@@ -322,13 +322,12 @@ class ApiService {
     if (profileData["status"] == true) {
       AuthToken = profileData["data"]["token"].toString();
       usercontroller.User(userModel.fromJson(profileData));
-      getAddressFromLatLng();
+      // getAddressFromLatLng();
 
       Get.back();
       Get.snackbar("Message", profileData['message']);
       bottomcontroller.navBarChange(0);
-      Get.to(() => const NavBarScreen(),
-          duration: const Duration(seconds: 1), transition: Transition.fadeIn);
+      Get.to(() => const NavBarScreen(), duration: const Duration(seconds: 1), transition: Transition.fadeIn);
     } else {
       Get.back();
       Get.snackbar("Error", profileData['message']);
@@ -359,16 +358,15 @@ class ApiService {
     var request = http.MultipartRequest('POST', uri);
 
     request.fields['name'] = updateProfiledata['name'];
-    request.fields['lat'] = updateProfiledata['lat'];
-    request.fields['long'] = updateProfiledata['long'];
+    // request.fields['lat'] = updateProfiledata['lat'];
+    // request.fields['long'] = updateProfiledata['long'];
     request.fields['phone'] = updateProfiledata['phone'];
+    request.fields["location"] = updateProfiledata["location"];
     // request.fields['email'] = updateProfiledata['email'];
     request.fields['password'] = updateProfiledata['password'];
     request.fields['designation'] = updateProfiledata['designation'];
     if (UserProfileImage != null) {
-      var multipartFile = await http.MultipartFile.fromPath(
-          'file', UserProfileImage,
-          filename: MyFilename, contentType: MediaType("image", "jpg"));
+      var multipartFile = await http.MultipartFile.fromPath('file', UserProfileImage, filename: MyFilename, contentType: MediaType("image", "jpg"));
       request.files.add(multipartFile);
     }
 
@@ -384,13 +382,12 @@ class ApiService {
 
     if (profileData["status"] == true) {
       usercontroller.User(userModel.fromJson(profileData));
-      getAddressFromLatLng();
+      // getAddressFromLatLng();
 
       Get.snackbar("Message", profileData['message']);
 
       bottomcontroller.navBarChange(3);
-      Get.to(() => const NavBarScreen(),
-          duration: const Duration(seconds: 1), transition: Transition.fadeIn);
+      Get.to(() => const NavBarScreen(), duration: const Duration(seconds: 1), transition: Transition.fadeIn);
     } else {
       Get.back();
       Get.snackbar("Error", profileData['message']);
@@ -431,18 +428,44 @@ class ApiService {
     }
   }
 
-  getAddressFromLatLng() async {
-    dynamic longitude = UserController.user.data!.location!.coordinates![0];
-    dynamic latitude = UserController.user.data!.location!.coordinates![1];
-    final placemarks = await placemarkFromCoordinates(latitude, longitude);
-    if (placemarks.isNotEmpty) {
-      final placemark = placemarks[0];
-      completeAddress =
-          '${placemark.street},${placemark.subLocality},${placemark.locality}, ${placemark.administrativeArea} ${placemark.postalCode}, ${placemark.country}';
-      return '${placemark.street}, ${placemark.locality}, ${placemark.administrativeArea} ${placemark.postalCode}, ${placemark.country}';
+  getDocumnets() async {
+    final documentcontroller = Get.put(DocumentController());
+    documentcontroller.setLoading(true);
+    final uri = Uri.parse("$apiGlobal/document");
+    http.Response response = await http.get(uri);
+    var resData = jsonDecode(response.body.toString());
+
+    if (resData["status"] == true) {
+      documentcontroller.setLoading(false);
+      documentcontroller.getDocumentsData(resData["data"]);
     }
-    return "Unable to get address";
   }
+
+  getMagazine() async {
+    final magazinecontroller = Get.put(MagazineController());
+    magazinecontroller.setLoading(true);
+    final uri = Uri.parse("$apiGlobal/magazine");
+    http.Response response = await http.get(uri);
+    var resData = jsonDecode(response.body.toString());
+
+    if (resData["status"] == true) {
+      magazinecontroller.setLoading(false);
+      magazinecontroller.getDocumentsData(resData["data"]);
+    }
+  }
+
+  // getAddressFromLatLng() async {
+  //   dynamic longitude = UserController.user.data!.location!.coordinates![0];
+  //   dynamic latitude = UserController.user.data!.location!.coordinates![1];
+  //   final placemarks = await placemarkFromCoordinates(latitude, longitude);
+  //   if (placemarks.isNotEmpty) {
+  //     final placemark = placemarks[0];
+  //     completeAddress =
+  //         '${placemark.street},${placemark.subLocality},${placemark.locality}, ${placemark.administrativeArea} ${placemark.postalCode}, ${placemark.country}';
+  //     return '${placemark.street}, ${placemark.locality}, ${placemark.administrativeArea} ${placemark.postalCode}, ${placemark.country}';
+  //   }
+  //   return "Unable to get address";
+  // }
 
   getTerms() async {
     final uri = Uri.parse("$apiGlobal/terms");

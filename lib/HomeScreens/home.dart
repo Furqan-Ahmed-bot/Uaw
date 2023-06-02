@@ -56,29 +56,10 @@ class _HomeScreenState extends State<HomeScreen> {
   //   CreateProfileScreen(),
   // ];
   List StatusWidgetDetails = [
-    {
-      "containerimage":
-          "assets/images/romain-dancre-doplSDELX7E-unsplash@3x.png",
-      "statustext": "Documents",
-      "navigateTo": "DocumentsScreen"
-    },
-    {
-      "containerimage":
-          "assets/images/zhang-shaoqi-PdUACzBJP-Y-unsplash@3x.png",
-      "statustext": "Videos",
-      "navigateTo": "DocumentsScreen"
-    },
-    {
-      "containerimage":
-          "assets/images/krakenimages-Y5bvRlcCx8k-unsplash@3x.png",
-      "statustext": "Magazines",
-      "navigateTo": "DocumentsScreen"
-    },
-    {
-      "containerimage": "assets/images/md-duran-rE9vgD_TXgM-unsplash@3x.png",
-      "statustext": "Events",
-      "navigateTo": "DocumentsScreen"
-    },
+    {"containerimage": "assets/images/romain-dancre-doplSDELX7E-unsplash@3x.png", "statustext": "Documents", "navigateTo": "DocumentsScreen"},
+    {"containerimage": "assets/images/zhang-shaoqi-PdUACzBJP-Y-unsplash@3x.png", "statustext": "Videos", "navigateTo": "DocumentsScreen"},
+    {"containerimage": "assets/images/krakenimages-Y5bvRlcCx8k-unsplash@3x.png", "statustext": "Magazines", "navigateTo": "DocumentsScreen"},
+    {"containerimage": "assets/images/md-duran-rE9vgD_TXgM-unsplash@3x.png", "statustext": "Events", "navigateTo": "DocumentsScreen"},
   ];
 
   @override
@@ -104,9 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
           leadingWidth: 70,
           leading: GestureDetector(
             onTap: () {
-              Get.to(() => DrawerScreen(),
-                  transition: Transition.leftToRight,
-                  duration: Duration(milliseconds: 300));
+              Get.to(() => DrawerScreen(), transition: Transition.leftToRight, duration: Duration(milliseconds: 300));
             },
             child: Center(
               child: Container(
@@ -165,8 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: white,
-                                suffixIconConstraints:
-                                    BoxConstraints(minWidth: 50),
+                                suffixIconConstraints: BoxConstraints(minWidth: 50),
                                 suffixIcon: Image.asset(
                                   "assets/images/Group 1290@3x.png",
                                   scale: 3.5,
@@ -197,8 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: 1.sw,
                           height: 0.15.sh,
                           child: ListView.separated(
-                            separatorBuilder:
-                                (BuildContext context, int index) {
+                            separatorBuilder: (BuildContext context, int index) {
                               return const SizedBox(width: 23);
                             },
                             scrollDirection: Axis.horizontal,
@@ -242,8 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   } else if (i == 3) {
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(
-                                          builder: (context) => NavBarScreen()),
+                                      MaterialPageRoute(builder: (context) => NavBarScreen()),
                                     );
                                     // log('ujijiukjjkjkhiu: $i');
                                     // Navigator.push(
@@ -256,10 +232,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   }
                                 },
                                 child: StatusWidget(
-                                  containerimage: StatusWidgetDetails[i]
-                                      ["containerimage"],
-                                  statustext: StatusWidgetDetails[i]
-                                      ["statustext"],
+                                  containerimage: StatusWidgetDetails[i]["containerimage"],
+                                  statustext: StatusWidgetDetails[i]["statustext"],
                                   index: i,
                                 ),
                               );
@@ -331,18 +305,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     10.horizontalSpace,
                                     Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          eventController.EventsData[0]['user']
-                                              ['name'],
+                                          eventController.EventsData[0]['user']['name'],
                                           style: txtstyleblue17,
                                         ),
                                         5.verticalSpace,
-                                        Text(eventController.EventsData[0]
-                                                    ['createdAt']
-                                                .toString()
+                                        Text(eventController.EventsData[0]['createdAt'].toString()
 
                                             // DateFormat(
                                             //   "MM-dd-yyyy",
@@ -360,27 +330,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onTap: () {
                                     Get.to(
                                         () => NewsAndEventsDetailsScreen(
-                                              name:
-                                                  eventController.EventsData[0]
-                                                      ['user']['name'],
-                                              date: eventController
-                                                  .EventsData[0]['createdAt']
-                                                  .toString(),
-                                              description: eventController
-                                                  .EventsData[0]['description'],
-                                              timee: eventController
-                                                  .EventsData[0]['createdAt']
-                                                  .toString(),
-                                              title: eventController
-                                                  .EventsData[0]['title'],
-                                              location: eventController
-                                                  .EventsData[0]['location']
-                                                  .toString(),
-                                              eventimage:
-                                                  eventController.EventsData[0]
-                                                      ['file'][0]['file'],
-                                              eventid: eventController
-                                                  .EventsData[0]['_id'],
+                                              name: eventController.EventsData[0]['user']['name'],
+                                              date: eventController.EventsData[0]['createdAt'].toString(),
+                                              description: eventController.EventsData[0]['description'],
+                                              timee: eventController.EventsData[0]['createdAt'].toString(),
+                                              title: eventController.EventsData[0]['title'],
+                                              location: eventController.EventsData[0]['location'].toString(),
+                                              eventimage: eventController.EventsData[0]['file'][0]['file'],
+                                              eventid: eventController.EventsData[0]['_id'],
                                             ),
                                         duration: Duration(seconds: 1),
                                         transition: Transition.fadeIn);
@@ -401,10 +358,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               topLeft: Radius.circular(10.r),
                                             ),
                                             color: black,
-                                            image: DecorationImage(
-                                                image: AssetImage(
-                                                    "assets/images/Group 1440@3x.png"),
-                                                fit: BoxFit.fill),
+                                            image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
                                           ),
                                         ),
                                       ),
@@ -415,10 +369,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           width: 115.w,
                                           height: 135.h,
                                           decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                image: AssetImage(
-                                                    "assets/images/Group 1440@3x.png"),
-                                                fit: BoxFit.fill),
+                                            image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
                                             color: black,
                                           ),
                                         ),
@@ -434,10 +385,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             borderRadius: BorderRadius.only(
                                               topRight: Radius.circular(10.r),
                                             ),
-                                            image: DecorationImage(
-                                                image: AssetImage(
-                                                    "assets/images/Group 1440@3x.png"),
-                                                fit: BoxFit.fill),
+                                            image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
                                           ),
                                         ),
                                       ),
@@ -445,35 +393,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                         crossAxisCellCount: 5,
                                         mainAxisCellCount: 1,
                                         child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                           children: [
                                             Container(
                                               width: 170.w,
                                               decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.only(
-                                                  bottomLeft:
-                                                      Radius.circular(10.r),
+                                                  bottomLeft: Radius.circular(10.r),
                                                 ),
                                                 color: black,
-                                                image: DecorationImage(
-                                                    image: AssetImage(
-                                                        "assets/images/Group 1440@3x.png"),
-                                                    fit: BoxFit.fill),
+                                                image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
                                               ),
                                             ),
                                             Container(
                                               width: 170.w,
                                               decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.only(
-                                                  bottomRight:
-                                                      Radius.circular(10.r),
+                                                  bottomRight: Radius.circular(10.r),
                                                 ),
                                                 color: black,
-                                                image: DecorationImage(
-                                                    image: AssetImage(
-                                                        "assets/images/Group 1440@3x.png"),
-                                                    fit: BoxFit.fill),
+                                                image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
                                               ),
                                             ),
                                           ],
@@ -543,18 +482,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                     borderRadius: BorderRadius.circular(10.r),
                                     color: whitecolor,
                                     image: DecorationImage(
-                                      image: AssetImage(
-                                          "assets/images/Rectangle 179@3x.png"),
+                                      image: AssetImage("assets/images/Rectangle 179@3x.png"),
                                       fit: BoxFit.fill,
                                     ),
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsets.only(
-                                        right: 10.r, bottom: 10.r),
+                                    padding: EdgeInsets.only(right: 10.r, bottom: 10.r),
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
+                                      crossAxisAlignment: CrossAxisAlignment.end,
                                       children: [
                                         Image.asset(
                                           "assets/images/Group 1435@3x.png",
@@ -616,9 +552,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 15.verticalSpace,
                                 GestureDetector(
                                   onTap: () {
-                                    Get.to(() => VidePalayerScreen(),
-                                        duration: Duration(seconds: 1),
-                                        transition: Transition.fadeIn);
+                                    Get.to(() => VidePalayerScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
                                   },
                                   child: Container(
                                     width: 0.9.sw,
@@ -627,16 +561,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.circular(10.r),
                                       color: whitecolor,
                                       image: DecorationImage(
-                                        image: AssetImage(
-                                            "assets/images/Group 1440@3x.png"),
+                                        image: AssetImage("assets/images/Group 1440@3x.png"),
                                         fit: BoxFit.fill,
                                       ),
                                     ),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Image.asset(
                                           "assets/images/Group 12950@3x.png",

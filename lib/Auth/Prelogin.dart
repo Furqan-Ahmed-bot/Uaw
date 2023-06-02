@@ -64,7 +64,8 @@ class _PreloginScreenState extends State<PreloginScreen> {
                           "Pre Login",
                           style: textroboto28,
                         ),
-                        50.verticalSpace,
+                        140.verticalSpace,
+
                         GestureDetector(
                           onTap: () {
                             Get.to(() => LoginScreen());
@@ -77,60 +78,60 @@ class _PreloginScreenState extends State<PreloginScreen> {
                             containertext: "Login with Email",
                           ),
                         ),
-                        15.verticalSpace,
-                        GestureDetector(
-                          onTap: () {
-                            bottomcontroller.navBarChange(0);
-                            Get.to(
-                              () => NavBarScreen(),
-                              duration: Duration(seconds: 1),
-                              transition: Transition.fadeIn,
-                            );
-                          },
-                          child: PreloginWidget(
-                            containercolor2: Color(0xff5C82E8),
-                            containercolor: Color(0xff3A559F),
-                            containertextcolor: whitecolor,
-                            iconimage: "assets/images/Icon awesome-facebook-f@3x.png",
-                            containertext: "Login with Facebook",
-                          ),
-                        ),
-                        15.verticalSpace,
-                        GestureDetector(
-                          onTap: () {
-                            bottomcontroller.navBarChange(0);
-                            Get.to(
-                              () => NavBarScreen(),
-                              duration: Duration(seconds: 1),
-                              transition: Transition.fadeIn,
-                            );
-                          },
-                          child: PreloginWidget(
-                            containercolor2: Color(0xffFF5C4D),
-                            containercolor: Color(0xffCB3E32),
-                            containertextcolor: whitecolor,
-                            iconimage: "assets/images/Icon simple-google@3x.png",
-                            containertext: "Login with Google",
-                          ),
-                        ),
-                        15.verticalSpace,
-                        GestureDetector(
-                          onTap: () {
-                            bottomcontroller.navBarChange(0);
-                            Get.to(
-                              () => NavBarScreen(),
-                              duration: Duration(seconds: 1),
-                              transition: Transition.fadeIn,
-                            );
-                          },
-                          child: PreloginWidget(
-                            containercolor2: Color(0xff000000),
-                            containercolor: Color(0xff000000),
-                            containertextcolor: whitecolor,
-                            iconimage: "assets/images/Icon awesome-apple@3x.png",
-                            containertext: "Login with Apple",
-                          ),
-                        ),
+                        // 15.verticalSpace,
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     bottomcontroller.navBarChange(0);
+                        //     Get.to(
+                        //       () => NavBarScreen(),
+                        //       duration: Duration(seconds: 1),
+                        //       transition: Transition.fadeIn,
+                        //     );
+                        //   },
+                        //   child: PreloginWidget(
+                        //     containercolor2: Color(0xff5C82E8),
+                        //     containercolor: Color(0xff3A559F),
+                        //     containertextcolor: whitecolor,
+                        //     iconimage: "assets/images/Icon awesome-facebook-f@3x.png",
+                        //     containertext: "Login with Facebook",
+                        //   ),
+                        // ),
+                        // 15.verticalSpace,
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     bottomcontroller.navBarChange(0);
+                        //     Get.to(
+                        //       () => NavBarScreen(),
+                        //       duration: Duration(seconds: 1),
+                        //       transition: Transition.fadeIn,
+                        //     );
+                        //   },
+                        //   child: PreloginWidget(
+                        //     containercolor2: Color(0xffFF5C4D),
+                        //     containercolor: Color(0xffCB3E32),
+                        //     containertextcolor: whitecolor,
+                        //     iconimage: "assets/images/Icon simple-google@3x.png",
+                        //     containertext: "Login with Google",
+                        //   ),
+                        // ),
+                        // 15.verticalSpace,
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     bottomcontroller.navBarChange(0);
+                        //     Get.to(
+                        //       () => NavBarScreen(),
+                        //       duration: Duration(seconds: 1),
+                        //       transition: Transition.fadeIn,
+                        //     );
+                        //   },
+                        //   child: PreloginWidget(
+                        //     containercolor2: Color(0xff000000),
+                        //     containercolor: Color(0xff000000),
+                        //     containertextcolor: whitecolor,
+                        //     iconimage: "assets/images/Icon awesome-apple@3x.png",
+                        //     containertext: "Login with Apple",
+                        //   ),
+                        // ),
                         Spacer(),
                         Center(
                           child: GestureDetector(

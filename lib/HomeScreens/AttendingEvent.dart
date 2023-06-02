@@ -56,7 +56,8 @@ class _AttendingEventScreenState extends State<AttendingEventScreen> {
         ),
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.r),
-          child: SingleChildScrollView(child: GetBuilder<EventController>(
+          child: SingleChildScrollView(
+            child: GetBuilder<EventController>(
             builder: (eventcontroller) {
               return eventcontroller.isLoding
                   ? const CircularProgressIndicator()

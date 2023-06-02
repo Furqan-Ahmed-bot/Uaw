@@ -8,9 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../Controllers/usercontroller.dart';
 import '../Global.dart';
+import '../Welcome.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -40,33 +42,33 @@ class _LoginScreenState extends State<LoginScreen> {
           backgroundColor: transparentcolor,
           elevation: 0,
           leading: GestureDetector(
-            onTap: () {
-              Get.back();
-            },
-            child: Center(
-              child: Container(
-                  width: 50.w,
-                  height: 50.h,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      colors: [
-                        greycolor,
-                        whitecolor,
-                      ],
-                    ),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    Icons.arrow_back,
-                    color: black,
-                  )),
-            ),
-          ),
+              // onTap: () {
+              //   Get.back();
+              // },
+              // child: Center(
+              //   child: Container(
+              //       width: 50.w,
+              //       height: 50.h,
+              //       decoration: BoxDecoration(
+              //         gradient: LinearGradient(
+              //           begin: Alignment.bottomCenter,
+              //           end: Alignment.topCenter,
+              //           colors: [
+              //             greycolor,
+              //             whitecolor,
+              //           ],
+              //         ),
+              //         shape: BoxShape.circle,
+              //       ),
+              //       child: Icon(
+              //         Icons.arrow_back,
+              //         color: black,
+              //       )),
+              // ),
+              ),
         ),
-        body: SingleChildScrollView(
-          child: Container(
+        body: ListView(children: [
+          Container(
             width: 1.sw,
             height: 1.sh,
             // decoration: BoxDecoration(
@@ -85,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                90.verticalSpace,
+                80.verticalSpace,
                 Expanded(
                   child: Container(
                     width: 1.sw,
@@ -207,7 +209,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                          30.verticalSpace,
+                          20.verticalSpace,
                           GestureDetector(
                             onTap: () {
                               Get.to(
@@ -220,7 +222,34 @@ class _LoginScreenState extends State<LoginScreen> {
                               "Forgot Password?",
                               style: textroboto18,
                             ),
-                          )
+                          ),
+                          50.verticalSpace,
+                          Center(
+                            child: GestureDetector(
+                              onTap: () {
+                                Get.to(() => WelcomeScreen());
+                              },
+                              child: RichText(
+                                text: TextSpan(
+                                  text: "Don't have an account? ",
+                                  style: GoogleFonts.roboto(
+                                    fontSize: 16.sp,
+                                    color: Color(0xff04366B),
+                                  ),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: 'Signup',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16.sp,
+                                        color: Color(0xff04366B),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -229,7 +258,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
           ),
-        ),
+        ]),
       ),
     );
   }

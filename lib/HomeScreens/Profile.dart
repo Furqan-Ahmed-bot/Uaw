@@ -234,6 +234,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     ),
                     5.verticalSpace,
                     TextFormField(
+                      minLines: 1,
+                      maxLines: null,
                       enabled: false,
                       decoration: InputDecoration(
                         hintMaxLines: 2,
@@ -244,7 +246,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           "assets/images/Group 1313@3x.png",
                           scale: 3.5,
                         ),
-                        hintText: completeAddress,
+                        hintText: UserController.user.data!.location.toString(),
                         hintStyle: medium18blackwopacity,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
