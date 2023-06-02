@@ -71,7 +71,21 @@ class _AttendingEventScreenState extends State<AttendingEventScreen> {
                               return GestureDetector(
                                 onTap: () {
                                   Get.to(
-                                      () => const AttendingEventDetailsScreen(),
+                                      () => AttendingEventDetailsScreen(
+                                            name:
+                                                eventcontroller.MyEvents[index]
+                                                    ['user']['name'],
+                                            timee: eventcontroller
+                                                .MyEvents[index]['date'],
+                                            date: eventcontroller
+                                                .MyEvents[index]['date'],
+                                            title: eventcontroller
+                                                .MyEvents[index]['title'],
+                                            description: eventcontroller
+                                                .MyEvents[index]['description'],
+                                            location: eventcontroller
+                                                .MyEvents[index]['location'],
+                                          ),
                                       duration: const Duration(seconds: 1),
                                       transition: Transition.fadeIn);
                                 },

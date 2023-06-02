@@ -6,15 +6,34 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class AttendingEventDetailsScreen extends StatefulWidget {
-  const AttendingEventDetailsScreen({super.key});
+  final eventid;
+  final name;
+  final timee;
+  final date;
+  final title;
+  final description;
+  final location;
+  final eventimage;
+  const AttendingEventDetailsScreen(
+      {super.key,
+      this.eventid,
+      this.name,
+      this.timee,
+      this.date,
+      this.title,
+      this.description,
+      this.location,
+      this.eventimage});
 
   @override
-  State<AttendingEventDetailsScreen> createState() => _AttendingEventDetailsScreenState();
+  State<AttendingEventDetailsScreen> createState() =>
+      _AttendingEventDetailsScreenState();
 }
 
-class _AttendingEventDetailsScreenState extends State<AttendingEventDetailsScreen> {
+class _AttendingEventDetailsScreenState
+    extends State<AttendingEventDetailsScreen> {
   String tdata = DateFormat("HH:mm a").format(DateTime.now());
-  DateTime currentTime = new DateTime.now();
+  DateTime currentTime = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -57,7 +76,7 @@ class _AttendingEventDetailsScreenState extends State<AttendingEventDetailsScree
                   Container(
                     width: 60.h,
                     height: 60.h,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
                         image: AssetImage(
@@ -71,16 +90,18 @@ class _AttendingEventDetailsScreenState extends State<AttendingEventDetailsScree
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Admin",
+                        widget.name,
                         style: txtstyleblue17,
                       ),
                       5.verticalSpace,
                       Text(
-                        DateFormat(
-                          "MMM dd yyyy",
-                        ).format(
-                          DateTime.now(),
-                        ),
+                        widget.date,
+
+                        // DateFormat(
+                        //   "MMM dd yyyy",
+                        // ).format(
+                        //   DateTime.now(),
+                        // ),
                         style: textroboto12,
                       ),
                     ],
@@ -93,7 +114,7 @@ class _AttendingEventDetailsScreenState extends State<AttendingEventDetailsScree
                 height: 328.h,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.r),
-                  image: DecorationImage(
+                  image: const DecorationImage(
                     image: AssetImage("assets/images/Group 1440@3x.png"),
                     fit: BoxFit.fill,
                   ),
@@ -101,7 +122,7 @@ class _AttendingEventDetailsScreenState extends State<AttendingEventDetailsScree
               ),
               15.verticalSpace,
               Text(
-                "Lorem ipsum dolor sit amet, consectetur",
+                widget.title,
                 style: txtstyleblue24,
               ),
               15.verticalSpace,
@@ -125,7 +146,7 @@ class _AttendingEventDetailsScreenState extends State<AttendingEventDetailsScree
                   ),
                   15.horizontalSpace,
                   Text(
-                    "03:00 Pm",
+                    widget.date,
                     style: textroboto14blue,
                   ),
                   // Text(
@@ -155,7 +176,7 @@ class _AttendingEventDetailsScreenState extends State<AttendingEventDetailsScree
                   ),
                   15.horizontalSpace,
                   Text(
-                    "Lorem Ipsum Dolor Sitamet,",
+                    widget.location,
                     style: textroboto14blue,
                   )
                 ],
@@ -174,7 +195,7 @@ class _AttendingEventDetailsScreenState extends State<AttendingEventDetailsScree
               ),
               15.verticalSpace,
               Text(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae vulputate velit. Nulla facilisi. Fusce interdum ornare arcu, quis",
+                widget.description,
                 style: textroboto15black,
               ),
               20.verticalSpace,

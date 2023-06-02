@@ -83,10 +83,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    ApiService().Events(context);
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-
-    // });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ApiService().Events(context);
+    });
     super.initState();
   }
 
