@@ -443,11 +443,7 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                     position: _offsetAnimation[1],
                     child: GestureDetector(
                       onTap: () {
-                        var data =
-                            ApiService().joinEvent(widget.eventid, context);
-                        if (data['status'] == true) {
-                          Get.to(NewsAndEventsScreen(value: ''));
-                        }
+                        ApiService().joinEvent(widget.eventid, context);
                       },
                       child: Container(
                         width: 189.w,
