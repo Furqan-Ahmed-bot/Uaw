@@ -24,7 +24,7 @@ class userModel {
 
 class Data {
   String? sId;
-  Location? location;
+  String? location;
   String? phone;
   String? userType;
   bool? isDeleted;
@@ -56,9 +56,7 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    location = json['location'] != null
-        ? new Location.fromJson(json['location'])
-        : null;
+    location = json['location'] ;
     phone = json['phone'];
     userType = json['userType'];
     isDeleted = json['isDeleted'];
@@ -83,9 +81,7 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['_id'] = this.sId;
-    if (this.location != null) {
-      data['location'] = this.location!.toJson();
-    }
+    data['location'] = this.location;
     data['phone'] = this.phone;
     data['userType'] = this.userType;
     data['isDeleted'] = this.isDeleted;
@@ -108,24 +104,24 @@ class Data {
   }
 }
 
-class Location {
-  String? type;
-  List<double>? coordinates;
+// class Location {
+//   String? type;
+//   List<double>? coordinates;
 
-  Location({this.type, this.coordinates});
+//   Location({this.type, this.coordinates});
 
-  Location.fromJson(Map<String, dynamic> json) {
-    type = json['type'];
-    coordinates = json['coordinates'].cast<double>();
-  }
+//   Location.fromJson(Map<String, dynamic> json) {
+//     type = json['type'];
+//     coordinates = json['coordinates'].cast<double>();
+//   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['type'] = this.type;
-    data['coordinates'] = this.coordinates;
-    return data;
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['type'] = this.type;
+//     data['coordinates'] = this.coordinates;
+//     return data;
+//   }
+// }
 
 class Designation {
   String? sId;

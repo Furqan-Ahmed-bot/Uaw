@@ -12,14 +12,15 @@ import 'APIService/API.dart';
 
 class CreateAccountScreen extends StatefulWidget {
   final name;
-  final lat;
-  final long;
+ final location;
+  // final lat;
+  // final long;
   final phone;
   final email;
   final designationID;
   final imagepath;
 
-  CreateAccountScreen({super.key, this.name, this.lat, this.long, this.phone, this.email, this.designationID, this.imagepath});
+  CreateAccountScreen({super.key, this.name, this.location, this.phone, this.email, this.designationID, this.imagepath});
 
   @override
   State<CreateAccountScreen> createState() => _CreateAccountScreenState();
@@ -276,9 +277,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         GestureDetector(
                           onTap: () async {
                             var completeProfile = {
+                             
                               "phone": widget.phone,
-                              "long": widget.long.toString(),
-                              "lat": widget.lat.toString(),
+                              "location":widget.location,
+                              // "long": widget.long.toString(),
+                              // "lat": widget.lat.toString(),
                               "password": password.text,
                               "name": widget.name,
                               "email": widget.email,

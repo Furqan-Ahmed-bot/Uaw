@@ -143,12 +143,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               userEmailforOTP = forgotPassword.text;
                               var forgotpassdata = {
                                 "email": forgotPassword.text,
-                               
                               };
                               if (_formKey.currentState!.validate()) {
                                 ApiService().forgotPassword(context, forgotpassdata);
-
-                             
                               } else {
                                 Get.snackbar("Error", "PLease enter your email address");
                               }
@@ -162,7 +159,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               ),
                               child: Center(
                                 child: Text(
-                                  "Reset Password",
+                                  "Continue",
                                   style: txtstylewhite20,
                                 ),
                               ),
@@ -179,7 +176,5 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         ),
       ),
     );
- 
- 
   }
 }

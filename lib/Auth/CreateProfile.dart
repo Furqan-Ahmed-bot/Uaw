@@ -358,16 +358,16 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                           }
                         },
                         controller: locationController,
-                        onChanged: (value) async {
-                          final List<double>? latlng = await getLatLong(value);
-                          if (latlng != null) {
-                            latitude = latlng[0];
-                            longitude = latlng[1];
-                            print('Latitude: $latitude, Longitude: $longitude');
-                          } else {
-                            print('Invalid address');
-                          }
-                        },
+                        // onChanged: (value) async {
+                        //   final List<double>? latlng = await getLatLong(value);
+                        //   if (latlng != null) {
+                        //     latitude = latlng[0];
+                        //     longitude = latlng[1];
+                        //     print('Latitude: $latitude, Longitude: $longitude');
+                        //   } else {
+                        //     print('Invalid address');
+                        //   }
+                        // },
                         decoration: InputDecoration(
                           hintMaxLines: 2,
                           // suffixIconConstraints: BoxConstraints(maxWidth: 35),
@@ -478,8 +478,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                         onTap: () {
                           var createProfiledata = {
                             "name": controllerFullName.text,
-                            "lat": latitude.toString(),
-                            "long": longitude.toString(),
+                            "location": locationController.text,
+                            // "lat": latitude.toString(),
+                            // "long": longitude.toString(),
                             "phone": controllerPhoneNum.text,
                             "email": uniqieemail.toString(),
                             "DesignationID": selectedDesignationID.toString(),
@@ -490,8 +491,9 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
                               Get.to(
                                   () => CreateAccountScreen(
                                       name: controllerFullName.text,
-                                      lat: latitude.toString(),
-                                      long: longitude.toString(),
+                                      location: locationController.text,
+                                      // lat: latitude.toString(),
+                                      // long: longitude.toString(),
                                       phone: controllerPhoneNum.text,
                                       email: uniqieemail.toString(),
                                       designationID: selectedDesignationID.toString(),
@@ -527,14 +529,14 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
         ));
   }
 
-  Future<List<double>?> getLatLong(String address) async {
-    final List<Location> locations = await locationFromAddress(address);
-    if (locations.isNotEmpty) {
-      final Location location = locations.first;
-      final List<double> latlong = [location.latitude, location.longitude];
-      return latlong;
-    } else {
-      return null;
-    }
-  }
+  // Future<List<double>?> getLatLong(String address) async {
+  //   final List<Location> locations = await locationFromAddress(address);
+  //   if (locations.isNotEmpty) {
+  //     final Location location = locations.first;
+  //     final List<double> latlong = [location.latitude, location.longitude];
+  //     return latlong;
+  //   } else {
+  //     return null;
+  //   }
+  // }
 }
