@@ -1,3 +1,4 @@
+import 'package:_uaw/test/example.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContextcontext) {
+  Widget build(BuildContext context) {
     return ScreenUtilInit(
         designSize: const Size(428, 926),
         builder: (context, child) {
@@ -64,6 +65,10 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               initialRoute: "/SplashScreen",
               getPages: [
+                // GetPage(
+                //   name: "/HomeExample",
+                //   page: () => HomeExample(),
+                // ),
                 GetPage(
                   name: "/OTPVerificationScreen",
                   page: () => OTPVerificationScreen(),

@@ -9,7 +9,7 @@ class MagazineController extends GetxController {
   }
 
   List MagzineData = [];
-  getDocumentsData(data) {
+  getMagzinesData(data) {
     MagzineData = data;
     print(MagzineData);
   }

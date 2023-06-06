@@ -511,7 +511,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               scale: 3.5,
                               color: black,
                             ),
-                            hintText: "****",
+                            hintText: "********",
                             hintStyle: medium18blackwopacity,
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10.r),

@@ -54,8 +54,7 @@ class ApiService {
     var resData = json.decode(response.body.toString());
     if (resData["status"] == true) {
       Get.snackbar("Message", resData["message"]);
-      Get.to(() => const PreloginScreen(),
-          duration: const Duration(seconds: 1), transition: Transition.fadeIn);
+      Get.to(() => const LoginScreen(), duration: const Duration(seconds: 1), transition: Transition.fadeIn);
     } else {
       Get.back();
       Get.snackbar("Error", resData['message']);
@@ -138,9 +137,9 @@ class ApiService {
       // getAddressFromLatLng();
       Get.back();
       Get.snackbar("Message", resData["message"]);
+
       bottomcontroller.navBarChange(0);
-      Get.to(() => const NavBarScreen(),
-          duration: const Duration(seconds: 1), transition: Transition.fadeIn);
+      Get.to(() => const NavBarScreen(), duration: const Duration(seconds: 1), transition: Transition.fadeIn);
     } else {
       Get.back();
       Get.snackbar("Error", resData["message"]);
@@ -309,8 +308,7 @@ class ApiService {
     request.fields['deviceType'] = "android";
     request.fields['deviceToken'] = "abc";
 
-    var multipartFile = await http.MultipartFile.fromPath('file', profileimage,
-        filename: MyFilename, contentType: MediaType("image", "jpg"));
+    var multipartFile = await http.MultipartFile.fromPath('file', profileimage, filename: MyFilename, contentType: MediaType("image", "jpg"));
 
     request.files.add(multipartFile);
     request.headers.addAll(headers);
@@ -329,8 +327,7 @@ class ApiService {
       Get.back();
       Get.snackbar("Message", profileData['message']);
       bottomcontroller.navBarChange(0);
-      Get.to(() => const NavBarScreen(),
-          duration: const Duration(seconds: 1), transition: Transition.fadeIn);
+      Get.to(() => const NavBarScreen(), duration: const Duration(seconds: 1), transition: Transition.fadeIn);
     } else {
       Get.back();
       Get.snackbar("Error", profileData['message']);
@@ -369,9 +366,7 @@ class ApiService {
     request.fields['password'] = updateProfiledata['password'];
     request.fields['designation'] = updateProfiledata['designation'];
     if (UserProfileImage != null) {
-      var multipartFile = await http.MultipartFile.fromPath(
-          'file', UserProfileImage,
-          filename: MyFilename, contentType: MediaType("image", "jpg"));
+      var multipartFile = await http.MultipartFile.fromPath('file', UserProfileImage, filename: MyFilename, contentType: MediaType("image", "jpg"));
       request.files.add(multipartFile);
     }
 
@@ -392,8 +387,7 @@ class ApiService {
       Get.snackbar("Message", profileData['message']);
 
       bottomcontroller.navBarChange(3);
-      Get.to(() => const NavBarScreen(),
-          duration: const Duration(seconds: 1), transition: Transition.fadeIn);
+      Get.to(() => const NavBarScreen(), duration: const Duration(seconds: 1), transition: Transition.fadeIn);
     } else {
       Get.back();
       Get.snackbar("Error", profileData['message']);
@@ -456,7 +450,7 @@ class ApiService {
 
     if (resData["status"] == true) {
       magazinecontroller.setLoading(false);
-      magazinecontroller.getDocumentsData(resData["data"]);
+      magazinecontroller.getMagzinesData(resData["data"]);
     }
   }
 

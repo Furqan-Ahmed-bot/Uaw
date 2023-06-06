@@ -125,6 +125,9 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
                                   return null;
                                 }
                               },
+                              onChanged: (value) {
+                                _formKey.currentState!.validate();
+                              },
                               controller: newPassword,
                               obscureText: _obscureText,
                               decoration: InputDecoration(
@@ -176,6 +179,9 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
                                   return null;
                                 }
                               },
+                              onChanged: (value) {
+                                _formKey.currentState!.validate();
+                              },
                               controller: confirmPassword,
                               obscureText: _obscureText2,
                               decoration: InputDecoration(
@@ -218,7 +224,7 @@ class _SetNewPasswordScreenState extends State<SetNewPasswordScreen> {
                             ),
                             30.verticalSpace,
                             GestureDetector(
-                              onTap: () {
+                              onTap: () async {
                                 var newPasswordData = {
                                   "password": newPassword.text,
                                 };

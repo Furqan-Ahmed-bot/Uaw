@@ -3,6 +3,8 @@
 import 'package:_uaw/Controllers/documentscontroller.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:_uaw/HomeScreens/NavBar.dart';
+import 'package:downloads_path_provider_28/downloads_path_provider_28.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -10,9 +12,18 @@ import 'package:intl/intl.dart';
 
 import '../Auth/APIService/API.dart';
 import '../Controller.dart';
+import 'package:http/http.dart' as http;
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import 'package:open_file_safe/open_file_safe.dart';
+
+import 'downloaddialouge.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'dart:io';
 
 class DocumentsScreen extends StatefulWidget {
   final String value;
+
   const DocumentsScreen({super.key, required this.value});
 
   @override
@@ -20,6 +31,58 @@ class DocumentsScreen extends StatefulWidget {
 }
 
 class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProviderStateMixin {
+  dynamic fileName;
+  Future<void> _downloadDocument(url, filename) async {
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final appDocumentsDirectory = await getApplicationDocumentsDirectory();
+      final filePath = '${appDocumentsDirectory.path}/${filename}}';
+      final file = File(filePath);
+      await file.writeAsBytes(response.bodyBytes);
+
+      // Open the document
+      final documentUrl = file.path;
+      if (await canLaunch(documentUrl)) {
+        await launch(documentUrl);
+      } else {
+        print('Could not open the document');
+      }
+
+      print('Document downloaded to: $filePath');
+      // Handle the downloaded file, e.g., open or share it
+    } else {
+      print('Failed to download the document. Status code: ${response.statusCode}');
+      // Handle error, such as displaying an error message to the user
+    }
+  }
+
+  // var _openResult = 'Unknown';
+  // final directory = getApplicationDocumentsDirectory();
+
+  // Future<void> openFile() async {
+  //   final filePath = 'https://uaw-api.thesuitchstaging.com/Uploads/1685717995211-dummy.pdf';
+  //   final result = await OpenFile.open(filePath);
+
+  //   setState(() {
+  //     _openResult = "type=${result.type}  message=${result.message}";
+  //   });
+  // }
+
+  // Future<void> downloadFile(String url, String fileName) async {
+  //   url =
+  //       "https://firebasestorage.googleapis.com/v0/b/e-commerce-72247.appspot.com/o/195-1950216_led-tv-png-hd-transparent-png.png?alt=media&token=0f8a6dac-1129-4b76-8482-47a6dcc0cd3e";
+  //   var response = await http.get(Uri.parse(url));
+  //   var filePath = await _localPath(fileName);
+  //   File file = File(filePath);
+  //   await file.writeAsBytes(response.bodyBytes);
+  //   print('File has been downloaded at $filePath');
+  // }
+
+  // Future<String> _localPath(String fileName) async {
+  //   final directory = await getExternalStorageDirectory();
+  //   return '${directory?.path}/$fileName';
+  // }
+
   final bottomcontroller = Get.put(BottomController());
   String now = DateFormat("yyyy-MM-dd").format(DateTime.now());
   List DocumentDetails = [
@@ -28,9 +91,7 @@ class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProv
     {"userimage": "assets/images/krakenimages-Y5bvRlcCx8k-unsplash@3x.png"},
   ];
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ApiService().getDocumnets();
-    });
+    ApiService().getDocumnets();
 
     super.initState();
   }
@@ -77,7 +138,7 @@ class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProv
           child: SingleChildScrollView(
             child: GetBuilder<DocumentController>(
               builder: (documentcontroller) {
-                return documentcontroller.isLoding
+                return documentcontroller.isLoding && documentcontroller.DocumentsData.isEmpty
                     ? Center(child: const CircularProgressIndicator())
                     : Column(
                         children: [
@@ -87,6 +148,10 @@ class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProv
                               shrinkWrap: true,
                               itemCount: documentcontroller.DocumentsData.length,
                               itemBuilder: (BuildContext context, index) {
+                                fileName = documentcontroller.DocumentsData[index]["file"][0];
+
+                                String filename2 = fileName.split('/').last;
+                                print(filename2);
                                 return Column(
                                   children: [
                                     Container(
@@ -124,11 +189,12 @@ class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProv
                                                     ),
                                                     5.verticalSpace,
                                                     Text(
-                                                      DateFormat(
-                                                        "MMM dd yyyy",
-                                                      ).format(
-                                                        DateTime.now(),
-                                                      ),
+                                                      documentcontroller.DocumentsData[index]["date"],
+                                                      // DateFormat(
+                                                      //   "MMM dd yyyy",
+                                                      // ).format(
+                                                      //   DateTime.now(),
+                                                      // ),
                                                       style: textroboto12,
                                                     ),
                                                   ],
@@ -142,10 +208,15 @@ class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProv
                                               decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.circular(10.r),
                                                 color: whitecolor,
-                                                image: const DecorationImage(
-                                                  image: AssetImage("assets/images/Rectangle 179@3x.png"),
-                                                  fit: BoxFit.fill,
-                                                ),
+                                                image: documentcontroller.DocumentsData[index]["file"][0].endsWith('txt')
+                                                    ? const DecorationImage(
+                                                        image: AssetImage("assets/images/unnamed.png"),
+                                                        fit: BoxFit.contain,
+                                                      )
+                                                    : DecorationImage(
+                                                        image: AssetImage("assets/images/download.png"),
+                                                        fit: BoxFit.contain,
+                                                      ),
                                               ),
                                               child: Padding(
                                                 padding: EdgeInsets.only(right: 10.r, bottom: 10.r),
@@ -153,18 +224,34 @@ class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProv
                                                   mainAxisAlignment: MainAxisAlignment.end,
                                                   crossAxisAlignment: CrossAxisAlignment.end,
                                                   children: [
-                                                    Image.asset(
-                                                      "assets/images/Group 1435@3x.png",
-                                                      scale: 2.5,
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        // openFile();
+                                                        // Replace with the actual document URL from the API response
+                                                        _downloadDocument(documentcontroller.DocumentsData[index]["file"][0], filename2);
+
+                                                        // showDialog(
+                                                        //   context: context,
+                                                        //   builder: (context) => const DownloadingDialog(),
+                                                        // );
+                                                      },
+                                                      child: Image.asset(
+                                                        "assets/images/Group 1435@3x.png",
+                                                        scale: 2.5,
+                                                      ),
                                                     ),
                                                   ],
                                                 ),
                                               ),
                                             ),
                                             10.verticalSpace,
-                                            Text(
-                                              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae vulputate velit. Nulla facilisi. Fusce interdum ornare arcu, quis",
-                                              style: textroboto15,
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  documentcontroller.DocumentsData[index]["title"],
+                                                  style: textroboto15,
+                                                ),
+                                              ],
                                             ),
                                             20.verticalSpace,
                                           ],
