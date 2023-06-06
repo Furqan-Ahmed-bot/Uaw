@@ -30,9 +30,8 @@ class _MagzineScreenState extends State<MagzineScreen> {
   String now = DateFormat("yyyy-MM-dd").format(DateTime.now());
   int i = 0;
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ApiService().getMagazine();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    ApiService().getMagazine();
 
     super.initState();
   }

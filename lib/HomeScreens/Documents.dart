@@ -3,7 +3,6 @@
 import 'package:_uaw/Controllers/documentscontroller.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:_uaw/HomeScreens/NavBar.dart';
-import 'package:downloads_path_provider_28/downloads_path_provider_28.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,8 +14,8 @@ import '../Controller.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
-import 'package:open_file_safe/open_file_safe.dart';
 
+import '../downloadfiles.dart';
 import 'downloaddialouge.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:io';
@@ -209,13 +208,12 @@ class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProv
                                                 borderRadius: BorderRadius.circular(10.r),
                                                 color: whitecolor,
                                                 image: documentcontroller.DocumentsData[index]["file"][0].endsWith('txt')
-                                                    ? const DecorationImage(
-                                                        image: AssetImage("assets/images/unnamed.png"),
-                                                        fit: BoxFit.contain,
-                                                      )
+                                                    ? const DecorationImage(image: AssetImage("assets/images/unnamed.png"), scale: 4
+                                                        // fit: BoxFit.contain,
+                                                        )
                                                     : DecorationImage(
-                                                        image: AssetImage("assets/images/download.png"),
-                                                        fit: BoxFit.contain,
+                                                        image: AssetImage("assets/images/download.png"), scale: 2,
+                                                        // fit: BoxFit.contain,
                                                       ),
                                               ),
                                               child: Padding(
@@ -226,6 +224,11 @@ class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProv
                                                   children: [
                                                     GestureDetector(
                                                       onTap: () {
+                                                        showDialog(
+                                                            context: context,
+                                                            builder: (context) => DownloadingDialogFile(
+                                                                url:
+                                                                    'https://uaw-api.thesuitchstaging.com/Uploads/${documentcontroller.DocumentsData[index]["file"][0]}'));
                                                         // openFile();
                                                         // Replace with the actual document URL from the API response
                                                         _downloadDocument(documentcontroller.DocumentsData[index]["file"][0], filename2);

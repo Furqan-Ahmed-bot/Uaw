@@ -6,6 +6,7 @@ import 'package:_uaw/Auth/OTPVerification.dart';
 import 'package:_uaw/Controllers/documentscontroller.dart';
 import 'package:_uaw/Controllers/magazinecontroller.dart';
 import 'package:_uaw/Controllers/usercontroller.dart';
+import 'package:_uaw/Controllers/videocontroller.dart';
 import 'package:_uaw/Models/usermodel.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
@@ -451,6 +452,18 @@ class ApiService {
     if (resData["status"] == true) {
       magazinecontroller.setLoading(false);
       magazinecontroller.getMagzinesData(resData["data"]);
+    }
+  }
+
+  getVideo() async {
+    final videocontroller = Get.put(VideoController());
+    videocontroller.setLoading(true);
+    final uri = Uri.parse("$apiGlobal/video");
+    http.Response response = await http.get(uri);
+    var resData = jsonDecode(response.body.toString());
+    if (resData["status"] == true) {
+      videocontroller.setLoading(false);
+      videocontroller.getvideoData(resData["data"]);
     }
   }
 
