@@ -5,7 +5,12 @@ import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 
 class DrawerVideoPlayerSvreen extends StatefulWidget {
-  const DrawerVideoPlayerSvreen({super.key});
+  final vurl;
+
+  DrawerVideoPlayerSvreen({
+    super.key,
+    this.vurl,
+  });
 
   @override
   State<DrawerVideoPlayerSvreen> createState() => _DrawerVideoPlayerSvreenState();
@@ -17,14 +22,13 @@ class _DrawerVideoPlayerSvreenState extends State<DrawerVideoPlayerSvreen> {
   @override
   void initState() {
     super.initState();
-    _videoPlayerController =
-        VideoPlayerController.network("https:/uaw-api.thesuitchstaging.com/Uploads/1686147854210-_import_625ba1ef73ca95.13144944_FPpreview.mp4")
-          ..initialize().then((_) {
-            _videoPlayerController.pause();
-            setState(() {
-              _isPlaying = false;
-            });
-          });
+    _videoPlayerController = VideoPlayerController.network(widget.vurl)
+      ..initialize().then((_) {
+        _videoPlayerController.pause();
+        setState(() {
+          _isPlaying = false;
+        });
+      });
 
     Duration durationOfVideo = _videoPlayerController.value.duration;
   }

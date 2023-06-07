@@ -20,6 +20,7 @@ class VideoScreen extends StatefulWidget {
 }
 
 class _VideoScreenState extends State<VideoScreen> {
+  dynamic fileName;
   final bottomcontroller = Get.put(BottomController());
   String now = DateFormat("yyyy-MM-dd").format(DateTime.now());
   List VideoDetails = [
@@ -87,11 +88,13 @@ class _VideoScreenState extends State<VideoScreen> {
                               physics: NeverScrollableScrollPhysics(),
                               itemCount: videocontroller.VideoData.length,
                               itemBuilder: (BuildContext context, index) {
+                                fileName = videocontroller.VideoData[index]["file"][0];
+                                String filename2 = fileName.split('/').last;
                                 return Column(
                                   children: [
                                     GestureDetector(
                                       onTap: () {
-                                        Get.to(() => DrawerVideoPlayerSvreen());
+                                        Get.to(() => DrawerVideoPlayerSvreen(vurl: videocontroller.VideoData[index]["filepath"][0]));
                                       },
                                       child: Container(
                                         width: 1.sw,
