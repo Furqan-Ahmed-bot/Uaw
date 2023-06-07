@@ -40,8 +40,7 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
   final bottomcontroller = Get.put(BottomController());
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   final CalendarFormat _calendarFormat = CalendarFormat.month;
-  final RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
-      .toggledOn; // Can be toggled on/off by longpressing a date
+  final RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOn; // Can be toggled on/off by longpressing a date
   final DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   DateTime? _rangeStart;
@@ -53,10 +52,8 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
 
   var selectedvalue;
   final kToday = DateTime.now();
-  final kFirstDay = DateTime(
-      DateTime.now().year, DateTime.now().month - 3, DateTime.now().day);
-  final kLastDay = DateTime(
-      DateTime.now().year, DateTime.now().month + 3, DateTime.now().day);
+  final kFirstDay = DateTime(DateTime.now().year, DateTime.now().month - 3, DateTime.now().day);
+  final kLastDay = DateTime(DateTime.now().year, DateTime.now().month + 3, DateTime.now().day);
   double pad = 23.0;
   void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
     setState(() {
@@ -77,10 +74,8 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
   void viewChanged(DateRangePickerViewChangedArgs args) {
     final DateTime visibleStartDate = args.visibleDateRange.startDate!;
     final DateTime visibleEndDate = args.visibleDateRange.endDate!;
-    final int totalVisibleDays =
-        (visibleStartDate.difference(visibleEndDate).inDays);
-    final DateTime midDate =
-        visibleStartDate.add(Duration(days: totalVisibleDays ~/ 2));
+    final int totalVisibleDays = (visibleStartDate.difference(visibleEndDate).inDays);
+    final DateTime midDate = visibleStartDate.add(Duration(days: totalVisibleDays ~/ 2));
     headerString = intl.DateFormat('MMMM yyyy').format(midDate).toString();
     SchedulerBinding.instance.addPostFrameCallback((duration) {});
   }
@@ -128,9 +123,7 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
           leadingWidth: 70,
           leading: GestureDetector(
             onTap: () {
-              Get.to(() => const DrawerScreen(),
-                  transition: Transition.leftToRight,
-                  duration: const Duration(milliseconds: 300));
+              Get.to(() => const DrawerScreen(), transition: Transition.leftToRight, duration: const Duration(milliseconds: 300));
             },
             child: Center(
               child: Container(
@@ -172,8 +165,7 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                 showDialog(
                     context: context,
                     builder: (context) {
-                      return StatefulBuilder(
-                          builder: (BuildContext context, setState) {
+                      return StatefulBuilder(builder: (BuildContext context, setState) {
                         return AlertDialog(
                             insetPadding: EdgeInsets.zero,
                             scrollable: true,
@@ -187,9 +179,7 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                               Container(
                                 width: 0.8.sw,
                                 height: 0.56.sh,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20.r),
-                                    color: const Color(0xffFFFFFF)),
+                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.r), color: const Color(0xffFFFFFF)),
                                 child: Column(
                                   children: [
                                     Row(
@@ -204,8 +194,7 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                             height: 35.h,
                                             decoration: BoxDecoration(
                                               borderRadius: BorderRadius.only(
-                                                bottomLeft:
-                                                    Radius.circular(20.r),
+                                                bottomLeft: Radius.circular(20.r),
                                                 topRight: Radius.circular(20.r),
                                               ),
                                               color: bluishshade,
@@ -221,16 +210,13 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                     ),
                                     10.verticalSpace,
                                     Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 0),
+                                      padding: const EdgeInsets.symmetric(horizontal: 0),
                                       child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Container(
                                             child: IconButton(
-                                              icon: const Icon(
-                                                  Icons.arrow_back_ios),
+                                              icon: const Icon(Icons.arrow_back_ios),
                                               color: Colors.black,
                                               iconSize: 20,
                                               onPressed: () {
@@ -300,8 +286,7 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                           //       duration: Duration(seconds: 1), transition: Transition.fadeIn);
                                           // },
 
-                                          selectionColor:
-                                              const Color(0xffEDEDED),
+                                          selectionColor: const Color(0xffEDEDED),
                                           selectionTextStyle: const TextStyle(
                                             color: Colors.black,
                                           ),
@@ -309,10 +294,8 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                           view: DateRangePickerView.month,
                                           headerHeight: 0,
                                           onViewChanged: viewChanged,
-                                          monthCellStyle:
-                                              DateRangePickerMonthCellStyle(
-                                            weekendTextStyle: const TextStyle(
-                                                color: Colors.red),
+                                          monthCellStyle: DateRangePickerMonthCellStyle(
+                                            weekendTextStyle: const TextStyle(color: Colors.red),
                                             todayCellDecoration: BoxDecoration(
                                                 border: Border.all(
                                               width: 1.w,
@@ -330,11 +313,9 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                               backgroundColor: Colors.white,
                                             ),
                                           ),
-                                          monthViewSettings:
-                                              const DateRangePickerMonthViewSettings(
+                                          monthViewSettings: const DateRangePickerMonthViewSettings(
                                             firstDayOfWeek: DateTime.monday,
-                                            viewHeaderStyle:
-                                                DateRangePickerViewHeaderStyle(
+                                            viewHeaderStyle: DateRangePickerViewHeaderStyle(
                                               textStyle: TextStyle(
                                                 color: Colors.black,
                                               ),
@@ -370,25 +351,14 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                           onTap: () {
                             Get.to(
                                 () => NewsAndEventsDetailsScreen(
-                                      name: eventController.EventsData[index]
-                                          ['user']['name'],
-                                      date: eventController.EventsData[index]
-                                              ['createdAt']
-                                          .toString(),
-                                      description: eventController
-                                          .EventsData[index]['description'],
-                                      timee: eventController.EventsData[index]
-                                              ['createdAt']
-                                          .toString(),
-                                      title: eventController.EventsData[index]
-                                          ['title'],
-                                      location: eventController
-                                          .EventsData[index]['location']
-                                          .toString(),
-                                      eventimage: eventController
-                                          .EventsData[index]['file'][0]['file'],
-                                      eventid: eventController.EventsData[index]
-                                          ['_id'],
+                                      name: eventController.EventsData[index]['user']['name'],
+                                      date: eventController.EventsData[index]['createdAt'].toString(),
+                                      description: eventController.EventsData[index]['description'],
+                                      timee: eventController.EventsData[index]['createdAt'].toString(),
+                                      title: eventController.EventsData[index]['title'],
+                                      location: eventController.EventsData[index]['location'].toString(),
+                                      eventimage: eventController.EventsData[index]['file'][0]['file'],
+                                      eventid: eventController.EventsData[index]['_id'],
                                     ),
                                 duration: Duration(seconds: 1),
                                 transition: Transition.fadeIn);
@@ -402,8 +372,7 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                             child: Padding(
                               padding: EdgeInsets.symmetric(horizontal: 20.r),
                               child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
                                   20.verticalSpace,
                                   Row(
@@ -414,33 +383,28 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
                                           image: DecorationImage(
-                                            image:
-
-                                                //  AssetImage(
-                                                //   "assets/images/Ellipse 68-1@3x.png",
-                                                // ),
-
-                                                NetworkImage(
-                                              "https://uaw-api.thesuitchstaging.com:3090/${eventController.EventsData[index]['file'][0]['file']}",
+                                            image: AssetImage(
+                                              "assets/images/Ellipse 68-1@3x.png",
                                             ),
+                                            fit: BoxFit.fill,
+
+                                            //     NetworkImage(
+                                            //   "https://uaw-api.thesuitchstaging.com:3090/${eventController.EventsData[index]['file'][0]['file']}",
+                                            // ),
                                           ),
                                         ),
                                       ),
                                       10.horizontalSpace,
                                       Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            eventController.EventsData[index]
-                                                ['user']['name'],
+                                            eventController.EventsData[index]['user']['name'],
                                             style: txtstyleblue17,
                                           ),
                                           5.verticalSpace,
                                           Text(
-                                            eventController.EventsData[index]
-                                                    ['createdAt']
-                                                .toString(),
+                                            eventController.EventsData[index]['createdAt'].toString(),
                                             style: textroboto12,
                                           ),
                                         ],
@@ -453,106 +417,97 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                     ],
                                   ),
                                   15.verticalSpace,
-                                  StaggeredGrid.count(
-                                    crossAxisCount: 3,
-                                    mainAxisSpacing: 5,
-                                    crossAxisSpacing: 5,
-                                    children: [
-                                      StaggeredGridTile.count(
-                                        crossAxisCellCount: 1,
-                                        mainAxisCellCount: 1,
-                                        child: Container(
-                                          width: 115.w,
-                                          height: 135.h,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(10.r),
-                                            ),
-                                            color: black,
-                                            image: const DecorationImage(
-                                                image: AssetImage(
-                                                    "assets/images/Group 1440@3x.png"),
-                                                fit: BoxFit.fill),
-                                          ),
-                                        ),
-                                      ),
-                                      StaggeredGridTile.count(
-                                        crossAxisCellCount: 1,
-                                        mainAxisCellCount: 1,
-                                        child: Container(
-                                          width: 115.w,
-                                          height: 135.h,
-                                          decoration: const BoxDecoration(
-                                            image: DecorationImage(
-                                                image: AssetImage(
-                                                    "assets/images/Group 1440@3x.png"),
-                                                fit: BoxFit.fill),
-                                            color: black,
-                                          ),
-                                        ),
-                                      ),
-                                      StaggeredGridTile.count(
-                                        crossAxisCellCount: 1,
-                                        mainAxisCellCount: 1,
-                                        child: Container(
-                                          width: 115.w,
-                                          height: 135.h,
-                                          decoration: BoxDecoration(
-                                            color: black,
-                                            borderRadius: BorderRadius.only(
-                                              topRight: Radius.circular(10.r),
-                                            ),
-                                            image: const DecorationImage(
-                                                image: AssetImage(
-                                                    "assets/images/Group 1440@3x.png"),
-                                                fit: BoxFit.fill),
-                                          ),
-                                        ),
-                                      ),
-                                      StaggeredGridTile.count(
-                                        crossAxisCellCount: 5,
-                                        mainAxisCellCount: 1,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                  eventController.EventsData[index]['file'][0]['file'] == null
+                                      ? StaggeredGrid.count(
+                                          crossAxisCount: 3,
+                                          mainAxisSpacing: 5,
+                                          crossAxisSpacing: 5,
                                           children: [
-                                            Container(
-                                              width: 170.w,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.only(
-                                                  bottomLeft:
-                                                      Radius.circular(10.r),
+                                            StaggeredGridTile.count(
+                                              crossAxisCellCount: 1,
+                                              mainAxisCellCount: 1,
+                                              child: Container(
+                                                width: 115.w,
+                                                height: 135.h,
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.only(
+                                                    topLeft: Radius.circular(10.r),
+                                                  ),
+                                                  color: black,
+                                                  image:
+                                                      const DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
                                                 ),
-                                                color: black,
-                                                image: const DecorationImage(
-                                                    image: AssetImage(
-                                                        "assets/images/Group 1440@3x.png"),
-                                                    fit: BoxFit.fill),
                                               ),
                                             ),
-                                            Container(
-                                              width: 170.w,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.only(
-                                                  bottomRight:
-                                                      Radius.circular(10.r),
+                                            StaggeredGridTile.count(
+                                              crossAxisCellCount: 1,
+                                              mainAxisCellCount: 1,
+                                              child: Container(
+                                                width: 115.w,
+                                                height: 135.h,
+                                                decoration: const BoxDecoration(
+                                                  image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                                  color: black,
                                                 ),
-                                                color: black,
-                                                image: const DecorationImage(
-                                                    image: AssetImage(
-                                                        "assets/images/Group 1440@3x.png"),
-                                                    fit: BoxFit.fill),
+                                              ),
+                                            ),
+                                            StaggeredGridTile.count(
+                                              crossAxisCellCount: 1,
+                                              mainAxisCellCount: 1,
+                                              child: Container(
+                                                width: 115.w,
+                                                height: 135.h,
+                                                decoration: BoxDecoration(
+                                                  color: black,
+                                                  borderRadius: BorderRadius.only(
+                                                    topRight: Radius.circular(10.r),
+                                                  ),
+                                                  image:
+                                                      const DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                                ),
+                                              ),
+                                            ),
+                                            StaggeredGridTile.count(
+                                              crossAxisCellCount: 5,
+                                              mainAxisCellCount: 1,
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Container(
+                                                    width: 170.w,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.only(
+                                                        bottomLeft: Radius.circular(10.r),
+                                                      ),
+                                                      color: black,
+                                                      image: const DecorationImage(
+                                                          image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    width: 170.w,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.only(
+                                                        bottomRight: Radius.circular(10.r),
+                                                      ),
+                                                      color: black,
+                                                      image: const DecorationImage(
+                                                          image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ],
+                                        )
+                                      : Image(
+                                          image: NetworkImage(
+                                            "https://uaw-api.thesuitchstaging.com:3090/${eventController.EventsData[index]['file'][0]['file']}",
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
                                   10.verticalSpace,
                                   Text(
-                                    eventController.EventsData[index]['title']
-                                        .toString(),
+                                    eventController.EventsData[index]['title'].toString(),
                                     style: textroboto15,
                                   ),
                                   20.verticalSpace,
@@ -648,10 +603,7 @@ class Newsandeventswidget extends StatelessWidget {
                             topLeft: Radius.circular(10.r),
                           ),
                           color: black,
-                          image: const DecorationImage(
-                              image:
-                                  AssetImage("assets/images/Group 1440@3x.png"),
-                              fit: BoxFit.fill),
+                          image: const DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
                         ),
                       ),
                     ),
@@ -662,10 +614,7 @@ class Newsandeventswidget extends StatelessWidget {
                         width: 115.w,
                         height: 135.h,
                         decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image:
-                                  AssetImage("assets/images/Group 1440@3x.png"),
-                              fit: BoxFit.fill),
+                          image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
                           color: black,
                         ),
                       ),
@@ -681,10 +630,7 @@ class Newsandeventswidget extends StatelessWidget {
                           borderRadius: BorderRadius.only(
                             topRight: Radius.circular(10.r),
                           ),
-                          image: const DecorationImage(
-                              image:
-                                  AssetImage("assets/images/Group 1440@3x.png"),
-                              fit: BoxFit.fill),
+                          image: const DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
                         ),
                       ),
                     ),
@@ -701,10 +647,7 @@ class Newsandeventswidget extends StatelessWidget {
                                 bottomLeft: Radius.circular(10.r),
                               ),
                               color: black,
-                              image: const DecorationImage(
-                                  image: AssetImage(
-                                      "assets/images/Group 1440@3x.png"),
-                                  fit: BoxFit.fill),
+                              image: const DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
                             ),
                           ),
                           Container(
@@ -714,10 +657,7 @@ class Newsandeventswidget extends StatelessWidget {
                                 bottomRight: Radius.circular(10.r),
                               ),
                               color: black,
-                              image: const DecorationImage(
-                                  image: AssetImage(
-                                      "assets/images/Group 1440@3x.png"),
-                                  fit: BoxFit.fill),
+                              image: const DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
                             ),
                           ),
                         ],

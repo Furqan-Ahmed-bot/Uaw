@@ -147,7 +147,8 @@ class _VideoScreenState extends State<VideoScreen> {
                                                   borderRadius: BorderRadius.circular(10.r),
                                                   color: whitecolor,
                                                   image: DecorationImage(
-                                                    image: AssetImage("assets/images/Group 1440@3x.png"),
+                                                    image: NetworkImage(
+                                                        "https://uaw-api.thesuitchstaging.com:3090/${videocontroller.VideoData[index]["coverImage"]["file"]}"),
                                                     fit: BoxFit.fill,
                                                   ),
                                                 ),

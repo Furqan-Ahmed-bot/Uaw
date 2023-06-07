@@ -1,5 +1,7 @@
 // ignore_for_file: unused_import
 
+import 'dart:convert';
+
 import 'package:_uaw/Controllers/documentscontroller.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:_uaw/HomeScreens/NavBar.dart';
@@ -8,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:open_file/open_file.dart';
 
 import '../Auth/APIService/API.dart';
 import '../Controller.dart';
@@ -53,6 +56,16 @@ class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProv
       print('Failed to download the document. Status code: ${response.statusCode}');
       // Handle error, such as displaying an error message to the user
     }
+  }
+
+  Future<String> _createFileFromString(String myfile, String extension) async {
+    final encodedStr = myfile;
+    Uint8List bytes = base64.decode(encodedStr);
+    String dir = (await getTemporaryDirectory()).path;
+    File file = File("$dir/" + DateTime.now().millisecondsSinceEpoch.toString() + extension);
+    await file.writeAsBytes(bytes);
+    OpenFile.open(file.path);
+    return file.path;
   }
 
   // var _openResult = 'Unknown';
@@ -207,14 +220,21 @@ class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProv
                                               decoration: BoxDecoration(
                                                 borderRadius: BorderRadius.circular(10.r),
                                                 color: whitecolor,
-                                                image: documentcontroller.DocumentsData[index]["file"][0].endsWith('txt')
-                                                    ? const DecorationImage(image: AssetImage("assets/images/unnamed.png"), scale: 4
-                                                        // fit: BoxFit.contain,
-                                                        )
-                                                    : DecorationImage(
-                                                        image: AssetImage("assets/images/download.png"), scale: 2,
-                                                        // fit: BoxFit.contain,
-                                                      ),
+                                                image:
+
+                                                    //  DecorationImage(
+                                                    //   image:
+                                                    //   NetworkImage(
+                                                    //       'https://uaw-api.thesuitchstaging.com:3090/${documentcontroller.DocumentsData[0]["coverImage"]["file"]}'),
+                                                    // ),
+                                                    documentcontroller.DocumentsData[index]["file"][0].endsWith('.txt')
+                                                        ? const DecorationImage(image: AssetImage("assets/images/unnamed.png"), scale: 4
+                                                            // fit: BoxFit.contain,
+                                                            )
+                                                        : DecorationImage(
+                                                            image: AssetImage("assets/images/download.png"), scale: 2,
+                                                            // fit: BoxFit.contain,
+                                                          ),
                                               ),
                                               child: Padding(
                                                 padding: EdgeInsets.only(right: 10.r, bottom: 10.r),

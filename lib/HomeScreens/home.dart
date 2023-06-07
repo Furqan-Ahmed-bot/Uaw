@@ -300,15 +300,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                           decoration: BoxDecoration(
                                             shape: BoxShape.circle,
                                             image: DecorationImage(
-                                              image:
-
-                                                  //  AssetImage(
-                                                  //   "assets/images/Ellipse 68-1@3x.png",
-                                                  // ),
-
-                                                  NetworkImage(
-                                                "https://uaw-api.thesuitchstaging.com:3090/${eventController.EventsData[0]['file'][0]['file']}",
+                                              image: AssetImage(
+                                                "assets/images/Ellipse 68-1@3x.png",
                                               ),
+
+                                              //     NetworkImage(
+                                              //   "https://uaw-api.thesuitchstaging.com:3090/${eventController.EventsData[0]['file'][0]['file']}",
+                                              // ),
                                             ),
                                           ),
                                         ),
@@ -321,7 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               style: txtstyleblue17,
                                             ),
                                             5.verticalSpace,
-                                            Text(eventController.EventsData[0]['createdAt'].toString()
+                                            Text(eventController.EventsData[0]['date'].toString()
 
                                                 // DateFormat(
                                                 //   "MM-dd-yyyy",
@@ -351,91 +349,101 @@ class _HomeScreenState extends State<HomeScreen> {
                                             duration: Duration(seconds: 1),
                                             transition: Transition.fadeIn);
                                       },
-                                      child: StaggeredGrid.count(
-                                        crossAxisCount: 3,
-                                        mainAxisSpacing: 5,
-                                        crossAxisSpacing: 5,
-                                        children: [
-                                          StaggeredGridTile.count(
-                                            crossAxisCellCount: 1,
-                                            mainAxisCellCount: 1,
-                                            child: Container(
-                                              width: 115.w,
-                                              height: 135.h,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(10.r),
-                                                ),
-                                                color: black,
-                                                image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
-                                              ),
-                                            ),
-                                          ),
-                                          StaggeredGridTile.count(
-                                            crossAxisCellCount: 1,
-                                            mainAxisCellCount: 1,
-                                            child: Container(
-                                              width: 115.w,
-                                              height: 135.h,
-                                              decoration: BoxDecoration(
-                                                image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
-                                                color: black,
-                                              ),
-                                            ),
-                                          ),
-                                          StaggeredGridTile.count(
-                                            crossAxisCellCount: 1,
-                                            mainAxisCellCount: 1,
-                                            child: Container(
-                                              width: 115.w,
-                                              height: 135.h,
-                                              decoration: BoxDecoration(
-                                                color: black,
-                                                borderRadius: BorderRadius.only(
-                                                  topRight: Radius.circular(10.r),
-                                                ),
-                                                image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
-                                              ),
-                                            ),
-                                          ),
-                                          StaggeredGridTile.count(
-                                            crossAxisCellCount: 5,
-                                            mainAxisCellCount: 1,
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Container(
-                                                  width: 170.w,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.only(
-                                                      bottomLeft: Radius.circular(10.r),
-                                                    ),
-                                                    color: black,
-                                                    image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
-                                                  ),
-                                                ),
-                                                Container(
-                                                  width: 170.w,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.only(
-                                                      bottomRight: Radius.circular(10.r),
-                                                    ),
-                                                    color: black,
-                                                    image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
+                                      child: Container(
+                                        child: Image(
+                                            image: NetworkImage(
+                                                "https://uaw-api.thesuitchstaging.com:3090/${eventController.EventsData[0]['file'][0]['file']}")),
                                       ),
+
+                                      // StaggeredGrid.count(
+                                      //   crossAxisCount: 3,
+                                      //   mainAxisSpacing: 5,
+                                      //   crossAxisSpacing: 5,
+                                      //   children: [
+                                      //     StaggeredGridTile.count(
+                                      //       crossAxisCellCount: 1,
+                                      //       mainAxisCellCount: 1,
+                                      //       child: Container(
+                                      //         width: 115.w,
+                                      //         height: 135.h,
+                                      //         decoration: BoxDecoration(
+                                      //           borderRadius: BorderRadius.only(
+                                      //             topLeft: Radius.circular(10.r),
+                                      //           ),
+                                      //           color: black,
+                                      //           image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                      //         ),
+                                      //       ),
+                                      //     ),
+                                      //     StaggeredGridTile.count(
+                                      //       crossAxisCellCount: 1,
+                                      //       mainAxisCellCount: 1,
+                                      //       child: Container(
+                                      //         width: 115.w,
+                                      //         height: 135.h,
+                                      //         decoration: BoxDecoration(
+                                      //           image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                      //           color: black,
+                                      //         ),
+                                      //       ),
+                                      //     ),
+                                      //     StaggeredGridTile.count(
+                                      //       crossAxisCellCount: 1,
+                                      //       mainAxisCellCount: 1,
+                                      //       child: Container(
+                                      //         width: 115.w,
+                                      //         height: 135.h,
+                                      //         decoration: BoxDecoration(
+                                      //           color: black,
+                                      //           borderRadius: BorderRadius.only(
+                                      //             topRight: Radius.circular(10.r),
+                                      //           ),
+                                      //           image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                      //         ),
+                                      //       ),
+                                      //     ),
+                                      //     StaggeredGridTile.count(
+                                      //       crossAxisCellCount: 5,
+                                      //       mainAxisCellCount: 1,
+                                      //       child: Row(
+                                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      //         children: [
+                                      //           Container(
+                                      //             width: 170.w,
+                                      //             decoration: BoxDecoration(
+                                      //               borderRadius: BorderRadius.only(
+                                      //                 bottomLeft: Radius.circular(10.r),
+                                      //               ),
+                                      //               color: black,
+                                      //               image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                      //             ),
+                                      //           ),
+                                      //           Container(
+                                      //             width: 170.w,
+                                      //             decoration: BoxDecoration(
+                                      //               borderRadius: BorderRadius.only(
+                                      //                 bottomRight: Radius.circular(10.r),
+                                      //               ),
+                                      //               color: black,
+                                      //               image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                      //             ),
+                                      //           ),
+                                      //         ],
+                                      //       ),
+                                      //     ),
+                                      //   ],
+                                      // ),
                                     ),
                                     10.verticalSpace,
-                                    Text(
-                                      '',
-                                      // UserController.event.data![0].description
-                                      //     .toString(),
-                                      style: textroboto15,
+                                    Row(
+                                      children: [
+                                        Text(
+                                          eventController.EventsData[0]['description'],
+                                          // UserController.event.data![0].description
+                                          //     .toString(),
+                                          style: textroboto15,
+                                        ),
+                                      ],
                                     ),
                                     20.verticalSpace,
                                   ],

@@ -8,9 +8,14 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../Controller.dart';
+import '../downloadfiles.dart';
 import 'NavBar.dart';
+import 'package:http/http.dart' as http;
+import 'dart:io';
 
 class MagzineScreen extends StatefulWidget {
   final String value;
@@ -21,6 +26,31 @@ class MagzineScreen extends StatefulWidget {
 }
 
 class _MagzineScreenState extends State<MagzineScreen> {
+  dynamic fileName;
+  Future<void> _magazindownload(url, filename) async {
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final appDocumentsDirectory = await getApplicationDocumentsDirectory();
+      final filePath = '${appDocumentsDirectory.path}/${filename}}';
+      final file = File(filePath);
+      await file.writeAsBytes(response.bodyBytes);
+
+      // Open the document
+      final documentUrl = file.path;
+      if (await canLaunch(documentUrl)) {
+        await launch(documentUrl);
+      } else {
+        print('Could not open the document');
+      }
+
+      print('Document downloaded to: $filePath');
+      // Handle the downloaded file, e.g., open or share it
+    } else {
+      print('Failed to download the document. Status code: ${response.statusCode}');
+      // Handle error, such as displaying an error message to the user
+    }
+  }
+
   final bottomcontroller = Get.put(BottomController());
   List imagelist = [
     {"userimage": "assets/images/Ellipse 68-1@3x.png"},
@@ -87,6 +117,10 @@ class _MagzineScreenState extends State<MagzineScreen> {
                             shrinkWrap: true,
                             itemCount: magazinecontroller.MagzineData.length,
                             itemBuilder: (BuildContext context, index) {
+                              fileName = magazinecontroller.MagzineData[index]["file"][0];
+
+                              String filename2 = fileName.split('/').last;
+                              print(filename2);
                               return Column(
                                 children: [
                                   Container(
@@ -102,8 +136,8 @@ class _MagzineScreenState extends State<MagzineScreen> {
                                         children: [
                                           20.verticalSpace,
                                           Row(
-                                            crossAxisAlignment: CrossAxisAlignment.end,
-                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                            // crossAxisAlignment: CrossAxisAlignment.end,
+                                            // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                             children: [
                                               Column(
                                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,39 +175,89 @@ class _MagzineScreenState extends State<MagzineScreen> {
                                                   ),
                                                   10.verticalSpace,
                                                   Container(
-                                                    width: 175.w,
-                                                    height: 200.h,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(10.r),
-                                                      image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
-                                                      color: black,
-                                                    ),
-                                                  ),
+                                                      width: 0.84.sw,
+                                                      height: 0.3.sh,
+                                                      decoration: BoxDecoration(
+                                                          image: DecorationImage(
+                                                        image: NetworkImage(
+                                                            "https://uaw-api.thesuitchstaging.com:3090/${magazinecontroller.MagzineData[index]["coverImage"]["file"]}"),
+                                                        fit: BoxFit.fill,
+                                                      )),
+                                                      child: Row(
+                                                        mainAxisAlignment: MainAxisAlignment.end,
+                                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                                        children: [
+                                                          Padding(
+                                                            padding: EdgeInsets.symmetric(horizontal: 10.r, vertical: 10.r),
+                                                            child: Row(
+                                                              // mainAxisAlignment: MainAxisAlignment.end,
+                                                              // crossAxisAlignment: CrossAxisAlignment.end,
+                                                              children: [
+                                                                GestureDetector(
+                                                                  onTap: () {
+                                                                    showDialog(
+                                                                        context: context,
+                                                                        builder: (context) => DownloadingDialogFile(
+                                                                            url:
+                                                                                'https://uaw-api.thesuitchstaging.com/Uploads/${magazinecontroller.MagzineData[index]["file"][0]}'));
+                                                                    // openFile();
+                                                                    // Replace with the actual document URL from the API response
+                                                                    _magazindownload(magazinecontroller.MagzineData[index]["file"][0], filename2);
+
+                                                                    // showDialog(
+                                                                    //   context: context,
+                                                                    //   builder: (context) => const DownloadingDialog(),
+                                                                    // );
+                                                                  },
+                                                                  child: Image.asset(
+                                                                    "assets/images/Group 1435@3x.png",
+                                                                    scale: 3.5,
+                                                                  ),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      )),
+                                                  //  DecorationImage(
+                                                  //   image:
+                                                  //   NetworkImage(
+                                                  //       'https://uaw-api.thesuitchstaging.com:3090/${documentcontroller.DocumentsData[0]["coverImage"]["file"]}'),
+                                                  // ),
+                                                  // Container(
+                                                  //   width: 175.w,
+                                                  //   height: 200.h,
+                                                  //   decoration: BoxDecoration(
+                                                  //     borderRadius: BorderRadius.circular(10.r),
+                                                  //     image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                                  //     color: black,
+                                                  //   ),
+                                                  // ),
                                                 ],
                                               ),
                                               10.horizontalSpace,
-                                              Container(
-                                                width: 175.w,
-                                                height: 248.h,
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(10.r),
-                                                  image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
-                                                  color: black,
-                                                ),
-                                                child: Padding(
-                                                  padding: EdgeInsets.symmetric(horizontal: 10.r, vertical: 10.r),
-                                                  child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.end,
-                                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                                    children: [
-                                                      Image.asset(
-                                                        "assets/images/Group 1435@3x.png",
-                                                        scale: 3.5,
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
+                                              // Container(
+                                              //   width: 175.w,
+                                              //   height: 248.h,
+                                              //   decoration: BoxDecoration(
+                                              //     borderRadius: BorderRadius.circular(10.r),
+                                              //     image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                              //     color: black,
+                                              //   ),
+                                              //   child: Padding(
+                                              //     padding: EdgeInsets.symmetric(horizontal: 10.r, vertical: 10.r),
+                                              //     child: Row(
+                                              //       mainAxisAlignment: MainAxisAlignment.end,
+                                              //       crossAxisAlignment: CrossAxisAlignment.end,
+                                              //       children: [
+                                              //         Image.asset(
+                                              //           "assets/images/Group 1435@3x.png",
+                                              //           scale: 3.5,
+                                              //         )
+                                              //       ],
+                                              //     ),
+                                              //   ),
+                                              // ),
                                             ],
                                           ),
                                           15.verticalSpace,
