@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:open_file/open_file.dart';
 
 class DownloadingDialogFile extends StatefulWidget {
   final url;
@@ -14,6 +14,7 @@ class DownloadingDialogFile extends StatefulWidget {
 }
 
 class _DownloadingDialogFileState extends State<DownloadingDialogFile> {
+  // String myurls = 'https://uaw-api.thesuitchstaging.com/Uploads/1686232844877-1685717967845-dummy.docx';
   Dio dio = Dio();
   double progress = 0.0;
   String? filePath;
@@ -39,12 +40,11 @@ class _DownloadingDialogFileState extends State<DownloadingDialogFile> {
       filePath = fullPath;
     });
     Get.back();
-    OpenFile.open(filePath!);
+    OpenFilex.open(filePath!);
   }
 
   @override
   void initState() {
-    super.initState();
     startDownloading();
   }
 
@@ -60,7 +60,7 @@ class _DownloadingDialogFileState extends State<DownloadingDialogFile> {
           CircularProgressIndicator.adaptive(),
           SizedBox(height: 20),
           Text(
-            "Opeining",
+            "Opening",
             style: TextStyle(
               color: Colors.white,
               fontSize: 17,

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/material.dart' as image;
 
 import 'package:_uaw/Auth/Login.dart';
 import 'package:_uaw/Auth/OTPVerification.dart';
@@ -9,6 +10,8 @@ import 'package:_uaw/Controllers/usercontroller.dart';
 import 'package:_uaw/Controllers/videocontroller.dart';
 import 'package:_uaw/Models/usermodel.dart';
 import 'package:flutter/material.dart';
+
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:path/path.dart' as path;
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -16,6 +19,7 @@ import 'package:http/http.dart' as http;
 import '../../Controller.dart';
 import '../../Controllers/eventcontroller.dart';
 import '../../Global.dart';
+import '../../Helpers.dart';
 import '../../HomeScreens/NavBar.dart';
 import '../../HomeScreens/NewsAndEvents.dart';
 import '../Prelogin.dart';
@@ -505,6 +509,41 @@ class ApiService {
     var resData = json.decode(response.body);
     if (resData["status"] == true) {
       return resData;
+    }
+  }
+
+  helpandsupport(context, helpformDetails) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const SpinKitRotatingCircle(
+            color: Colors.white,
+            size: 50.0,
+          );
+        });
+    final uri = Uri.parse("$apiGlobal/user/contact");
+    final headers = {
+      "Authorization": "Bearer $AuthToken",
+      'Content-Type': 'application/json',
+    };
+
+    final body = {
+      "email": helpformDetails["email"],
+      "name": helpformDetails["name"],
+      "phone": helpformDetails["phone"],
+      "message": helpformDetails["message"],
+    };
+    final postData = json.encode(body);
+    http.Response response = await http.post(uri, headers: headers, body: postData);
+
+    var resData = json.decode(response.body.toString());
+    if (resData["status"] == true) {
+      Get.back();
+      Get.snackbar("title", resData["message"]);
+    } else {
+      Get.back();
+      Get.snackbar("Error", resData["message"]);
     }
   }
 }

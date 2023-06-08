@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:open_file/open_file.dart';
+//import 'package:open_file/open_file.dart';
 
 import '../Auth/APIService/API.dart';
 import '../Controller.dart';
@@ -19,6 +19,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 
 import '../downloadfiles.dart';
+import '../mywebview.dart';
 import 'downloaddialouge.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:io';
@@ -58,15 +59,15 @@ class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProv
     }
   }
 
-  Future<String> _createFileFromString(String myfile, String extension) async {
-    final encodedStr = myfile;
-    Uint8List bytes = base64.decode(encodedStr);
-    String dir = (await getTemporaryDirectory()).path;
-    File file = File("$dir/" + DateTime.now().millisecondsSinceEpoch.toString() + extension);
-    await file.writeAsBytes(bytes);
-    OpenFile.open(file.path);
-    return file.path;
-  }
+  // Future<String> _createFileFromString(String myfile, String extension) async {
+  //   final encodedStr = myfile;
+  //   Uint8List bytes = base64.decode(encodedStr);
+  //   String dir = (await getTemporaryDirectory()).path;
+  //   File file = File("$dir/" + DateTime.now().millisecondsSinceEpoch.toString() + extension);
+  //   await file.writeAsBytes(bytes);
+  //   OpenFile.open(file.path);
+  //   return file.path;
+  // }
 
   // var _openResult = 'Unknown';
   // final directory = getApplicationDocumentsDirectory();
@@ -244,14 +245,35 @@ class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProv
                                                   children: [
                                                     GestureDetector(
                                                       onTap: () {
-                                                        showDialog(
-                                                            context: context,
-                                                            builder: (context) => DownloadingDialogFile(
-                                                                url:
-                                                                    'https://uaw-api.thesuitchstaging.com/Uploads/${documentcontroller.DocumentsData[index]["file"][0]}'));
-                                                        // openFile();
-                                                        // Replace with the actual document URL from the API response
-                                                        _downloadDocument(documentcontroller.DocumentsData[index]["file"][0], filename2);
+                                                        if (documentcontroller.DocumentsData[index]["file"][0].endsWith('.doc')) {
+                                                          launchUrl(
+                                                              Uri.parse(
+                                                                  "https://uaw-api.thesuitchstaging.com/Uploads/${documentcontroller.DocumentsData[index]["file"][0]}" ??
+                                                                      ''),
+                                                              mode: LaunchMode.externalApplication);
+                                                        } else {
+                                                          showDialog(
+                                                              context: context,
+                                                              builder: (context) => DownloadingDialogFile(
+                                                                  url:
+                                                                      'https://uaw-api.thesuitchstaging.com/Uploads/${documentcontroller.DocumentsData[index]["file"][0]}'));
+                                                          // openFile();
+                                                          // Replace with the actual document URL from the API response
+                                                          _downloadDocument(documentcontroller.DocumentsData[index]["file"][0], filename2);
+
+                                                          // showDialog(
+                                                          //   context: context,
+                                                          //   builder: (context) => const DownloadingDialog(),
+                                                          // );
+                                                        }
+                                                        // showDialog(
+                                                        //     context: context,
+                                                        //     builder: (context) => DownloadingDialogFile(
+                                                        //         url:
+                                                        //             'https://uaw-api.thesuitchstaging.com/Uploads/${documentcontroller.DocumentsData[index]["file"][0]}'));
+                                                        // // openFile();
+                                                        // // Replace with the actual document URL from the API response
+                                                        // _downloadDocument(documentcontroller.DocumentsData[index]["file"][0], filename2);
 
                                                         // showDialog(
                                                         //   context: context,
