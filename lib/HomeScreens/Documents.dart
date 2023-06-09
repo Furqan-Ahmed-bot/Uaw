@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+
 //import 'package:open_file/open_file.dart';
 
 import '../Auth/APIService/API.dart';
@@ -35,11 +36,12 @@ class DocumentsScreen extends StatefulWidget {
 
 class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProviderStateMixin {
   dynamic fileName;
-  Future<void> _downloadDocument(url, filename) async {
+  Future<void> _downloadDocument(String url, String filename) async {
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       final appDocumentsDirectory = await getApplicationDocumentsDirectory();
-      final filePath = '${appDocumentsDirectory.path}/${filename}}';
+
+      final filePath = '${appDocumentsDirectory.path}/$filename';
       final file = File(filePath);
       await file.writeAsBytes(response.bodyBytes);
 
@@ -58,6 +60,33 @@ class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProv
       // Handle error, such as displaying an error message to the user
     }
   }
+  // Future<void> _downloadDocument(url, filename) async {
+  //   final response = await http.get(Uri.parse(url));
+  //   if (response.statusCode == 200) {
+  //     final appDownloadsDirectory = await getExternalStorageDirectory();
+
+  //     final filePath = '${appDownloadsDirectory!.path}/${filename}}';
+  //     await Directory(filePath).create(recursive: true);
+
+  //     final file = File(filePath);
+  //     final filepath = '$filePath/$filename';
+  //     await file.writeAsBytes(response.bodyBytes);
+
+  //     // Open the document
+  //     final documentUrl = file.path;
+  //     if (await canLaunch(documentUrl)) {
+  //       await launch(documentUrl);
+  //     } else {
+  //       print('Could not open the document');
+  //     }
+
+  //     print('Document downloaded to: $filePath');
+  //     // Handle the downloaded file, e.g., open or share it
+  //   } else {
+  //     print('Failed to download the document. Status code: ${response.statusCode}');
+  //     // Handle error, such as displaying an error message to the user
+  //   }
+  // }
 
   // Future<String> _createFileFromString(String myfile, String extension) async {
   //   final encodedStr = myfile;
@@ -228,7 +257,9 @@ class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProv
                                                     //   NetworkImage(
                                                     //       'https://uaw-api.thesuitchstaging.com:3090/${documentcontroller.DocumentsData[0]["coverImage"]["file"]}'),
                                                     // ),
-                                                    documentcontroller.DocumentsData[index]["file"][0].endsWith('.txt')
+                                                    documentcontroller.DocumentsData[index]["file"][0].endsWith('.txt') ||
+                                                            documentcontroller.DocumentsData[index]["file"][0].endsWith('.docx') ||
+                                                            documentcontroller.DocumentsData[index]["file"][0].endsWith('.doc')
                                                         ? const DecorationImage(image: AssetImage("assets/images/unnamed.png"), scale: 4
                                                             // fit: BoxFit.contain,
                                                             )
@@ -245,12 +276,23 @@ class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProv
                                                   children: [
                                                     GestureDetector(
                                                       onTap: () {
-                                                        if (documentcontroller.DocumentsData[index]["file"][0].endsWith('.doc')) {
-                                                          launchUrl(
-                                                              Uri.parse(
-                                                                  "https://uaw-api.thesuitchstaging.com/Uploads/${documentcontroller.DocumentsData[index]["file"][0]}" ??
-                                                                      ''),
-                                                              mode: LaunchMode.externalApplication);
+                                                        if (documentcontroller.DocumentsData[index]["file"][0].endsWith('.docx') ||
+                                                            documentcontroller.DocumentsData[index]["file"][0].endsWith('.doc')) {
+                                                          showDialog(
+                                                              context: context,
+                                                              builder: (context) => DownloadingDialogFile(
+                                                                  url:
+                                                                      'https://uaw-api.thesuitchstaging.com/Uploads/${documentcontroller.DocumentsData[index]["file"][0]}'));
+                                                          // openFile();
+                                                          // Replace with the actual document URL from the API response
+                                                          _downloadDocument(documentcontroller.DocumentsData[index]["file"][0], filename2);
+                                                          // launchUrl(
+                                                          //     Uri.parse(
+                                                          //         "https://docs.google.com/gview?embedded=true&url=https://uaw-api.thesuitchstaging.com/Uploads/${documentcontroller.DocumentsData[index]["file"][0]}" ??
+                                                          //             ''),
+                                                          //     mode: LaunchMode.externalNonBrowserApplication);
+
+                                                          // print(launchUrl);
                                                         } else {
                                                           showDialog(
                                                               context: context,
