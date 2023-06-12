@@ -19,9 +19,11 @@ class DrawerVideoPlayerSvreen extends StatefulWidget {
 class _DrawerVideoPlayerSvreenState extends State<DrawerVideoPlayerSvreen> {
   late bool _isPlaying = false;
   late VideoPlayerController _videoPlayerController;
+  int _currentVideoIndex = 0;
   @override
   void initState() {
     super.initState();
+    _setupVideoPlayer();
     _videoPlayerController = VideoPlayerController.network(widget.vurl)
       ..initialize().then((_) {
         _videoPlayerController.pause();
@@ -49,6 +51,31 @@ class _DrawerVideoPlayerSvreenState extends State<DrawerVideoPlayerSvreen> {
       _isPlaying ? _videoPlayerController.play() : _videoPlayerController.pause();
       _isPlaying = !_isPlaying;
     });
+  }
+
+  void _setupVideoPlayer() {
+    _videoPlayerController = VideoPlayerController.network(widget.vurl[_currentVideoIndex])
+      ..initialize().then((_) {
+        setState(() {});
+      });
+  }
+
+  void _playNextVideo() {
+    if (_currentVideoIndex < widget.vurl.length - 1) {
+      _currentVideoIndex++;
+      _videoPlayerController.pause();
+      _videoPlayerController.dispose();
+      _setupVideoPlayer();
+    }
+  }
+
+  void _playPreviousVideo() {
+    if (_currentVideoIndex > 0) {
+      _currentVideoIndex--;
+      _videoPlayerController.pause();
+      _videoPlayerController.dispose();
+      _setupVideoPlayer();
+    }
   }
 
   @override
@@ -179,14 +206,19 @@ class _DrawerVideoPlayerSvreenState extends State<DrawerVideoPlayerSvreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Container(
-                    width: 48.w,
-                    height: 48.h,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: white,
+                  GestureDetector(
+                    onTap: () {
+                      _playPreviousVideo();
+                    },
+                    child: Container(
+                      width: 48.w,
+                      height: 48.h,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: white,
+                      ),
+                      child: Image.asset("assets/images/Group 1437@3x.png"),
                     ),
-                    child: Image.asset("assets/images/Group 1437@3x.png"),
                   ),
                   GestureDetector(
                     onTap: () {
@@ -227,14 +259,19 @@ class _DrawerVideoPlayerSvreenState extends State<DrawerVideoPlayerSvreen> {
                         // ),
                         ),
                   ),
-                  Container(
-                    width: 48.w,
-                    height: 48.h,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: white,
+                  GestureDetector(
+                    onTap: () {
+                      _playNextVideo();
+                    },
+                    child: Container(
+                      width: 48.w,
+                      height: 48.h,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: white,
+                      ),
+                      child: Image.asset("assets/images/Group 1439@3x.png"),
                     ),
-                    child: Image.asset("assets/images/Group 1439@3x.png"),
                   ),
                 ],
               ),

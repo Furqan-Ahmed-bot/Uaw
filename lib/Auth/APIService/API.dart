@@ -18,6 +18,7 @@ import 'package:http/http.dart' as http;
 
 import '../../Controller.dart';
 import '../../Controllers/eventcontroller.dart';
+import '../../Controllers/feedscontroller.dart';
 import '../../Global.dart';
 import '../../Helpers.dart';
 import '../../HomeScreens/NavBar.dart';
@@ -468,6 +469,18 @@ class ApiService {
     if (resData["status"] == true) {
       videocontroller.setLoading(false);
       videocontroller.getvideoData(resData["data"]);
+    }
+  }
+
+  getFeeds() async {
+    final feedscontroller = Get.put(feedsController());
+    feedscontroller.setLoading(true);
+    final uri = Uri.parse("$apiGlobal/allcontent");
+    http.Response response = await http.get(uri);
+    var resData = jsonDecode(response.body.toString());
+    if (resData["status"] == true) {
+      feedscontroller.setLoading(false);
+      feedscontroller.getFeeds(resData["data"]);
     }
   }
 

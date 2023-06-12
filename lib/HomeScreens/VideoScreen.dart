@@ -14,6 +14,7 @@ class VidePalayerScreen extends StatefulWidget {
 class _VidePalayerScreenState extends State<VidePalayerScreen> {
   late bool _isPlaying = false;
   late VideoPlayerController _videoPlayerController;
+  
   @override
   void initState() {
     super.initState();

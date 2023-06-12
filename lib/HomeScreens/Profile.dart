@@ -173,7 +173,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         //   "assets/images/Icon feather-user@3x3.png",
                         //   scale: 3.5,
                         // ),
-                        hintText: UserController.user.data!.designation!.title.toString(),
+                        // hintText: UserController.user.data!.designation!.title.toString(),
                         hintStyle: txtstyleblack14WO,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),

@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 
+import 'package:_uaw/Controllers/feedscontroller.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:_uaw/HomeScreens/Documents.dart';
 import 'package:_uaw/HomeScreens/Drawer.dart';
@@ -22,6 +23,7 @@ import '../Auth/APIService/API.dart';
 import '../Controller.dart';
 import '../Controllers/eventcontroller.dart';
 import '../Controllers/usercontroller.dart';
+import 'package:path/path.dart' as path;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -33,6 +35,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  dynamic documentUrl;
   bool isDrawerOpen = false;
 
   void toggleDrawer() {
@@ -69,6 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       ApiService().Events(context);
+      ApiService().getFeeds();
       print("SchedulerBinding");
     });
     // WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -459,151 +463,196 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             15.verticalSpace,
-                            Container(
-                              width: 1.sw,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.r),
-                                color: white,
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20.r),
-                                child: Column(
-                                  children: [
-                                    20.verticalSpace,
-                                    Row(
-                                      children: [
-                                        Container(
-                                          width: 60.h,
-                                          height: 60.h,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                              image: AssetImage(
-                                                "assets/images/Ellipse 68-1@3x.png",
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        15.horizontalSpace,
-                                        Text(
-                                          "Admin",
-                                          style: txtstyleblue17,
-                                        )
-                                      ],
-                                    ),
-                                    15.verticalSpace,
-                                    Container(
-                                      width: 0.9.sw,
-                                      height: 250.h,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10.r),
-                                        color: whitecolor,
-                                        image: DecorationImage(
-                                          image: AssetImage("assets/images/Rectangle 179@3x.png"),
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsets.only(right: 10.r, bottom: 10.r),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
-                                          crossAxisAlignment: CrossAxisAlignment.end,
-                                          children: [
-                                            Image.asset(
-                                              "assets/images/Group 1435@3x.png",
-                                              scale: 2.5,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    10.verticalSpace,
-                                    Text(
-                                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae vulputate velit. Nulla facilisi. Fusce interdum ornare arcu, quis",
-                                      style: textroboto15,
-                                    ),
-                                    20.verticalSpace,
-                                  ],
-                                ),
-                              ),
+                            GetBuilder<feedsController>(
+                              builder: (feedsController) {
+                                return feedsController.isloading && feedsController.feedsData.isEmpty
+                                    ? Center(child: CircularProgressIndicator())
+                                    : Column(
+                                        children: [
+                                          ListView.builder(
+                                              physics: NeverScrollableScrollPhysics(),
+                                              shrinkWrap: true,
+                                              itemCount: feedsController.feedsData.length,
+                                              itemBuilder: (BuildContext, index) {
+                                                return Column(
+                                                  children: [
+                                                    Container(
+                                                      width: 1.sw,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius: BorderRadius.circular(10.r),
+                                                        color: white,
+                                                      ),
+                                                      child: Padding(
+                                                        padding: EdgeInsets.symmetric(horizontal: 20.r),
+                                                        child: Column(
+                                                          children: [
+                                                            20.verticalSpace,
+                                                            Row(
+                                                              children: [
+                                                                Container(
+                                                                  width: 60.h,
+                                                                  height: 60.h,
+                                                                  decoration: BoxDecoration(
+                                                                    shape: BoxShape.circle,
+                                                                    image: DecorationImage(
+                                                                      image: AssetImage(
+                                                                        "assets/images/Ellipse 68-1@3x.png",
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                15.horizontalSpace,
+                                                                Text(
+                                                                  feedsController.feedsData[index]["user"]["name"],
+                                                                  style: txtstyleblue17,
+                                                                )
+                                                              ],
+                                                            ),
+                                                            15.verticalSpace,
+                                                            Container(
+                                                              width: 0.9.sw,
+                                                              height: 250.h,
+                                                              decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(10.r),
+                                                                color: whitecolor,
+                                                                image: feedsController.feedsData[index]["filepath"][0].endsWith(".pdf")
+                                                                    ? DecorationImage(
+                                                                        image: NetworkImage(
+                                                                            "https://uaw-api.thesuitchstaging.com/Uploads/${feedsController.feedsData[index]["coverImage"]["file"]}"),
+                                                                        fit: BoxFit.fill,
+                                                                      )
+                                                                    : feedsController.feedsData[index]["filepath"][0].endsWith(".mp4")
+                                                                        ? DecorationImage(
+                                                                            image: NetworkImage(
+                                                                                "https://uaw-api.thesuitchstaging.com/Uploads/${feedsController.feedsData[index]["coverImage"]["file"]}"),
+                                                                            fit: BoxFit.fill,
+                                                                          )
+                                                                        : feedsController.feedsData[index]["filepath"][0].endsWith(".docx") ||
+                                                                                feedsController.feedsData[index]["filepath"][0].endsWith(".doc")
+                                                                            ? DecorationImage(
+                                                                                image: NetworkImage(
+                                                                                    "https://uaw-api.thesuitchstaging.com/Uploads/${feedsController.feedsData[index]["coverImage"]["file"]}"),
+                                                                                fit: BoxFit.fill,
+                                                                              )
+                                                                            : DecorationImage(
+                                                                                image: AssetImage("assets/images/Rectangle 179@3x.png"),
+                                                                                fit: BoxFit.fill,
+                                                                              ),
+                                                              ),
+                                                              child: Padding(
+                                                                padding: EdgeInsets.only(right: 10.r, bottom: 10.r),
+                                                                child: Row(
+                                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                                                  children: [
+                                                                    Image.asset(
+                                                                      "assets/images/Group 1435@3x.png",
+                                                                      scale: 2.5,
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            10.verticalSpace,
+                                                            Row(
+                                                              children: [
+                                                                Text(
+                                                                  feedsController.feedsData[index]["title"],
+                                                                  style: textroboto15,
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            20.verticalSpace,
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    15.verticalSpace,
+                                                  ],
+                                                );
+                                              })
+                                        ],
+                                      );
+                              },
                             ),
                             15.verticalSpace,
-                            Container(
-                              width: 1.sw,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.r),
-                                color: white,
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20.r),
-                                child: Column(
-                                  children: [
-                                    20.verticalSpace,
-                                    Row(
-                                      children: [
-                                        Container(
-                                          width: 60.h,
-                                          height: 60.h,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                              image: AssetImage(
-                                                "assets/images/Ellipse 68-1@3x.png",
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        15.horizontalSpace,
-                                        Hero(
-                                          tag: "Video",
-                                          child: Material(
-                                            type: MaterialType.transparency,
-                                            child: Text(
-                                              "Admin",
-                                              style: txtstyleblue17,
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    15.verticalSpace,
-                                    GestureDetector(
-                                      onTap: () {
-                                        Get.to(() => VidePalayerScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
-                                      },
-                                      child: Container(
-                                        width: 0.9.sw,
-                                        height: 250.h,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10.r),
-                                          color: whitecolor,
-                                          image: DecorationImage(
-                                            image: AssetImage("assets/images/Group 1440@3x.png"),
-                                            fit: BoxFit.fill,
-                                          ),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            Image.asset(
-                                              "assets/images/Group 12950@3x.png",
-                                              scale: 3.5,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    10.verticalSpace,
-                                    Text(
-                                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae vulputate velit. Nulla facilisi. Fusce interdum ornare arcu, quis",
-                                      style: textroboto15,
-                                    ),
-                                    20.verticalSpace,
-                                  ],
-                                ),
-                              ),
-                            ),
+                            // Container(
+                            //   width: 1.sw,
+                            //   decoration: BoxDecoration(
+                            //     borderRadius: BorderRadius.circular(10.r),
+                            //     color: white,
+                            //   ),
+                            //   child: Padding(
+                            //     padding: EdgeInsets.symmetric(horizontal: 20.r),
+                            //     child: Column(
+                            //       children: [
+                            //         20.verticalSpace,
+                            //         Row(
+                            //           children: [
+                            //             Container(
+                            //               width: 60.h,
+                            //               height: 60.h,
+                            //               decoration: BoxDecoration(
+                            //                 shape: BoxShape.circle,
+                            //                 image: DecorationImage(
+                            //                   image: AssetImage(
+                            //                     "assets/images/Ellipse 68-1@3x.png",
+                            //                   ),
+                            //                 ),
+                            //               ),
+                            //             ),
+                            //             15.horizontalSpace,
+                            //             Hero(
+                            //               tag: "Video",
+                            //               child: Material(
+                            //                 type: MaterialType.transparency,
+                            //                 child: Text(
+                            //                   "Admin",
+                            //                   style: txtstyleblue17,
+                            //                 ),
+                            //               ),
+                            //             )
+                            //           ],
+                            //         ),
+                            //         15.verticalSpace,
+                            //         GestureDetector(
+                            //           onTap: () {
+                            //             Get.to(() => VidePalayerScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+                            //           },
+                            //           child: Container(
+                            //             width: 0.9.sw,
+                            //             height: 250.h,
+                            //             decoration: BoxDecoration(
+                            //               borderRadius: BorderRadius.circular(10.r),
+                            //               color: whitecolor,
+                            //               image: DecorationImage(
+                            //                 image: AssetImage("assets/images/Group 1440@3x.png"),
+                            //                 fit: BoxFit.fill,
+                            //               ),
+                            //             ),
+                            //             child: Row(
+                            //               mainAxisAlignment: MainAxisAlignment.center,
+                            //               crossAxisAlignment: CrossAxisAlignment.center,
+                            //               children: [
+                            //                 Image.asset(
+                            //                   "assets/images/Group 12950@3x.png",
+                            //                   scale: 3.5,
+                            //                 ),
+                            //               ],
+                            //             ),
+                            //           ),
+                            //         ),
+                            //         10.verticalSpace,
+                            //         Text(
+                            //           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae vulputate velit. Nulla facilisi. Fusce interdum ornare arcu, quis",
+                            //           style: textroboto15,
+                            //         ),
+                            //         20.verticalSpace,
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
+
                             150.verticalSpace,
                           ],
                         );
