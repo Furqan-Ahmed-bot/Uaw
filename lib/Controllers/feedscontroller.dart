@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 class feedsController extends GetxController {
   bool isloading = false;
 
-  setState(bool val) {
+  setLoading(bool val) {
     isloading = val;
     update();
   }
@@ -14,5 +14,5 @@ class feedsController extends GetxController {
     print(feedsData);
   }
 
-  void setLoading(bool bool) {}
+  // void setLoading(bool bool) {}
 }

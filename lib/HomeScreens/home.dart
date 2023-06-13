@@ -1,11 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:_uaw/Controllers/feedscontroller.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:_uaw/HomeScreens/Documents.dart';
 import 'package:_uaw/HomeScreens/Drawer.dart';
+import 'package:_uaw/HomeScreens/DrawerVideoPlayer.dart';
 import 'package:_uaw/HomeScreens/Magzines.dart';
 import 'package:_uaw/HomeScreens/NavBar.dart';
 import 'package:_uaw/HomeScreens/NewsAndEventDetails.dart';
@@ -18,12 +20,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../Auth/APIService/API.dart';
 import '../Controller.dart';
 import '../Controllers/eventcontroller.dart';
 import '../Controllers/usercontroller.dart';
 import 'package:path/path.dart' as path;
+import 'package:http/http.dart' as http;
+
+import '../downloadfiles.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -70,11 +77,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      ApiService().Events(context);
-      ApiService().getFeeds();
-      print("SchedulerBinding");
-    });
+    // SchedulerBinding.instance.addPostFrameCallback((_) {
+
+    //   print("SchedulerBinding");
+    // });
+    ApiService().Events(context);
+    ApiService().getFeeds();
     // WidgetsBinding.instance.addPostFrameCallback((_) {
 
     // });
@@ -528,11 +536,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                           10.verticalSpace,
                                           Row(
                                             children: [
-                                              Text(
-                                                eventController.EventsData[0]['description'],
-                                                // UserController.event.data![0].description
-                                                //     .toString(),
-                                                style: textroboto15,
+                                              Container(
+                                                constraints: BoxConstraints(maxWidth: 0.8.sw),
+                                                child: Text(
+                                                  eventController.EventsData[0]['description'],
+                                                  // UserController.event.data![0].description
+                                                  //     .toString(),
+                                                  style: textroboto15,
+                                                  overflow: TextOverflow.ellipsis,
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -565,98 +577,144 @@ class _HomeScreenState extends State<HomeScreen> {
                                               shrinkWrap: true,
                                               itemCount: feedsController.feedsData.length,
                                               itemBuilder: (BuildContext, index) {
+                                                fileName = feedsController.feedsData[index]["file"][0];
+                                                videoFile = feedsController.feedsData[index]["file"][0];
+
+                                                String filename2 = fileName.split('/').last;
+                                                String videoFileName = fileName.split('/').last;
                                                 return Column(
                                                   children: [
-                                                    Container(
-                                                      width: 1.sw,
-                                                      decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(10.r),
-                                                        color: white,
-                                                      ),
-                                                      child: Padding(
-                                                        padding: EdgeInsets.symmetric(horizontal: 20.r),
-                                                        child: Column(
-                                                          children: [
-                                                            20.verticalSpace,
-                                                            Row(
-                                                              children: [
-                                                                Container(
-                                                                  width: 60.h,
-                                                                  height: 60.h,
-                                                                  decoration: BoxDecoration(
-                                                                    shape: BoxShape.circle,
-                                                                    image: DecorationImage(
-                                                                      image: AssetImage(
-                                                                        "assets/images/Ellipse 68-1@3x.png",
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        feedsController.feedsData[index]["filepath"][0].endsWith(".mp4")
+                                                            ? Get.to(
+                                                                () => DrawerVideoPlayerSvreen(vurl: feedsController.feedsData[index]["filepath"][0]))
+                                                            : null;
+                                                      },
+                                                      child: Container(
+                                                        width: 1.sw,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(10.r),
+                                                          color: white,
+                                                        ),
+                                                        child: Padding(
+                                                          padding: EdgeInsets.symmetric(horizontal: 20.r),
+                                                          child: Column(
+                                                            children: [
+                                                              20.verticalSpace,
+                                                              Row(
+                                                                children: [
+                                                                  Container(
+                                                                    width: 60.h,
+                                                                    height: 60.h,
+                                                                    decoration: BoxDecoration(
+                                                                      shape: BoxShape.circle,
+                                                                      image: DecorationImage(
+                                                                        image: AssetImage(
+                                                                          "assets/images/Ellipse 68-1@3x.png",
+                                                                        ),
                                                                       ),
                                                                     ),
                                                                   ),
+                                                                  15.horizontalSpace,
+                                                                  Text(
+                                                                    feedsController.feedsData[index]["user"]["name"],
+                                                                    style: txtstyleblue17,
+                                                                  )
+                                                                ],
+                                                              ),
+                                                              15.verticalSpace,
+                                                              Container(
+                                                                width: 0.9.sw,
+                                                                height: 250.h,
+                                                                decoration: BoxDecoration(
+                                                                  borderRadius: BorderRadius.circular(10.r),
+                                                                  color: whitecolor,
+                                                                  image: feedsController.feedsData[index]["filepath"][0].endsWith(".pdf")
+                                                                      ? DecorationImage(
+                                                                          image: NetworkImage(
+                                                                              "https://uaw-api.thesuitchstaging.com/Uploads/${feedsController.feedsData[index]["coverImage"]["file"]}"),
+                                                                          fit: BoxFit.fill,
+                                                                        )
+                                                                      : feedsController.feedsData[index]["filepath"][0].endsWith(".mp4")
+                                                                          ? DecorationImage(
+                                                                              image: NetworkImage(
+                                                                                  "https://uaw-api.thesuitchstaging.com/Uploads/${feedsController.feedsData[index]["coverImage"]["file"]}"),
+                                                                              fit: BoxFit.fill,
+                                                                            )
+                                                                          : feedsController.feedsData[index]["filepath"][0].endsWith(".docx") ||
+                                                                                  feedsController.feedsData[index]["filepath"][0].endsWith(".doc")
+                                                                              ? DecorationImage(
+                                                                                  image: NetworkImage(
+                                                                                      "https://uaw-api.thesuitchstaging.com/Uploads/${feedsController.feedsData[index]["coverImage"]["file"]}"),
+                                                                                  fit: BoxFit.fill,
+                                                                                )
+                                                                              : DecorationImage(
+                                                                                  image: AssetImage("assets/images/Rectangle 179@3x.png"),
+                                                                                  fit: BoxFit.fill,
+                                                                                ),
                                                                 ),
-                                                                15.horizontalSpace,
-                                                                Text(
-                                                                  feedsController.feedsData[index]["user"]["name"],
-                                                                  style: txtstyleblue17,
-                                                                )
-                                                              ],
-                                                            ),
-                                                            15.verticalSpace,
-                                                            Container(
-                                                              width: 0.9.sw,
-                                                              height: 250.h,
-                                                              decoration: BoxDecoration(
-                                                                borderRadius: BorderRadius.circular(10.r),
-                                                                color: whitecolor,
-                                                                image: feedsController.feedsData[index]["filepath"][0].endsWith(".pdf")
-                                                                    ? DecorationImage(
-                                                                        image: NetworkImage(
-                                                                            "https://uaw-api.thesuitchstaging.com/Uploads/${feedsController.feedsData[index]["coverImage"]["file"]}"),
-                                                                        fit: BoxFit.fill,
-                                                                      )
-                                                                    : feedsController.feedsData[index]["filepath"][0].endsWith(".mp4")
-                                                                        ? DecorationImage(
-                                                                            image: NetworkImage(
-                                                                                "https://uaw-api.thesuitchstaging.com/Uploads/${feedsController.feedsData[index]["coverImage"]["file"]}"),
-                                                                            fit: BoxFit.fill,
-                                                                          )
-                                                                        : feedsController.feedsData[index]["filepath"][0].endsWith(".docx") ||
-                                                                                feedsController.feedsData[index]["filepath"][0].endsWith(".doc")
-                                                                            ? DecorationImage(
-                                                                                image: NetworkImage(
-                                                                                    "https://uaw-api.thesuitchstaging.com/Uploads/${feedsController.feedsData[index]["coverImage"]["file"]}"),
-                                                                                fit: BoxFit.fill,
-                                                                              )
-                                                                            : DecorationImage(
-                                                                                image: AssetImage("assets/images/Rectangle 179@3x.png"),
-                                                                                fit: BoxFit.fill,
+                                                                child: Padding(
+                                                                  padding: EdgeInsets.only(right: 10.r, bottom: 10.r),
+                                                                  child: Row(
+                                                                    mainAxisAlignment: MainAxisAlignment.end,
+                                                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                                                    children: [
+                                                                      feedsController.feedsData[index]["filepath"][0].endsWith(".mp4")
+                                                                          ? Container()
+                                                                          : GestureDetector(
+                                                                              onTap: () {
+                                                                                if (feedsController.feedsData[index]["file"][0].endsWith('.docx') ||
+                                                                                    feedsController.feedsData[index]["file"][0].endsWith('.doc')) {
+                                                                                  showDialog(
+                                                                                      context: context,
+                                                                                      builder: (context) => DownloadingDialogFile(
+                                                                                          url:
+                                                                                              'https://uaw-api.thesuitchstaging.com/Uploads/${feedsController.feedsData[index]["file"][0]}'));
+
+                                                                                  _downloadDocument(
+                                                                                      feedsController.feedsData[index]["file"][0], filename2);
+                                                                                } else {
+                                                                                  showDialog(
+                                                                                      context: context,
+                                                                                      builder: (context) => DownloadingDialogFile(
+                                                                                          url:
+                                                                                              'https://uaw-api.thesuitchstaging.com/Uploads/${feedsController.feedsData[index]["file"][0]}'));
+
+                                                                                  _downloadDocument(
+                                                                                      feedsController.feedsData[index]["file"][0], filename2);
+
+                                                                                  // showDialog(
+                                                                                  //   context: context,
+                                                                                  //   builder: (context) => const DownloadingDialog(),
+                                                                                  // );
+                                                                                }
+                                                                              },
+                                                                              child: Image.asset(
+                                                                                "assets/images/Group 1435@3x.png",
+                                                                                scale: 2.5,
                                                                               ),
-                                                              ),
-                                                              child: Padding(
-                                                                padding: EdgeInsets.only(right: 10.r, bottom: 10.r),
-                                                                child: Row(
-                                                                  mainAxisAlignment: MainAxisAlignment.end,
-                                                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                                                  children: [
-                                                                    feedsController.feedsData[index]["filepath"][0].endsWith(".mp4")
-                                                                        ? Container()
-                                                                        : Image.asset(
-                                                                            "assets/images/Group 1435@3x.png",
-                                                                            scale: 2.5,
-                                                                          ),
-                                                                  ],
+                                                                            ),
+                                                                    ],
+                                                                  ),
                                                                 ),
                                                               ),
-                                                            ),
-                                                            10.verticalSpace,
-                                                            Row(
-                                                              children: [
-                                                                Text(
-                                                                  feedsController.feedsData[index]["title"],
-                                                                  style: textroboto15,
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            20.verticalSpace,
-                                                          ],
+                                                              10.verticalSpace,
+                                                              Row(
+                                                                children: [
+                                                                  Container(
+                                                                    constraints: BoxConstraints(maxWidth: 200),
+                                                                    child: Text(
+                                                                      feedsController.feedsData[index]["title"],
+                                                                      overflow: TextOverflow.ellipsis,
+                                                                      style: textroboto15,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              20.verticalSpace,
+                                                            ],
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
@@ -798,5 +856,32 @@ class StatusWidget extends StatelessWidget {
         )
       ],
     );
+  }
+}
+
+dynamic fileName;
+dynamic videoFile;
+Future<void> _downloadDocument(String url, String filename) async {
+  final response = await http.get(Uri.parse(url));
+  if (response.statusCode == 200) {
+    final appDocumentsDirectory = await getApplicationDocumentsDirectory();
+
+    final filePath = '${appDocumentsDirectory.path}/$filename';
+    final file = File(filePath);
+    await file.writeAsBytes(response.bodyBytes);
+
+    // Open the document
+    final documentUrl = file.path;
+    if (await canLaunch(documentUrl)) {
+      await launch(documentUrl);
+    } else {
+      print('Could not open the document');
+    }
+
+    print('Document downloaded to: $filePath');
+    // Handle the downloaded file, e.g., open or share it
+  } else {
+    print('Failed to download the document. Status code: ${response.statusCode}');
+    // Handle error, such as displaying an error message to the user
   }
 }

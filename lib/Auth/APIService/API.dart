@@ -23,6 +23,7 @@ import '../../Global.dart';
 import '../../Helpers.dart';
 import '../../HomeScreens/NavBar.dart';
 import '../../HomeScreens/NewsAndEvents.dart';
+import '../../HomeScreens/Settings.dart';
 import '../Prelogin.dart';
 import '../SetNewPassword.dart';
 import '../TermsOfServices.dart';
@@ -552,8 +553,91 @@ class ApiService {
 
     var resData = json.decode(response.body.toString());
     if (resData["status"] == true) {
-      Get.back();
-      Get.snackbar("title", resData["message"]);
+      showDialog(
+        barrierDismissible: true,
+        // barrierColor: Colors.white,
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(
+            builder: (BuildContext context, setState) {
+              return AlertDialog(
+                insetPadding: EdgeInsets.zero,
+                backgroundColor: Color(0xff000000B8),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15.0.r),
+                ),
+                contentPadding: EdgeInsets.all(0),
+                actionsPadding: EdgeInsets.all(0),
+                actions: [
+                  Container(
+                    width: 370.w,
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.r), color: Color(0xffFFFFFF)),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(() => SettingsScreen());
+                              },
+                              child: Container(
+                                width: 35.w,
+                                height: 35.h,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(15.r),
+                                    topRight: Radius.circular(15.r),
+                                  ),
+                                  color: bluishshade,
+                                ),
+                                child: Icon(
+                                  Icons.close,
+                                  color: white,
+                                  size: 25.r,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        20.verticalSpace,
+                        Center(
+                            child: Icon(
+                          Icons.abc,
+                        )
+                            // Image.asset(
+                            //   "assets/images/check@3x.png",
+                            //   scale: 3.5,
+                            // ),
+                            ),
+                        Text(
+                          "Success",
+                          textAlign: TextAlign.center,
+                          style: txtstyleblack26bold,
+                        ),
+                        20.verticalSpace,
+                        Container(
+                          width: 0.6.sw,
+                          child: Text(
+                            "Form Submitted Successfully",
+                            textAlign: TextAlign.center,
+                            style: textrobotobluishshade22Medium,
+                          ),
+                        ),
+                        40.verticalSpace,
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      );
+
+      // Get.to(() => SettingsScreen());
+      // Get.snackbar("title", resData["message"]);
+      // Get.back();
     } else {
       Get.back();
       Get.snackbar("Error", resData["message"]);

@@ -58,7 +58,7 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
           leading: Center(
             child: GestureDetector(
               onTap: () {
-                Get.back();
+                Get.to(()=>SettingsScreen());
               },
               child: Image.asset(
                 "assets/images/Group 1430@3x.png",

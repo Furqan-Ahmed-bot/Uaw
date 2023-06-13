@@ -168,12 +168,12 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: white,
-                        // prefixIconConstraints: BoxConstraints(minWidth: 50),
-                        // prefixIcon: Image.asset(
-                        //   "assets/images/Icon feather-user@3x3.png",
-                        //   scale: 3.5,
-                        // ),
-                        // hintText: UserController.user.data!.designation!.title.toString(),
+                        prefixIconConstraints: BoxConstraints(minWidth: 50),
+                        prefixIcon: Image.asset(
+                          "assets/images/Icon feather-user@3x3.png",
+                          scale: 3.5,
+                        ),
+                        hintText: UserController.user.data!.designation!.title.toString(),
                         hintStyle: txtstyleblack14WO,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
