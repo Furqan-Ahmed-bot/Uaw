@@ -34,12 +34,10 @@ class NewsAndEventsDetailsScreen extends StatefulWidget {
   });
 
   @override
-  State<NewsAndEventsDetailsScreen> createState() =>
-      _NewsAndEventsDetailsScreenState();
+  State<NewsAndEventsDetailsScreen> createState() => _NewsAndEventsDetailsScreenState();
 }
 
-class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
-    with SingleTickerProviderStateMixin {
+class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen> with SingleTickerProviderStateMixin {
   final bottomcontroller = Get.put(BottomController());
   final bool _isTextOnLeft = true;
   final double _textSize = 24.0;
@@ -73,9 +71,7 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
   }
 
   void _animate() {
-    _controller.status == AnimationStatus.completed
-        ? _controller.reverse()
-        : _controller.forward();
+    _controller.status == AnimationStatus.completed ? _controller.reverse() : _controller.forward();
   }
 
   String tdata = DateFormat("HH:mm a").format(DateTime.now());
@@ -190,8 +186,7 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                           fit: BoxFit.fill,
                         )
                       : DecorationImage(
-                          image: NetworkImage(
-                              'https://uaw-api.thesuitchstaging.com:3090/${widget.eventimage}'),
+                          image: NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${widget.eventimage}'),
                           fit: BoxFit.fill,
                         ),
                 ),
@@ -302,15 +297,11 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                                     Container(
                                       width: 370.w,
                                       height: 210.h,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15.r),
-                                          color: Color(0xffFFFFFF)),
+                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.r), color: Color(0xffFFFFFF)),
                                       child: Column(
                                         children: [
                                           Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
+                                            mainAxisAlignment: MainAxisAlignment.end,
                                             children: [
                                               GestureDetector(
                                                 onTap: () {
@@ -325,12 +316,9 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                                                   width: 35.w,
                                                   height: 35.h,
                                                   decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.only(
-                                                      bottomLeft:
-                                                          Radius.circular(15.r),
-                                                      topRight:
-                                                          Radius.circular(15.r),
+                                                    borderRadius: BorderRadius.only(
+                                                      bottomLeft: Radius.circular(15.r),
+                                                      topRight: Radius.circular(15.r),
                                                     ),
                                                     color: bluishshade,
                                                   ),
@@ -354,8 +342,7 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                                           ),
                                           20.verticalSpace,
                                           Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
+                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                             children: [
                                               GestureDetector(
                                                 onTap: () {
@@ -370,9 +357,7 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                                                   width: 162.w,
                                                   height: 55.h,
                                                   decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.r),
+                                                    borderRadius: BorderRadius.circular(10.r),
                                                     color: redishcolor,
                                                   ),
                                                   child: Center(
@@ -385,21 +370,14 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                                               ),
                                               GestureDetector(
                                                 onTap: () {
-                                                  bottomcontroller
-                                                      .navBarChange(1);
-                                                  Get.to(() => NavBarScreen(),
-                                                      duration:
-                                                          Duration(seconds: 1),
-                                                      transition:
-                                                          Transition.fadeIn);
+                                                  bottomcontroller.navBarChange(1);
+                                                  Get.to(() => NavBarScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
                                                 },
                                                 child: Container(
                                                   width: 162.w,
                                                   height: 55.h,
                                                   decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.r),
+                                                    borderRadius: BorderRadius.circular(10.r),
                                                     color: bluishshade,
                                                   ),
                                                   child: Center(

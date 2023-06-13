@@ -357,7 +357,9 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                       timee: eventController.EventsData[index]['createdAt'].toString(),
                                       title: eventController.EventsData[index]['title'],
                                       location: eventController.EventsData[index]['location'].toString(),
-                                      eventimage: eventController.EventsData[index]['file'][0]['file'],
+                                      eventimage: eventController.EventsData[index]['file'].length == 0
+                                          ? null
+                                          : eventController.EventsData[index]['file'][0]['file'],
                                       eventid: eventController.EventsData[index]['_id'],
                                     ),
                                 duration: Duration(seconds: 1),
@@ -417,7 +419,7 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                     ],
                                   ),
                                   15.verticalSpace,
-                                  eventController.EventsData[index]['file'][0]['file'] == null
+                                  eventController.EventsData[index]['file'].length == 0
                                       ? StaggeredGrid.count(
                                           crossAxisCount: 3,
                                           mainAxisSpacing: 5,
@@ -506,9 +508,13 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                           ),
                                         ),
                                   10.verticalSpace,
-                                  Text(
-                                    eventController.EventsData[index]['title'].toString(),
-                                    style: textroboto15,
+                                  Row(
+                                    children: [
+                                      Text(
+                                        eventController.EventsData[index]['title'].toString(),
+                                        style: textroboto15,
+                                      ),
+                                    ],
                                   ),
                                   20.verticalSpace,
                                 ],
