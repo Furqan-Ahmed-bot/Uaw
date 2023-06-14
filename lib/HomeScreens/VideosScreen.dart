@@ -94,7 +94,10 @@ class _VideoScreenState extends State<VideoScreen> {
                                   children: [
                                     GestureDetector(
                                       onTap: () {
-                                        Get.to(() => DrawerVideoPlayerSvreen(vurl: videocontroller.VideoData[index]["filepath"][0]));
+                                        Get.to(() => DrawerVideoPlayerSvreen(
+                                              vurl: videocontroller.VideoData[index]["filepath"][0],
+                                              details: videocontroller.VideoData[index]["title"].toString(),
+                                            ));
                                       },
                                       child: Container(
                                         width: 1.sw,

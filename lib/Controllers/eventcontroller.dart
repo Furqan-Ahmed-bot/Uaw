@@ -1,5 +1,3 @@
-// ignore_for_file: non_constant_identifier_names, avoid_print
-
 import 'package:get/get.dart';
 
 class EventController extends GetxController {
@@ -10,8 +8,10 @@ class EventController extends GetxController {
     update();
   }
 
+  List AllEvents = [];
   List EventsData = [];
   getEventsData(data) {
+    AllEvents = data;
     EventsData = data;
     print(EventsData);
   }

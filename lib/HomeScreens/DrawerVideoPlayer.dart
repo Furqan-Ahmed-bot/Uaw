@@ -6,10 +6,12 @@ import 'package:video_player/video_player.dart';
 
 class DrawerVideoPlayerSvreen extends StatefulWidget {
   final vurl;
+  final details;
 
   DrawerVideoPlayerSvreen({
     super.key,
     this.vurl,
+    this.details,
   });
 
   @override
@@ -20,10 +22,12 @@ class _DrawerVideoPlayerSvreenState extends State<DrawerVideoPlayerSvreen> {
   late bool _isPlaying = false;
   late VideoPlayerController _videoPlayerController;
   int _currentVideoIndex = 0;
+  double _seekAmount = 3.0;
+  Duration _position = Duration();
   @override
   void initState() {
     super.initState();
-    _setupVideoPlayer();
+
     _videoPlayerController = VideoPlayerController.network(widget.vurl)
       ..initialize().then((_) {
         _videoPlayerController.pause();
@@ -31,12 +35,19 @@ class _DrawerVideoPlayerSvreenState extends State<DrawerVideoPlayerSvreen> {
           _isPlaying = false;
         });
       });
+    _videoPlayerController.addListener(_handlePositionUpdate);
 
     Duration durationOfVideo = _videoPlayerController.value.duration;
   }
 
+  void _handlePositionUpdate() {
+    setState(() {
+      _position = _videoPlayerController.value.position;
+    });
+  }
+
   getVideoPosition() {
-    var duration = Duration(milliseconds: _videoPlayerController.value.position.inMilliseconds.round());
+    var duration = Duration(seconds: _videoPlayerController.value.position.inSeconds.round());
     return [duration.inMinutes, duration.inSeconds].map((seg) => seg.remainder(60).toString().padLeft(2, '0')).join(':');
   }
 
@@ -53,35 +64,38 @@ class _DrawerVideoPlayerSvreenState extends State<DrawerVideoPlayerSvreen> {
     });
   }
 
-  void _setupVideoPlayer() {
-    _videoPlayerController = VideoPlayerController.network(widget.vurl[_currentVideoIndex])
-      ..initialize().then((_) {
-        setState(() {});
-      });
+  void _fastForward() {
+    // Get the current position and add the seek amount
+    var currentPosition = _videoPlayerController.value.position;
+    var seekPosition = currentPosition + Duration(seconds: _seekAmount.toInt());
+
+    // Check if the seek position is within the video duration
+    if (seekPosition > _videoPlayerController.value.duration) {
+      seekPosition = _videoPlayerController.value.duration;
+    }
+
+    // Seek to the new position
+    _videoPlayerController.seekTo(seekPosition);
   }
 
-  void _playNextVideo() {
-    if (_currentVideoIndex < widget.vurl.length - 1) {
-      _currentVideoIndex++;
-      _videoPlayerController.pause();
-      _videoPlayerController.dispose();
-      _setupVideoPlayer();
-    }
-  }
+  void _fastRewind() {
+    // Get the current position and subtract the seek amount
+    var currentPosition = _videoPlayerController.value.position;
+    var seekPosition = currentPosition - Duration(seconds: _seekAmount.toInt());
 
-  void _playPreviousVideo() {
-    if (_currentVideoIndex > 0) {
-      _currentVideoIndex--;
-      _videoPlayerController.pause();
-      _videoPlayerController.dispose();
-      _setupVideoPlayer();
+    // Check if the seek position is within the video duration
+    if (seekPosition < Duration.zero) {
+      seekPosition = Duration.zero;
     }
+
+    // Seek to the new position
+    _videoPlayerController.seekTo(seekPosition);
   }
 
   @override
   Widget build(BuildContext context) {
-    final Duration duration = _videoPlayerController.value.duration;
-    final Duration position = _videoPlayerController.value.position;
+    Duration duration = _videoPlayerController.value.duration;
+    Duration position = _videoPlayerController.value.position;
     return Container(
       width: 1.sw,
       height: 1.sh,
@@ -172,7 +186,7 @@ class _DrawerVideoPlayerSvreenState extends State<DrawerVideoPlayerSvreen> {
             ),
             50.verticalSpace,
             Text(
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod",
+              widget.details,
               textAlign: TextAlign.center,
               style: txtstylewhite15opacity,
             ),
@@ -208,7 +222,7 @@ class _DrawerVideoPlayerSvreenState extends State<DrawerVideoPlayerSvreen> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      _playPreviousVideo();
+                      _fastRewind();
                     },
                     child: Container(
                       width: 48.w,
@@ -261,7 +275,7 @@ class _DrawerVideoPlayerSvreenState extends State<DrawerVideoPlayerSvreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      _playNextVideo();
+                      _fastForward();
                     },
                     child: Container(
                       width: 48.w,
