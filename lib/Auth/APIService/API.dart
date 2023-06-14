@@ -190,7 +190,7 @@ class ApiService {
   Events(context) async {
     final eventcontroller = Get.put(EventController());
     eventcontroller.setLoading(true);
-    final uri = Uri.parse("$apiGlobal/user/getnewevents");
+    final uri = Uri.parse("$apiGlobal/user/getmyevents");
     var header = {'Authorization': 'Bearer $AuthToken'};
     http.Response response = await http.get(uri, headers: header);
     var resData = json.decode(response.body.toString());
@@ -579,7 +579,8 @@ class ApiService {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                Get.to(() => SettingsScreen());
+                                bottomcontroller.navBarChange(0);
+                                Get.to(() => const NavBarScreen(), duration: const Duration(seconds: 1), transition: Transition.fadeIn);
                               },
                               child: Container(
                                 width: 35.w,
@@ -634,10 +635,6 @@ class ApiService {
           );
         },
       );
-
-      // Get.to(() => SettingsScreen());
-      // Get.snackbar("title", resData["message"]);
-      // Get.back();
     } else {
       Get.back();
       Get.snackbar("Error", resData["message"]);

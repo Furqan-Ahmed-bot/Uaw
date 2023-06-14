@@ -79,8 +79,6 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 1.sw,
-      height: 1.sh,
       color: whitish,
       child: Scaffold(
         backgroundColor: transparentcolor,
@@ -111,338 +109,353 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
           ),
           centerTitle: true,
         ),
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.r),
-          child: Column(
-            children: [
-              35.verticalSpace,
-              Row(
-                children: [
-                  Container(
-                    width: 60.h,
-                    height: 60.h,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: AssetImage(
-                          "assets/images/Ellipse 68@3x.png",
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.r),
+            child: Column(
+              children: [
+                35.verticalSpace,
+                Row(
+                  children: [
+                    Container(
+                      width: 60.h,
+                      height: 60.h,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage(
+                            "assets/images/Ellipse 68@3x.png",
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  10.horizontalSpace,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.name,
-                        style: txtstyleblue17,
-                      ),
-                      5.verticalSpace,
-                      Text(
-                        widget.date,
-                        style: textroboto12,
-                      ),
-                      // Text(
-                      //   DateFormat(
-                      //     "MMM dd yyyy",
-                      //   ).format(
-                      //     DateTime.now(),
-                      //   ),
-                      //   style: textroboto12,
+                    10.horizontalSpace,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.name,
+                          style: txtstyleblue17,
+                        ),
+                        5.verticalSpace,
+                        Text(
+                          widget.date,
+                          style: textroboto12,
+                        ),
+                        // Text(
+                        //   DateFormat(
+                        //     "MMM dd yyyy",
+                        //   ).format(
+                        //     DateTime.now(),
+                        //   ),
+                        //   style: textroboto12,
 
-                      // ),
-                    ],
-                  ),
-                  Spacer(),
-                  Row(
-                    children: [
-                      Image.asset(
-                        "assets/images/Icon feather-clock@3x.png",
-                        scale: 3.5,
-                      ),
-                      5.horizontalSpace,
-                      Text(
-                        "03:00 Pm",
-                        style: textroboto14blue,
-                      ),
-                      // Text(
-                      //   tdata,
-                      //   style: textroboto14blue,
-                      // )
-                    ],
-                  ),
-                ],
-              ),
-              15.verticalSpace,
-              Container(
-                width: 1.sw,
-                height: 328.h,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.r),
-                  image: widget.eventimage == null
-                      ? DecorationImage(
-                          image: AssetImage("assets/images/Group 1440@3x.png"),
-                          fit: BoxFit.fill,
-                        )
-                      : DecorationImage(
-                          image: NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${widget.eventimage}'),
-                          fit: BoxFit.fill,
+                        // ),
+                      ],
+                    ),
+                    Spacer(),
+                    Row(
+                      children: [
+                        Image.asset(
+                          "assets/images/Icon feather-clock@3x.png",
+                          scale: 3.5,
                         ),
+                        5.horizontalSpace,
+                        Text(
+                          widget.timee,
+                          style: textroboto14blue,
+                        ),
+                        // Text(
+                        //   tdata,
+                        //   style: textroboto14blue,
+                        // )
+                      ],
+                    ),
+                  ],
                 ),
-              ),
-              15.verticalSpace,
-              Text(
-                widget.title,
-                style: txtstyleblue24,
-              ),
-              15.verticalSpace,
-              DottedLine(
-                direction: Axis.horizontal,
-                lineLength: 0.9.sw,
-                lineThickness: 1.0,
-                dashLength: 4.0,
-                dashColor: bluishshade,
-                dashRadius: 0.0,
-                dashGapLength: 4.0,
-                dashGapColor: Colors.transparent,
-                dashGapRadius: 0.0,
-              ),
-              15.verticalSpace,
-              Row(
-                children: [
-                  Image.asset(
-                    "assets/images/Icon feather-clock@3x.png",
-                    scale: 3.5,
+                15.verticalSpace,
+                Container(
+                  width: 1.sw,
+                  height: 328.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.r),
+                    image: widget.eventimage == null
+                        ? DecorationImage(
+                            image: AssetImage("assets/images/Group 1440@3x.png"),
+                            fit: BoxFit.fill,
+                          )
+                        : DecorationImage(
+                            image: NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${widget.eventimage}'),
+                            fit: BoxFit.fill,
+                          ),
                   ),
-                  15.horizontalSpace,
-                  Text(
-                    widget.timee,
-                    style: textroboto14blue,
-                  ),
-                  // Text(
-                  //   tdata,
-                  //   style: textroboto14blue,
-                  // )
-                ],
-              ),
-              15.verticalSpace,
-              DottedLine(
-                direction: Axis.horizontal,
-                lineLength: 0.9.sw,
-                lineThickness: 1.0,
-                dashLength: 4.0,
-                dashColor: bluishshade,
-                dashRadius: 0.0,
-                dashGapLength: 4.0,
-                dashGapColor: Colors.transparent,
-                dashGapRadius: 0.0,
-              ),
-              15.verticalSpace,
-              Row(
-                children: [
-                  Image.asset(
-                    "assets/images/Icon feather-map-pin@3x.png",
-                    scale: 3.5,
-                  ),
-                  15.horizontalSpace,
-                  Text(
-                    widget.location,
-                    style: textroboto14blue,
-                  )
-                ],
-              ),
-              15.verticalSpace,
-              DottedLine(
-                direction: Axis.horizontal,
-                lineLength: 0.9.sw,
-                lineThickness: 1.0,
-                dashLength: 4.0,
-                dashColor: bluishshade,
-                dashRadius: 0.0,
-                dashGapLength: 4.0,
-                dashGapColor: Colors.transparent,
-                dashGapRadius: 0.0,
-              ),
-              15.verticalSpace,
-              Text(
-                widget.description ?? '',
-                style: textroboto15black,
-              ),
-              Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SlideTransition(
-                    position: _offsetAnimation[0],
-                    child: GestureDetector(
-                      onTap: () {
-                        _animate();
-                        showDialog(
-                          barrierDismissible: true,
-                          // barrierColor: Colors.white,
-                          context: context,
-                          builder: (context) {
-                            return StatefulBuilder(
-                              builder: (BuildContext context, setState) {
-                                return AlertDialog(
-                                  insetPadding: EdgeInsets.zero,
-                                  backgroundColor: Color(0xff000000b8),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15.0.r),
-                                  ),
-                                  contentPadding: EdgeInsets.all(0),
-                                  actionsPadding: EdgeInsets.all(0),
-                                  actions: [
-                                    Container(
-                                      width: 370.w,
-                                      height: 210.h,
-                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.r), color: Color(0xffFFFFFF)),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.end,
-                                            children: [
-                                              GestureDetector(
-                                                onTap: () {
-                                                  setState(
-                                                    () {
-                                                      _animate();
-                                                    },
-                                                  );
-                                                  Get.back();
-                                                },
-                                                child: Container(
-                                                  width: 35.w,
-                                                  height: 35.h,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.only(
-                                                      bottomLeft: Radius.circular(15.r),
-                                                      topRight: Radius.circular(15.r),
-                                                    ),
-                                                    color: bluishshade,
-                                                  ),
-                                                  child: Icon(
-                                                    Icons.close,
-                                                    color: white,
-                                                    size: 25.r,
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          ),
-                                          5.verticalSpace,
-                                          SizedBox(
-                                            width: 0.7.sw,
-                                            child: Text(
-                                              "Are you sure you want to reject?",
-                                              textAlign: TextAlign.center,
-                                              style: txtstyleblue25,
-                                            ),
-                                          ),
-                                          20.verticalSpace,
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              GestureDetector(
-                                                onTap: () {
-                                                  setState(
-                                                    () {
-                                                      _animate();
-                                                    },
-                                                  );
-                                                  Get.back();
-                                                },
-                                                child: Container(
-                                                  width: 162.w,
-                                                  height: 55.h,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(10.r),
-                                                    color: redishcolor,
-                                                  ),
-                                                  child: Center(
-                                                    child: Text(
-                                                      "No",
-                                                      style: medium16white,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              GestureDetector(
-                                                onTap: () {
-                                                  bottomcontroller.navBarChange(1);
-                                                  Get.to(() => NavBarScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
-                                                },
-                                                child: Container(
-                                                  width: 162.w,
-                                                  height: 55.h,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(10.r),
-                                                    color: bluishshade,
-                                                  ),
-                                                  child: Center(
-                                                    child: Text(
-                                                      "Yes",
-                                                      style: medium16white,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          20.verticalSpace,
-                                        ],
-                                      ),
+                ),
+                15.verticalSpace,
+                Row(
+                  children: [
+                    Text(
+                      widget.title,
+                      style: txtstyleblue24,
+                    ),
+                  ],
+                ),
+                15.verticalSpace,
+                DottedLine(
+                  direction: Axis.horizontal,
+                  lineLength: 0.9.sw,
+                  lineThickness: 1.0,
+                  dashLength: 4.0,
+                  dashColor: bluishshade,
+                  dashRadius: 0.0,
+                  dashGapLength: 4.0,
+                  dashGapColor: Colors.transparent,
+                  dashGapRadius: 0.0,
+                ),
+                15.verticalSpace,
+                Row(
+                  children: [
+                    Image.asset(
+                      "assets/images/Icon feather-clock@3x.png",
+                      scale: 3.5,
+                    ),
+                    15.horizontalSpace,
+                    Text(
+                      widget.timee,
+                      style: textroboto14blue,
+                    ),
+                    // Text(
+                    //   tdata,
+                    //   style: textroboto14blue,
+                    // )
+                  ],
+                ),
+                15.verticalSpace,
+                DottedLine(
+                  direction: Axis.horizontal,
+                  lineLength: 0.9.sw,
+                  lineThickness: 1.0,
+                  dashLength: 4.0,
+                  dashColor: bluishshade,
+                  dashRadius: 0.0,
+                  dashGapLength: 4.0,
+                  dashGapColor: Colors.transparent,
+                  dashGapRadius: 0.0,
+                ),
+                15.verticalSpace,
+                Row(
+                  children: [
+                    Image.asset(
+                      "assets/images/Icon feather-map-pin@3x.png",
+                      scale: 3.5,
+                    ),
+                    15.horizontalSpace,
+                    Text(
+                      widget.location,
+                      style: textroboto14blue,
+                    )
+                  ],
+                ),
+                15.verticalSpace,
+                DottedLine(
+                  direction: Axis.horizontal,
+                  lineLength: 0.9.sw,
+                  lineThickness: 1.0,
+                  dashLength: 4.0,
+                  dashColor: bluishshade,
+                  dashRadius: 0.0,
+                  dashGapLength: 4.0,
+                  dashGapColor: Colors.transparent,
+                  dashGapRadius: 0.0,
+                ),
+                15.verticalSpace,
+                Row(
+                  children: [
+                    Container(
+                      constraints: BoxConstraints(maxWidth: 0.9.sw),
+                      child: Text(
+                        widget.description ?? '',
+                        style: textroboto15black,
+                        overflow: TextOverflow.visible,
+                      ),
+                    ),
+                  ],
+                ),
+                50.verticalSpace,
+                // Spacer(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SlideTransition(
+                      position: _offsetAnimation[0],
+                      child: GestureDetector(
+                        onTap: () {
+                          _animate();
+                          showDialog(
+                            barrierDismissible: true,
+                            // barrierColor: Colors.white,
+                            context: context,
+                            builder: (context) {
+                              return StatefulBuilder(
+                                builder: (BuildContext context, setState) {
+                                  return AlertDialog(
+                                    insetPadding: EdgeInsets.zero,
+                                    backgroundColor: Color(0xff000000b8),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15.0.r),
                                     ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                        );
-                      },
-                      child: Container(
-                        width: 189.w,
-                        height: 55.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.r),
-                          color: redishcolor,
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Reject",
-                            style: txtstylewhite20,
+                                    contentPadding: EdgeInsets.all(0),
+                                    actionsPadding: EdgeInsets.all(0),
+                                    actions: [
+                                      Container(
+                                        width: 370.w,
+                                        height: 210.h,
+                                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.r), color: Color(0xffFFFFFF)),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              children: [
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    setState(
+                                                      () {
+                                                        _animate();
+                                                      },
+                                                    );
+                                                    Get.back();
+                                                  },
+                                                  child: Container(
+                                                    width: 35.w,
+                                                    height: 35.h,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.only(
+                                                        bottomLeft: Radius.circular(15.r),
+                                                        topRight: Radius.circular(15.r),
+                                                      ),
+                                                      color: bluishshade,
+                                                    ),
+                                                    child: Icon(
+                                                      Icons.close,
+                                                      color: white,
+                                                      size: 25.r,
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                            5.verticalSpace,
+                                            SizedBox(
+                                              width: 0.7.sw,
+                                              child: Text(
+                                                "Are you sure you want to reject?",
+                                                textAlign: TextAlign.center,
+                                                style: txtstyleblue25,
+                                              ),
+                                            ),
+                                            20.verticalSpace,
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    setState(
+                                                      () {
+                                                        _animate();
+                                                      },
+                                                    );
+                                                    Get.back();
+                                                  },
+                                                  child: Container(
+                                                    width: 162.w,
+                                                    height: 55.h,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(10.r),
+                                                      color: redishcolor,
+                                                    ),
+                                                    child: Center(
+                                                      child: Text(
+                                                        "No",
+                                                        style: medium16white,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    bottomcontroller.navBarChange(1);
+                                                    Get.to(() => NavBarScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+                                                  },
+                                                  child: Container(
+                                                    width: 162.w,
+                                                    height: 55.h,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(10.r),
+                                                      color: bluishshade,
+                                                    ),
+                                                    child: Center(
+                                                      child: Text(
+                                                        "Yes",
+                                                        style: medium16white,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            20.verticalSpace,
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        },
+                        child: Container(
+                          width: 189.w,
+                          height: 55.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.r),
+                            color: redishcolor,
+                          ),
+                          child: Center(
+                            child: Text(
+                              "Reject",
+                              style: txtstylewhite20,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  SlideTransition(
-                    position: _offsetAnimation[1],
-                    child: GestureDetector(
-                      onTap: () {
-                        ApiService().joinEvent(widget.eventid, context);
-                      },
-                      child: Container(
-                        width: 189.w,
-                        height: 55.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.r),
-                          color: bluishshade,
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Accept",
-                            style: txtstylewhite20,
+                    SlideTransition(
+                      position: _offsetAnimation[1],
+                      child: GestureDetector(
+                        onTap: () {
+                          ApiService().joinEvent(widget.eventid, context);
+                        },
+                        child: Container(
+                          width: 189.w,
+                          height: 55.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.r),
+                            color: bluishshade,
+                          ),
+                          child: Center(
+                            child: Text(
+                              "Accept",
+                              style: txtstylewhite20,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              20.verticalSpace,
-            ],
+                  ],
+                ),
+                20.verticalSpace,
+              ],
+            ),
           ),
         ),
       ),

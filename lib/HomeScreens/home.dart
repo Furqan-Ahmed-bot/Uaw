@@ -33,8 +33,10 @@ import 'package:http/http.dart' as http;
 import '../downloadfiles.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({
+  String? cameFrom;
+  HomeScreen({
     super.key,
+    this.cameFrom,
   });
 
   @override
@@ -81,8 +83,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
     //   print("SchedulerBinding");
     // });
-    ApiService().Events(context);
-    ApiService().getFeeds();
+    if (widget.cameFrom == 'login') {
+      ApiService().Events(context);
+      ApiService().getFeeds();
+    } else {
+      Future.delayed(Duration.zero, () {
+        ApiService().Events(context);
+        ApiService().getFeeds();
+      });
+    }
     // WidgetsBinding.instance.addPostFrameCallback((_) {
 
     // });

@@ -22,7 +22,7 @@ class NavBarScreen extends StatefulWidget {
   const NavBarScreen({super.key});
 
   @override
-  State<NavBarScreen> createState() => _NavBarScreenState();      
+  State<NavBarScreen> createState() => _NavBarScreenState();
 }
 
 class _NavBarScreenState extends State<NavBarScreen> with SingleTickerProviderStateMixin {
@@ -59,7 +59,7 @@ class _NavBarScreenState extends State<NavBarScreen> with SingleTickerProviderSt
   int pageIndex = 0;
 
   final pages = [
-    HomeScreen(),
+    HomeScreen(cameFrom: 'login'),
     selection == true ? SelectedDateEventDetailsScreen() : NewsAndEventsScreen(value: "null"),
     NotificationScreen(),
     UserProfileScreen(),

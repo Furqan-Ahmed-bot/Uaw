@@ -352,9 +352,9 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                             Get.to(
                                 () => NewsAndEventsDetailsScreen(
                                       name: eventController.EventsData[index]['user']['name'],
-                                      date: eventController.EventsData[index]['createdAt'].toString(),
+                                      date: eventController.EventsData[index]['date'].toString(),
                                       description: eventController.EventsData[index]['description'],
-                                      timee: eventController.EventsData[index]['createdAt'].toString(),
+                                      timee: eventController.EventsData[index]['time'].toString(),
                                       title: eventController.EventsData[index]['title'],
                                       location: eventController.EventsData[index]['location'].toString(),
                                       eventimage: eventController.EventsData[index]['file'].length == 0
@@ -406,7 +406,7 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                           ),
                                           5.verticalSpace,
                                           Text(
-                                            eventController.EventsData[index]['createdAt'].toString(),
+                                            eventController.EventsData[index]['date'].toString(),
                                             style: textroboto12,
                                           ),
                                         ],
