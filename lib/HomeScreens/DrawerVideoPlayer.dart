@@ -185,11 +185,13 @@ class _DrawerVideoPlayerSvreenState extends State<DrawerVideoPlayerSvreen> {
               ],
             ),
             50.verticalSpace,
-            Text(
-              widget.details,
-              textAlign: TextAlign.center,
-              style: txtstylewhite15opacity,
-            ),
+            widget.details == null
+                ? Text("")
+                : Text(
+                    widget.details,
+                    textAlign: TextAlign.center,
+                    style: txtstylewhite15opacity,
+                  ),
             30.verticalSpace,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

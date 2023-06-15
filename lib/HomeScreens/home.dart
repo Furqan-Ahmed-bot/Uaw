@@ -83,18 +83,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
     //   print("SchedulerBinding");
     // });
-    if (widget.cameFrom == 'login') {
+    if (widget.cameFrom == '') {
+      Future.delayed(Duration.zero, () {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          ApiService().Events(context);
+          ApiService().getFeeds();
+        });
+      });
+    } else {
+      // WidgetsBinding.instance.addPostFrameCallback((_) {
+
+      // });
       ApiService().Events(context);
       ApiService().getFeeds();
-    } else {
-      Future.delayed(Duration.zero, () {
-        ApiService().Events(context);
-        ApiService().getFeeds();
-      });
     }
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
 
-    // });
     super.initState();
   }
 

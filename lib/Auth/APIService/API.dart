@@ -190,7 +190,7 @@ class ApiService {
   Events(context) async {
     final eventcontroller = Get.put(EventController());
     eventcontroller.setLoading(true);
-    final uri = Uri.parse("$apiGlobal/user/getmyevents");
+    final uri = Uri.parse("$apiGlobal/user/getnewevents");
     var header = {'Authorization': 'Bearer $AuthToken'};
     http.Response response = await http.get(uri, headers: header);
     var resData = json.decode(response.body.toString());
