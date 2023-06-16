@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 class DrawerVideoPlayerSvreen extends StatefulWidget {
   final vurl;
@@ -26,11 +28,14 @@ class _DrawerVideoPlayerSvreenState extends State<DrawerVideoPlayerSvreen> {
   Duration _position = Duration();
   @override
   void initState() {
+    // saveVideoToCache();
     super.initState();
 
     _videoPlayerController = VideoPlayerController.network(widget.vurl)
       ..initialize().then((_) {
+        _videoPlayerController.play();
         _videoPlayerController.pause();
+
         setState(() {
           _isPlaying = false;
         });
@@ -50,6 +55,26 @@ class _DrawerVideoPlayerSvreenState extends State<DrawerVideoPlayerSvreen> {
     var duration = Duration(seconds: _videoPlayerController.value.position.inSeconds.round());
     return [duration.inMinutes, duration.inSeconds].map((seg) => seg.remainder(60).toString().padLeft(2, '0')).join(':');
   }
+
+  // void saveVideoToCache() async {
+  //   // Create a cache manager instance
+  //   final cacheManager = DefaultCacheManager();
+
+  //   // Get the file associated with the video URL
+  //   FileInfo? fileInfo = await cacheManager.getFileFromCache(widget.vurl);
+
+  //   // Check if the file is already cached
+  //   if (fileInfo == null || !await fileInfo.file.exists()) {
+  //     // If the file is not cached, download and save it
+  //     fileInfo = await cacheManager.downloadFile(widget.vurl);
+  //   }
+
+  //   // Retrieve the cached file
+  //   final cachedFile = fileInfo.file;
+
+  //   // Use the cached file for further processing, e.g., displaying or playing the video
+  //   print('Cached video file path: ${cachedFile.path}');
+  // }
 
   @override
   void dispose() {

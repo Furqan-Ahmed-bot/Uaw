@@ -12,6 +12,7 @@ import 'package:dotted_line/dotted_line.dart';
 
 import '../Controller.dart';
 
+
 class NewsAndEventsDetailsScreen extends StatefulWidget {
   final eventid;
   final name;

@@ -401,6 +401,20 @@ class ApiService {
     }
   }
 
+  rejectEvent(eventid,context) async {
+    final uri = Uri.parse("$apiGlobal/removeuser/$eventid");
+    var data = {"uid": userid};
+    http.Response response = await http.patch(
+      uri,
+      body: data,
+    );
+    var resData = json.decode(response.body.toString());
+    if (resData["status"] == true) {
+      Get.snackbar("Message", resData["message"]);
+      Get.back();
+    }
+  }
+
   joinEvent(eventid, context) async {
     final uri = Uri.parse("$apiGlobal/joinevent/$eventid");
     var data = {'uid': userid};
