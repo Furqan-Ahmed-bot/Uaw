@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 import '../Auth/APIService/API.dart';
 import '../Controller.dart';
 import 'NavBar.dart';
+import 'newtestingvideo.dart';
 
 class VideoScreen extends StatefulWidget {
   final String value;
@@ -97,6 +98,7 @@ class _VideoScreenState extends State<VideoScreen> {
                                         Get.to(() => DrawerVideoPlayerSvreen(
                                               vurl: videocontroller.VideoData[index]["filepath"][0],
                                               details: videocontroller.VideoData[index]["title"].toString(),
+                                              
                                             ));
                                       },
                                       child: Container(

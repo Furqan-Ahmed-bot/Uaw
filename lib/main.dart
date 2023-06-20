@@ -23,6 +23,8 @@ Future main() async {
   _handleLocationPermission(ContextAction);
 }
 
+
+
 Future<bool> _handleLocationPermission(context) async {
   bool serviceEnabled;
   LocationPermission permission;

@@ -393,7 +393,7 @@ class ApiService {
 
       Get.snackbar("Message", profileData['message']);
 
-      bottomcontroller.navBarChange(3);
+      bottomcontroller.navBarChange(2);
       Get.to(() => const NavBarScreen(), duration: const Duration(seconds: 1), transition: Transition.fadeIn);
     } else {
       Get.back();
@@ -401,7 +401,7 @@ class ApiService {
     }
   }
 
-  rejectEvent(eventid,context) async {
+  rejectEvent(eventid, context) async {
     final uri = Uri.parse("$apiGlobal/removeuser/$eventid");
     var data = {"uid": userid};
     http.Response response = await http.patch(
@@ -411,7 +411,10 @@ class ApiService {
     var resData = json.decode(response.body.toString());
     if (resData["status"] == true) {
       Get.snackbar("Message", resData["message"]);
-      Get.back();
+      bottomcontroller.navBarChange(1);
+      Get.to(() => const NavBarScreen(), duration: const Duration(seconds: 1), transition: Transition.fadeIn);
+    } else {
+      Get.snackbar("Message", resData["message"]);
     }
   }
 

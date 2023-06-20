@@ -56,6 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   final bottomcontroller = Get.put(BottomController());
   final eventcontroller = Get.put(EventController());
+  final feedController = Get.put(feedsController());
+  List AllFeeds = [];
 
   final userController = Get.put(UserController());
   UserController cnt = Get.find();
@@ -70,12 +72,26 @@ class _HomeScreenState extends State<HomeScreen> {
   //   DocumentsScreen(),
   //   CreateProfileScreen(),
   // ];
+
   List StatusWidgetDetails = [
     {"containerimage": "assets/images/romain-dancre-doplSDELX7E-unsplash@3x.png", "statustext": "Documents", "navigateTo": "DocumentsScreen"},
     {"containerimage": "assets/images/zhang-shaoqi-PdUACzBJP-Y-unsplash@3x.png", "statustext": "Videos", "navigateTo": "DocumentsScreen"},
     {"containerimage": "assets/images/krakenimages-Y5bvRlcCx8k-unsplash@3x.png", "statustext": "Magazines", "navigateTo": "DocumentsScreen"},
     {"containerimage": "assets/images/md-duran-rE9vgD_TXgM-unsplash@3x.png", "statustext": "Events", "navigateTo": "DocumentsScreen"},
   ];
+
+  void searchevent(query) {
+    AllFeeds = feedController.AllFeeds;
+    if (query.isEmpty) {
+      setState(() {
+        feedController.feedsData = feedController.AllFeeds;
+      });
+    } else {
+      feedController.feedsData = AllFeeds.where((item) => (item['title'].toLowerCase()).contains(query)).toList();
+
+      feedController.feedsData;
+    }
+  }
 
   @override
   void initState() {
@@ -174,6 +190,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: 50.h,
                                 width: 1.sw,
                                 child: TextFormField(
+                                  onChanged: (value) {
+                                    print(value);
+                                    setState(() {
+                                      searchevent(value);
+                                    });
+                                  },
                                   decoration: InputDecoration(
                                     filled: true,
                                     fillColor: white,

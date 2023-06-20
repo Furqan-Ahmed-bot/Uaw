@@ -8,8 +8,10 @@ class feedsController extends GetxController {
     update();
   }
 
+  List AllFeeds = [];
   List feedsData = [];
   getFeeds(data) {
+    AllFeeds = data;
     feedsData = data;
     print(feedsData);
   }

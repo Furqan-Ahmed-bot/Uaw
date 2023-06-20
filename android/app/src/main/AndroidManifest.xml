@@ -12,10 +12,12 @@
    
    <application
         android:label="UAW"
+        android:usesCleartextTraffic="true"
         android:name="${applicationName}"
         android:roundIcon="@mipmap/round_launcher"
         android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher">
+        
 
 
 

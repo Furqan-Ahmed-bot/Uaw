@@ -63,17 +63,6 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
 
   void searchevent(query) {
     myEevents = eventController.AllEvents;
-    var a = myEevents[0]['date'];
-    int b = 5;
-
-    if (query == myEevents[0]['date']) {
-      print('Date Matched');
-    } else {
-      print('Tupe not matched');
-    }
-    print('date type is   ${a.runtimeType}');
-    print(' ff type is   ${b.runtimeType}');
-    print('MyEventsss $myEevents');
     if (query.isEmpty) {
       setState(() {
         eventController.EventsData = eventController.AllEvents;

@@ -12,7 +12,6 @@ import 'package:dotted_line/dotted_line.dart';
 
 import '../Controller.dart';
 
-
 class NewsAndEventsDetailsScreen extends StatefulWidget {
   final eventid;
   final name;
@@ -383,8 +382,7 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                                                 ),
                                                 GestureDetector(
                                                   onTap: () {
-                                                    bottomcontroller.navBarChange(1);
-                                                    Get.to(() => NavBarScreen(), duration: Duration(seconds: 1), transition: Transition.fadeIn);
+                                                    ApiService().rejectEvent(widget.eventid, context);
                                                   },
                                                   child: Container(
                                                     width: 162.w,
