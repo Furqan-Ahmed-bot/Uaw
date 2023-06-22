@@ -23,6 +23,28 @@ class NewsAndEventsScreen extends StatefulWidget {
 }
 
 class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
+  Future<DateTime?> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: Colors.amberAccent, // <-- SEE HERE
+              onPrimary: Colors.redAccent, // <-- SEE HERE
+              onSurface: Colors.blueAccent, // <-- SEE HERE
+            ),
+          ),
+          child: Container(),
+        );
+      },
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2015, 8),
+      lastDate: DateTime(2101),
+    );
+    return picked;
+  }
+
   final bottomcontroller = Get.put(BottomController());
   final eventController = Get.put(EventController());
   final GlobalKey<ScaffoldState> _key = GlobalKey();
@@ -91,19 +113,22 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
 //
 
   final DateRangePickerController _dateController = DateRangePickerController();
-  String _date = "null";
-  void selectionChanged(DateRangePickerSelectionChangedArgs args) {
-    SchedulerBinding.instance.addPostFrameCallback((duration) {
-      setState(() {
-        _date = DateFormat('dd MMM yyyy').format(args.value).toString();
-        print('mydate is $_date');
-        searchevent(_date);
-        showAll = true;
-      });
+  dynamic _date;
+  // void selectionChanged(DateRangePickerSelectionChangedArgs args) {
+  //   SchedulerBinding.instance.addPostFrameCallback((duration) {
+  //     setState(() {
+  //       _date = DateFormat('d MMM yyyy').format(args.value).toString();
+  //       print('mydate is $_date');
+  //       searchevent(_date);
+  //       setState(() {
+  //         searchevent(_date);
+  //       });
+  //       showAll = true;
+  //     });
 
-      Get.back();
-    });
-  }
+  //     Get.back();
+  //   });
+  // }
 
   @override
   void initState() {
@@ -185,150 +210,205 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                   )
                 : Container(),
             GestureDetector(
-              onTap: () {
-                showDialog(
+              onTap: () async {
+                DateTime? pickedDate = await showDatePicker(
                     context: context,
-                    builder: (context) {
-                      return StatefulBuilder(builder: (BuildContext context, setState) {
-                        return AlertDialog(
-                            insetPadding: EdgeInsets.zero,
-                            scrollable: true,
-                            backgroundColor: const Color(0xff000000b8),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0.r),
+                    builder: (context, child) {
+                      return Theme(
+                        data: Theme.of(context).copyWith(
+                          colorScheme: ColorScheme.light(
+                            primary: bluishshade, // <-- SEE HERE
+                            onPrimary: Colors.white, // <-- SEE HERE
+                            onSurface: bluishshade, // <-- SEE HERE
+                          ),
+                          textButtonTheme: TextButtonThemeData(
+                            style: TextButton.styleFrom(
+                              primary: bluishshade, // button text color
                             ),
-                            contentPadding: const EdgeInsets.all(0),
-                            actionsPadding: const EdgeInsets.all(0),
-                            actions: [
-                              Container(
-                                width: 0.8.sw,
-                                height: 0.56.sh,
-                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.r), color: const Color(0xffFFFFFF)),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            Get.back();
-                                          },
-                                          child: Container(
-                                            width: 35.w,
-                                            height: 35.h,
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.only(
-                                                bottomLeft: Radius.circular(20.r),
-                                                topRight: Radius.circular(20.r),
-                                              ),
-                                              color: bluishshade,
-                                            ),
-                                            child: const Icon(
-                                              Icons.close,
-                                              color: white,
-                                              size: 25,
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    10.verticalSpace,
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 0),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                            child: IconButton(
-                                              icon: const Icon(Icons.arrow_back_ios),
-                                              color: Colors.black,
-                                              iconSize: 20,
-                                              onPressed: () {
-                                                setState(
-                                                  () {
-                                                    _dateController.backward!();
-                                                  },
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                          Container(
-                                            child: Text(headerString,
-                                                textAlign: TextAlign.center,
-                                                style: const TextStyle(
-                                                  fontSize: 25,
-                                                  color: Colors.black,
-                                                )),
-                                          ),
-                                          Container(
-                                              child: IconButton(
-                                            icon: const Icon(
-                                              Icons.arrow_forward_ios,
-                                            ),
-                                            color: Colors.black,
-                                            iconSize: 20,
-                                            onPressed: () {
-                                              setState(() {
-                                                _dateController.forward!();
-                                              });
-                                            },
-                                          )),
-                                        ],
-                                      ),
-                                    ),
-                                    Stack(
-                                      alignment: Alignment.center,
-                                      children: [
-                                        20.verticalSpace,
-                                        SfDateRangePicker(
-                                          view: DateRangePickerView.month,
-                                          controller: _dateController,
-                                          allowViewNavigation: true,
-                                          onSelectionChanged: selectionChanged,
-                                          initialSelectedDate: DateTime.now(),
-                                          selectionColor: const Color(0xffEDEDED),
-                                          selectionTextStyle: const TextStyle(
-                                            color: Colors.black,
-                                          ),
-                                          backgroundColor: Colors.white,
-                                          headerHeight: 0,
-                                          onViewChanged: viewChanged,
-                                          monthCellStyle: DateRangePickerMonthCellStyle(
-                                            weekendTextStyle: const TextStyle(color: Colors.red),
-                                            todayCellDecoration: BoxDecoration(
-                                                border: Border.all(
-                                              width: 1.w,
-                                              color: Colors.transparent,
-                                            )),
-                                            todayTextStyle: const TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w500,
-                                              color: Color(0xffEDEDED),
-                                            ),
-                                            textStyle: const TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 15,
-                                              color: Colors.black,
-                                              backgroundColor: Colors.white,
-                                            ),
-                                          ),
-                                          monthViewSettings: const DateRangePickerMonthViewSettings(
-                                            firstDayOfWeek: DateTime.monday,
-                                            viewHeaderStyle: DateRangePickerViewHeaderStyle(
-                                              textStyle: TextStyle(
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ]);
-                      });
-                    });
+                          ),
+                        ),
+                        child: child!,
+                      );
+                    },
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
+                    lastDate: DateTime(2101));
+
+                if (pickedDate != null) {
+                  // print("date"+
+                  //     pickedDate.toString()); //pickedDate output format => 2021-03-10 00:00:00.000
+                  String formattedDate = DateFormat('d MMM yyyy').format(pickedDate);
+                  // print("final date" + formattedDate);
+                  setState(() {
+                    _date = formattedDate;
+                    searchevent(_date);
+                    showAll = true;
+
+                    print("my selected date $_date"); //set output date to TextField value.
+                  });
+                  // print("delivery_date.text" + delivery_date.text);
+                  //formatted date output using intl package =>  2021-03-16
+                } else {
+                  print("Date is not selected");
+                }
+                // showDialog(
+                //     context: context,
+                //     builder: (context) {
+                //       return StatefulBuilder(builder: (BuildContext context, setState) {
+                //         return AlertDialog(
+                //             insetPadding: EdgeInsets.zero,
+                //             scrollable: true,
+                //             backgroundColor: const Color(0xff000000b8),
+                //             shape: RoundedRectangleBorder(
+                //               borderRadius: BorderRadius.circular(20.0.r),
+                //             ),
+                //             contentPadding: const EdgeInsets.all(0),
+                //             actionsPadding: const EdgeInsets.all(0),
+                //             actions: [
+
+                //               Container(
+                //                 width: 0.8.sw,
+                //                 height: 0.56.sh,
+                //                 decoration: BoxDecoration(borderRadius: BorderRadius.circular(20.r), color: const Color(0xffFFFFFF)),
+                //                 child: Column(
+                //                   children: [
+                //                     Row(
+                //                       mainAxisAlignment: MainAxisAlignment.end,
+                //                       children: [
+                //                         GestureDetector(
+                //                           onTap: () {
+                //                             Get.back();
+                //                           },
+                //                           child: Container(
+                //                             width: 35.w,
+                //                             height: 35.h,
+                //                             decoration: BoxDecoration(
+                //                               borderRadius: BorderRadius.only(
+                //                                 bottomLeft: Radius.circular(20.r),
+                //                                 topRight: Radius.circular(20.r),
+                //                               ),
+                //                               color: bluishshade,
+                //                             ),
+                //                             child: const Icon(
+                //                               Icons.close,
+                //                               color: white,
+                //                               size: 25,
+                //                             ),
+                //                           ),
+                //                         )
+                //                       ],
+                //                     ),
+                //                     10.verticalSpace,
+                //                     // Padding(
+                //                     //   padding: const EdgeInsets.symmetric(horizontal: 0),
+                //                     //   child: Row(
+                //                     //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //                     //     children: [
+                //                     //       Container(
+                //                     //         child: IconButton(
+                //                     //           icon: const Icon(Icons.arrow_back_ios),
+                //                     //           color: Colors.black,
+                //                     //           iconSize: 20,
+                //                     //           onPressed: () {
+                //                     //             setState(
+                //                     //               () {
+                //                     //                 _dateController.backward!();
+                //                     //               },
+                //                     //             );
+                //                     //           },
+                //                     //         ),
+                //                     //       ),
+                //                     //       Row(
+                //                     //         children: [
+                //                     //           Container(
+                //                     //             child: Text(headerString,
+                //                     //                 textAlign: TextAlign.center,
+                //                     //                 style: const TextStyle(
+                //                     //                   fontSize: 25,
+                //                     //                   color: Colors.black,
+                //                     //                 )),
+                //                     //           ),
+                //                     //           GestureDetector(
+                //                     //             onTap: () {},
+                //                     //             child: Icon(
+                //                     //               Icons.arrow_drop_down,
+                //                     //               color: Colors.black,
+                //                     //             ),
+                //                     //           )
+                //                     //         ],
+                //                     //       ),
+                //                     //       Container(
+                //                     //           child: IconButton(
+                //                     //         icon: const Icon(
+                //                     //           Icons.arrow_forward_ios,
+                //                     //         ),
+                //                     //         color: Colors.black,
+                //                     //         iconSize: 20,
+                //                     //         onPressed: () {
+                //                     //           setState(() {
+                //                     //             _dateController.forward!();
+                //                     //           });
+                //                     //         },
+                //                     //       )),
+                //                     //     ],
+                //                     //   ),
+                //                     // ),
+
+                //                     Stack(
+                //                       alignment: Alignment.center,
+                //                       children: [
+                //                         20.verticalSpace,
+
+                //                         // SfDateRangePicker(
+                //                         //   view: DateRangePickerView.year,
+                //                         //   // selectionMode: DateRangePickerSelectionMode.single,
+                //                         //   controller: _dateController,
+                //                         //   allowViewNavigation: true,
+                //                         //   onSelectionChanged: selectionChanged,
+                //                         //   initialSelectedDate: DateTime.now(),
+                //                         //   selectionColor: const Color(0xffEDEDED),
+                //                         //   selectionTextStyle: const TextStyle(
+                //                         //     color: Colors.black,
+                //                         //   ),
+                //                         //   backgroundColor: Colors.white,
+                //                         //   headerHeight: 0,
+                //                         //   onViewChanged: viewChanged,
+                //                         //   monthCellStyle: DateRangePickerMonthCellStyle(
+                //                         //     weekendTextStyle: const TextStyle(color: Colors.red),
+                //                         //     todayCellDecoration: BoxDecoration(
+                //                         //         border: Border.all(
+                //                         //       width: 1.w,
+                //                         //       color: Colors.transparent,
+                //                         //     )),
+                //                         //     todayTextStyle: const TextStyle(
+                //                         //       fontSize: 15,
+                //                         //       fontWeight: FontWeight.w500,
+                //                         //       color: Color(0xffEDEDED),
+                //                         //     ),
+                //                         //     textStyle: const TextStyle(
+                //                         //       fontWeight: FontWeight.w400,
+                //                         //       fontSize: 15,
+                //                         //       color: Colors.black,
+                //                         //       backgroundColor: Colors.white,
+                //                         //     ),
+                //                         //   ),
+                //                         //   monthViewSettings: const DateRangePickerMonthViewSettings(
+                //                         //     firstDayOfWeek: DateTime.monday,
+                //                         //     viewHeaderStyle: DateRangePickerViewHeaderStyle(
+                //                         //       textStyle: TextStyle(
+                //                         //         color: Colors.black,
+                //                         //       ),
+                //                         //     ),
+                //                         //   ),
+                //                         // ),
+                //                       ],
+                //                     ),
+                //                   ],
+                //                 ),
+                //               )
+                //             ]);
+                //       });
+                //     });
               },
               child: Image.asset(
                 "assets/images/Icon metro-calendar@3x.png",

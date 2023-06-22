@@ -107,9 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       });
     } else {
-      // WidgetsBinding.instance.addPostFrameCallback((_) {
-
-      // });
+      WidgetsBinding.instance.addPostFrameCallback((_) {});
       ApiService().Events(context);
       ApiService().getFeeds();
     }
@@ -621,8 +619,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     GestureDetector(
                                                       onTap: () {
                                                         feedsController.feedsData[index]["filepath"][0].endsWith(".mp4")
-                                                            ? Get.to(
-                                                                () => DrawerVideoPlayerSvreen(vurl: feedsController.feedsData[index]["filepath"][0]))
+                                                            ? Get.to(() => DrawerVideoPlayerSvreen(Videofilepath: videoFile))
                                                             : null;
                                                       },
                                                       child: Container(

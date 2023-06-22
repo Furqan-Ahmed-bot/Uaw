@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:_uaw/Controllers/videocontroller.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:_uaw/HomeScreens/Drawer.dart';
 import 'package:_uaw/HomeScreens/DrawerVideoPlayer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -20,7 +23,16 @@ class VideoScreen extends StatefulWidget {
   State<VideoScreen> createState() => _VideoScreenState();
 }
 
+File? videoFile;
+
 class _VideoScreenState extends State<VideoScreen> {
+  _initializeVideoPlayer(DownloadURL) async {
+    String NewURL = DownloadURL.replaceFirst("https:/", "https://");
+    videoFile = await DefaultCacheManager().getSingleFile(NewURL);
+
+    print(videoFile);
+  }
+
   dynamic fileName;
   final bottomcontroller = Get.put(BottomController());
   String now = DateFormat("yyyy-MM-dd").format(DateTime.now());
@@ -34,6 +46,11 @@ class _VideoScreenState extends State<VideoScreen> {
     ApiService().getVideo();
 
     super.initState();
+  }
+
+  void dispose() {
+    DefaultCacheManager().emptyCache();
+    super.dispose();
   }
 
   @override
@@ -94,11 +111,12 @@ class _VideoScreenState extends State<VideoScreen> {
                                 return Column(
                                   children: [
                                     GestureDetector(
-                                      onTap: () {
+                                      onTap: () async {
+                                        await _initializeVideoPlayer(videocontroller.VideoData[index]["filepath"][0]);
+
                                         Get.to(() => DrawerVideoPlayerSvreen(
-                                              vurl: videocontroller.VideoData[index]["filepath"][0],
+                                              Videofilepath: videoFile,
                                               details: videocontroller.VideoData[index]["title"].toString(),
-                                              
                                             ));
                                       },
                                       child: Container(

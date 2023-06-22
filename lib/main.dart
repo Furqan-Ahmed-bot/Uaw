@@ -10,6 +10,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'Auth/OTPVerification.dart';
 import 'Auth/check.dart';
 
+import 'Helpers.dart';
 import 'HomeScreens/NavBar.dart';
 import 'HomeScreens/Notification.dart';
 import 'Splash.dart';
@@ -22,8 +23,6 @@ Future main() async {
   runApp(const MyApp());
   _handleLocationPermission(ContextAction);
 }
-
-
 
 Future<bool> _handleLocationPermission(context) async {
   bool serviceEnabled;
