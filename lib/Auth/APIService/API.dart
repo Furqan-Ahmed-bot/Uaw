@@ -428,10 +428,12 @@ class ApiService {
     var resData = json.decode(response.body.toString());
     if (resData['status'] == true) {
       Get.snackbar('Message', resData['message']);
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const NewsAndEventsScreen(
-                value: '',
-              )));
+      bottomcontroller.navBarChange(1);
+      Get.to(() => NavBarScreen());
+      // Navigator.of(context).push(MaterialPageRoute(
+      //     builder: (context) => const NewsAndEventsScreen(
+      //           value: '',
+      //         )));
       // Get.to(const NewsAndEventsScreen(
       //   value: '',
       // ));

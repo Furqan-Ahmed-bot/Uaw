@@ -12,6 +12,8 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:flutter/widgets.dart' as widgets;
 import 'package:_uaw/Global.dart';
 
+import '../Controllers/eventcontroller.dart';
+
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
 
@@ -22,6 +24,7 @@ class UserProfileScreen extends StatefulWidget {
 class _UserProfileScreenState extends State<UserProfileScreen> {
   TextEditingController Locationcontroller = TextEditingController();
   final UserDetails = Get.put(UserController());
+  final eventcontroller = Get.put(EventController());
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
@@ -300,7 +303,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         //   scale: 3.5,
                         //   color: black,
                         // ),
-                        hintText: "3 upcoming events",
+                        hintText: "${eventcontroller.MyEvents.length.toString()} Attending Events",
                         hintStyle: medium18blackwopacity,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),

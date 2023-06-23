@@ -4,6 +4,7 @@ import 'package:_uaw/Controllers/videocontroller.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:_uaw/HomeScreens/Drawer.dart';
 import 'package:_uaw/HomeScreens/DrawerVideoPlayer.dart';
+import 'package:_uaw/HomeScreens/testchewiecontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -111,12 +112,11 @@ class _VideoScreenState extends State<VideoScreen> {
                                 return Column(
                                   children: [
                                     GestureDetector(
-                                      onTap: () async {
-                                        await _initializeVideoPlayer(videocontroller.VideoData[index]["filepath"][0]);
-
+                                      onTap: () {
                                         Get.to(() => DrawerVideoPlayerSvreen(
-                                              Videofilepath: videoFile,
+                                              // Videofilepath: videoFile,
                                               details: videocontroller.VideoData[index]["title"].toString(),
+                                              videoFilePath: videocontroller.VideoData[index]["filepath"][0].toString(),
                                             ));
                                       },
                                       child: Container(
@@ -143,6 +143,7 @@ class _VideoScreenState extends State<VideoScreen> {
                                                         ),
                                                       ),
                                                     ),
+                                                   
                                                   ),
                                                   15.horizontalSpace,
                                                   Column(

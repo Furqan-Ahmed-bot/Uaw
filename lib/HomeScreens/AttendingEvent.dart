@@ -16,6 +16,7 @@ class AttendingEventScreen extends StatefulWidget {
 }
 
 class _AttendingEventScreenState extends State<AttendingEventScreen> {
+  final eventcontroller = Get.put(EventController());
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {

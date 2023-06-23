@@ -231,7 +231,7 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                       );
                     },
                     initialDate: DateTime.now(),
-                    firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
+                    firstDate: DateTime(1990), //DateTime.now() - not to allow to choose before today.
                     lastDate: DateTime(2101));
 
                 if (pickedDate != null) {

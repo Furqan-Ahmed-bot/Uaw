@@ -104,12 +104,14 @@ class _HomeScreenState extends State<HomeScreen> {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           ApiService().Events(context);
           ApiService().getFeeds();
+          ApiService().geteventbyuser();
         });
       });
     } else {
       WidgetsBinding.instance.addPostFrameCallback((_) {});
       ApiService().Events(context);
       ApiService().getFeeds();
+      ApiService().geteventbyuser();
     }
 
     super.initState();
@@ -619,7 +621,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     GestureDetector(
                                                       onTap: () {
                                                         feedsController.feedsData[index]["filepath"][0].endsWith(".mp4")
-                                                            ? Get.to(() => DrawerVideoPlayerSvreen(Videofilepath: videoFile))
+                                                            ? Get.to(() => DrawerVideoPlayerSvreen(
+                                                                  videoFilePath: feedsController.feedsData[index]["filepath"][0].toString(),
+                                                                  details: feedsController.feedsData[index]["title"].toString(),
+                                                                ))
                                                             : null;
                                                       },
                                                       child: Container(
