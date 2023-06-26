@@ -22,6 +22,14 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
+  String capitalizeFirstLetter(String text) {
+    if (text.isEmpty) return text;
+
+    final firstLetter = text.substring(0, 1).toUpperCase();
+    final remainingLetters = text.substring(1);
+    return '$firstLetter$remainingLetters';
+  }
+
   TextEditingController Locationcontroller = TextEditingController();
   final UserDetails = Get.put(UserController());
   final eventcontroller = Get.put(EventController());
@@ -29,6 +37,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   @override
   Widget build(BuildContext context) {
     completeAddress;
+    String designationTitle = UserController.user.data!.designation!.title.toString();
+    String capitalizedTitle = capitalizeFirstLetter(designationTitle);
 
     return Scaffold(
         key: _key,
@@ -176,7 +186,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           "assets/images/Icon feather-user@3x3.png",
                           scale: 3.5,
                         ),
-                        hintText: UserController.user.data!.designation!.title.toString(),
+                        hintText: capitalizedTitle,
                         hintStyle: txtstyleblack14WO,
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r),
