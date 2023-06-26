@@ -29,7 +29,7 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.light(
+            colorScheme: const ColorScheme.light(
               primary: Colors.amberAccent, // <-- SEE HERE
               onPrimary: Colors.redAccent, // <-- SEE HERE
               onSurface: Colors.blueAccent, // <-- SEE HERE
@@ -462,7 +462,7 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                           Container(
                                             width: 60.h,
                                             height: 60.h,
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                               shape: BoxShape.circle,
                                               image: DecorationImage(
                                                 image: AssetImage(
@@ -499,7 +499,7 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                         ],
                                       ),
                                       15.verticalSpace,
-                                      eventController.EventsData[index]['file'].length == 0
+                                      eventController.EventsData[index]['file'] == null || eventController.EventsData[index]['file'].length == 0
                                           ? Container(
                                               width: 1.sw,
                                               height: 0.35.sh,

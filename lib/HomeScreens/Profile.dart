@@ -120,7 +120,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                         ),
                         image: DecorationImage(
                             image: NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file}'),
-                            fit: BoxFit.fill),
+                            fit: BoxFit.cover),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,

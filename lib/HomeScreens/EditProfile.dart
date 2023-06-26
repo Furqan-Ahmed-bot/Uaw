@@ -206,7 +206,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               ),
                               image: DecorationImage(
                                 image: NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file.toString()}'),
-                                fit: BoxFit.fill,
+                                fit: BoxFit.cover,
                               ),
                             )
                           : BoxDecoration(

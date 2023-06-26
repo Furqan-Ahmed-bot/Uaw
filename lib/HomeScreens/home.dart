@@ -180,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: SingleChildScrollView(child: GetBuilder<EventController>(
                 builder: (eventController) {
                   eventController.EventsData;
-                  return eventController.isLoding && eventcontroller.MyEvents.isEmpty
+                  return eventController.isLoding && eventController.MyEvents.isEmpty
                       ? Center(child: CircularProgressIndicator())
                       : Column(
                           children: [
@@ -399,7 +399,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   transition: Transition.fadeIn);
                                             },
                                             child: Container(
-                                              child: eventController.EventsData[0]['file'].length == 0
+                                              child: eventController.EventsData[0]['file'] == null ||
+                                                      eventController.EventsData[0]['file'].length == 0
                                                   ? StaggeredGrid.count(
                                                       crossAxisCount: 3,
                                                       mainAxisSpacing: 5,
