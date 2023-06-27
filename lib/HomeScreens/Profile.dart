@@ -120,47 +120,52 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   ),
                   Positioned(
                     top: -40,
-                    child: Container(
-                      width: 140.w,
-                      height: 140.h,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          width: 5.w,
-                          color: Color(0xff00000026),
-                        ),
-                        // image: DecorationImage(
-                        //     image: NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file}'),
-                        //     fit: BoxFit.cover),
-                      ),
-                      child: ClipOval(
-                        child: Image.network(
-                          'https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file}',
-                          fit: BoxFit.fitWidth,
-                          alignment: Alignment.center,
-                        ),
-                      ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.end,
-                      //   crossAxisAlignment: CrossAxisAlignment.end,
-                      //   children: [
-                      //     // Container(
-                      //     //   width: 40.w,
-                      //     //   height: 40.h,
-                      //     //   decoration: BoxDecoration(
-                      //     //     shape: BoxShape.circle,
-                      //     //     color: bluishshade,
-                      //     //   ),
-                      //     //   child: Icon(
-                      //     //     Icons.camera_alt,
-                      //     //     color: whitecolor,
-                      //     //     size: 20,
-                      //     //   ),
-                      //     // )
-                      //   ],
-                      // ),
+                    child: CircleAvatar(
+                      radius: 70.r,
+                      backgroundImage: NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file}'),
+                      backgroundColor: Colors.transparent,
                     ),
-                  )
+                    // Container(
+                    //   width: 140.w,
+                    //   height: 140.h,
+                    //   decoration: BoxDecoration(
+                    //     shape: BoxShape.circle,
+                    //     border: Border.all(
+                    //       width: 5.w,
+                    //       color: Color(0xff00000026),
+                    //     ),
+                    //     image: DecorationImage(
+                    //         image: NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file}'),
+                    //         fit: BoxFit.cover),
+                    //   ),
+                    // child: ClipOval(
+                    //   child: Image.network(
+                    //     'https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file}',
+                    //     // fit: BoxFit.fitWidth,
+                    //     alignment: Alignment.center,
+                    //   ),
+                    // ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.end,
+                    //   crossAxisAlignment: CrossAxisAlignment.end,
+                    //   children: [
+                    // Container(
+                    //   width: 40.w,
+                    //   height: 40.h,
+                    //   decoration: BoxDecoration(
+                    //     shape: BoxShape.circle,
+                    //     color: bluishshade,
+                    //   ),
+                    //   child: Icon(
+                    //     Icons.camera_alt,
+                    //     color: whitecolor,
+                    //     size: 20,
+                    //   ),
+                    // )
+                    //   ],
+                    // ),
+                    // ),
+                  ),
                 ],
               ),
               100.verticalSpace,

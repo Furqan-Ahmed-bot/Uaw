@@ -188,61 +188,120 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                 ),
                 Positioned(
-                  top: 100,
+                  top: 120,
                   child: GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () {
-                      getImage();
-                    },
-                    child: Container(
-                      width: 140.w,
-                      height: 140.h,
-                      decoration: UserProfileImage == null
-                          ? BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                width: 5.w,
-                                color: Color(0xff00000026),
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () {
+                        getImage();
+                      },
+                      child: UserProfileImage != null
+                          ? CircleAvatar(
+                              radius: 70.r,
+                              // backgroundColor: Colors.transparent,
+                              backgroundImage: FileImage(
+                                File(UserProfileImage!.path),
                               ),
-                              image: DecorationImage(
-                                image: NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file.toString()}'),
-                                fit: BoxFit.fitWidth,
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 90),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      width: 40.w,
+                                      height: 40.h,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: bluishshade,
+                                      ),
+                                      child: Icon(
+                                        Icons.camera_alt,
+                                        color: whitecolor,
+                                        size: 20,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             )
-                          : BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                width: 5.w,
-                                color: Color(0xff00000026),
-                              ),
-                              image: DecorationImage(
-                                image: FileImage(
-                                  File(UserProfileImage!.path),
+                          : CircleAvatar(
+                              radius: 60.r,
+                              backgroundColor: Colors.transparent,
+                              backgroundImage:
+                                  NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file.toString()}'),
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 90),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      width: 40.w,
+                                      height: 40.h,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: bluishshade,
+                                      ),
+                                      child: Icon(
+                                        Icons.camera_alt,
+                                        color: whitecolor,
+                                        size: 20,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                fit: BoxFit.fitWidth,
                               ),
-                            ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Container(
-                            width: 40.w,
-                            height: 40.h,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: bluishshade,
-                            ),
-                            child: Icon(
-                              Icons.camera_alt,
-                              color: whitecolor,
-                              size: 20,
-                            ),
-                          )
-                        ],
+                            )
+                      // Container(
+                      //   width: 140.w,
+                      //   height: 140.h,
+                      //   decoration: UserProfileImage == null
+                      //       ? BoxDecoration(
+                      //           shape: BoxShape.circle,
+                      //           border: Border.all(
+                      //             width: 5.w,
+                      //             color: Color(0xff00000026),
+                      //           ),
+                      //           image: DecorationImage(
+                      //             image: NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file.toString()}'),
+                      //             fit: BoxFit.fitWidth,
+                      //           ),
+                      //         )
+                      //       : BoxDecoration(
+                      //           shape: BoxShape.circle,
+                      //           border: Border.all(
+                      //             width: 5.w,
+                      //             color: Color(0xff00000026),
+                      //           ),
+                      //           image: DecorationImage(
+                      //             image: FileImage(
+                      //               File(UserProfileImage!.path),
+                      //             ),
+                      //             fit: BoxFit.fitWidth,
+                      //           ),
+                      //         ),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.end,
+                      //     crossAxisAlignment: CrossAxisAlignment.end,
+                      //     children: [
+                      //       Container(
+                      //         width: 40.w,
+                      //         height: 40.h,
+                      //         decoration: BoxDecoration(
+                      //           shape: BoxShape.circle,
+                      //           color: bluishshade,
+                      //         ),
+                      //         child: Icon(
+                      //           Icons.camera_alt,
+                      //           color: whitecolor,
+                      //           size: 20,
+                      //         ),
+                      //       )
+                      //     ],
+                      //   ),
+                      // ),
+
                       ),
-                    ),
-                  ),
                 ),
               ],
             ),
