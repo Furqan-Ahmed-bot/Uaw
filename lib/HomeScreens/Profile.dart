@@ -34,6 +34,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   final UserDetails = Get.put(UserController());
   final eventcontroller = Get.put(EventController());
   final GlobalKey<ScaffoldState> _key = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     completeAddress;
@@ -128,29 +129,36 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           width: 5.w,
                           color: Color(0xff00000026),
                         ),
-                        image: DecorationImage(
-                            image: NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file}'),
-                            fit: BoxFit.cover),
+                        // image: DecorationImage(
+                        //     image: NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file}'),
+                        //     fit: BoxFit.cover),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          // Container(
-                          //   width: 40.w,
-                          //   height: 40.h,
-                          //   decoration: BoxDecoration(
-                          //     shape: BoxShape.circle,
-                          //     color: bluishshade,
-                          //   ),
-                          //   child: Icon(
-                          //     Icons.camera_alt,
-                          //     color: whitecolor,
-                          //     size: 20,
-                          //   ),
-                          // )
-                        ],
+                      child: ClipOval(
+                        child: Image.network(
+                          'https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file}',
+                          fit: BoxFit.fitWidth,
+                          alignment: Alignment.center,
+                        ),
                       ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.end,
+                      //   crossAxisAlignment: CrossAxisAlignment.end,
+                      //   children: [
+                      //     // Container(
+                      //     //   width: 40.w,
+                      //     //   height: 40.h,
+                      //     //   decoration: BoxDecoration(
+                      //     //     shape: BoxShape.circle,
+                      //     //     color: bluishshade,
+                      //     //   ),
+                      //     //   child: Icon(
+                      //     //     Icons.camera_alt,
+                      //     //     color: whitecolor,
+                      //     //     size: 20,
+                      //     //   ),
+                      //     // )
+                      //   ],
+                      // ),
                     ),
                   )
                 ],

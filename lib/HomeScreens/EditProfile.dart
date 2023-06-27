@@ -206,7 +206,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               ),
                               image: DecorationImage(
                                 image: NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file.toString()}'),
-                                fit: BoxFit.cover,
+                                fit: BoxFit.fitWidth,
                               ),
                             )
                           : BoxDecoration(
@@ -219,7 +219,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                 image: FileImage(
                                   File(UserProfileImage!.path),
                                 ),
-                                fit: BoxFit.fill,
+                                fit: BoxFit.fitWidth,
                               ),
                             ),
                       child: Row(
