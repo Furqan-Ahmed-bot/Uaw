@@ -34,13 +34,15 @@ class _DrawerScreenState extends State<DrawerScreen> {
 
   void _onDrawerOpened() {
     setState(() {
-      SystemChrome.setEnabledSystemUIOverlays([]);
+      // SystemChrome.setEnabledSystemUIOverlays([]);
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     });
   }
 
   void _onDrawerClosed() {
     setState(() {
-      SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+      // SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     });
   }
 
@@ -74,10 +76,13 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   width: 0.8.sw,
                   height: 0.91.sh,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [
-                      Colors.transparent.withOpacity(0.5),
-                      Color(0xff04366BCC),
-                    ]),
+                    gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.transparent.withOpacity(0.5),
+                          Color(0xff04366BCC),
+                        ]),
                   ),
                   child: Column(
                     children: [
@@ -110,7 +115,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
                             width: 5.w,
                             color: whitecolor,
                           ),
-                          image: DecorationImage(image: AssetImage("assets/images/Group 1433@3x1.png"), fit: BoxFit.fill),
+                          image: DecorationImage(
+                              image: AssetImage(
+                                  "assets/images/Group 1433@3x1.png"),
+                              fit: BoxFit.fill),
                         ),
                       ),
                       20.verticalSpace,
@@ -129,7 +137,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                if (bottomcontroller.navigationBarIndexValue != 0) {
+                                if (bottomcontroller.navigationBarIndexValue !=
+                                    0) {
                                   bottomcontroller.navBarChange(0);
                                 } else {
                                   Get.back();
@@ -308,7 +317,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
                             actions: [
                               Container(
                                 width: 370.w,
-                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.r), color: Color(0xffFFFFFF)),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15.r),
+                                    color: Color(0xffFFFFFF)),
                                 child: Column(
                                   children: [
                                     Row(
@@ -323,7 +334,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                             height: 35.h,
                                             decoration: BoxDecoration(
                                               borderRadius: BorderRadius.only(
-                                                bottomLeft: Radius.circular(15.r),
+                                                bottomLeft:
+                                                    Radius.circular(15.r),
                                                 topRight: Radius.circular(15.r),
                                               ),
                                               color: bluishshade,
@@ -345,7 +357,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                     ),
                                     30.verticalSpace,
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
                                       children: [
                                         GestureDetector(
                                           onTap: () {
@@ -355,7 +368,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                             width: 162.w,
                                             height: 55.h,
                                             decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(10.r),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.r),
                                               color: redishcolor,
                                             ),
                                             child: Center(
@@ -374,7 +388,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                             width: 162.w,
                                             height: 55.h,
                                             decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(10.r),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.r),
                                               color: bluishshade,
                                             ),
                                             child: Center(
