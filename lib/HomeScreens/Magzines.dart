@@ -30,8 +30,11 @@ class _MagzineScreenState extends State<MagzineScreen> {
   Future<void> _magazindownload(url, filename) async {
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
-      final appDocumentsDirectory = await getApplicationDocumentsDirectory();
-      final filePath = '${appDocumentsDirectory.path}/${filename}}';
+      // final appDocumentsDirectory = await getApplicationDocumentsDirectory();
+      Object appDocumentsDirectory = Platform.isAndroid
+          ? (await getExternalStorageDirectory())!.path //FOR ANDROID
+          : (await getApplicationSupportDirectory()).path;
+      final filePath = '$appDocumentsDirectory/$filename}';
       final file = File(filePath);
       await file.writeAsBytes(response.bodyBytes);
 
@@ -202,7 +205,9 @@ class _MagzineScreenState extends State<MagzineScreen> {
                                                                                 'https://uaw-api.thesuitchstaging.com/Uploads/${magazinecontroller.MagzineData[index]["file"][0]}'));
                                                                     // openFile();
                                                                     // Replace with the actual document URL from the API response
-                                                                    _magazindownload(magazinecontroller.MagzineData[index]["file"][0], filename2);
+                                                                    _magazindownload(
+                                                                        'https://uaw-api.thesuitchstaging.com/Uploads/${magazinecontroller.MagzineData[index]["file"][0]}',
+                                                                        filename2);
 
                                                                     // showDialog(
                                                                     //   context: context,

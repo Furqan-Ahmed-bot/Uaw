@@ -301,7 +301,10 @@ class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProv
                                                                       'https://uaw-api.thesuitchstaging.com/Uploads/${documentcontroller.DocumentsData[index]["file"][0]}'));
                                                           // openFile();
                                                           // Replace with the actual document URL from the API response
-                                                          _downloadDocument(documentcontroller.DocumentsData[index]["file"][0], filename2);
+                                                          print("UAWWW : " + documentcontroller.DocumentsData[index]["file"][0].toString());
+                                                          _downloadDocument(
+                                                              'https://uaw-api.thesuitchstaging.com/Uploads/${documentcontroller.DocumentsData[index]["file"][0]}',
+                                                              filename2);
 
                                                           // showDialog(
                                                           //   context: context,
@@ -315,9 +318,9 @@ class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProv
                                                         //             'https://uaw-api.thesuitchstaging.com/Uploads/${documentcontroller.DocumentsData[index]["file"][0]}'));
                                                         // // openFile();
                                                         // // Replace with the actual document URL from the API response
-                                                        // _downloadDocument(documentcontroller.DocumentsData[index]["file"][0], 
-                                                        // 
-                                                        // 
+                                                        // _downloadDocument(documentcontroller.DocumentsData[index]["file"][0],
+                                                        //
+                                                        //
                                                         // );
 
                                                         // showDialog(

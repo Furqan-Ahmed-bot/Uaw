@@ -719,7 +719,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                                               'https://uaw-api.thesuitchstaging.com/Uploads/${feedsController.feedsData[index]["file"][0]}'));
 
                                                                                   _downloadDocument(
-                                                                                      feedsController.feedsData[index]["file"][0], filename2);
+                                                                                      'https://uaw-api.thesuitchstaging.com/Uploads/${feedsController.feedsData[index]["file"][0]}',
+                                                                                      filename2);
 
                                                                                   // showDialog(
                                                                                   //   context: context,

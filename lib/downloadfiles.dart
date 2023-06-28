@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,7 +22,11 @@ class _DownloadingDialogFileState extends State<DownloadingDialogFile> {
   String? filePath;
 
   Future<void> startDownloading() async {
-    String dir = (await getExternalStorageDirectory())!.path; // Use getExternalStorageDirectory() instead of getApplicationDocumentsDirectory()
+    // String dir = (await getExternalStorageDirectory())!.path;
+    // Use getExternalStorageDirectory() instead of getApplicationDocumentsDirectory()
+    Object dir = Platform.isAndroid
+        ? (await getExternalStorageDirectory())!.path //FOR ANDROID
+        : (await getApplicationSupportDirectory()).path; //FOR iOS
     String fileName = widget.url.split('/').last;
     String fullPath = '$dir/Download/$fileName';
     print(fullPath);
