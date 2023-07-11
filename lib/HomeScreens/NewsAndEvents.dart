@@ -415,211 +415,222 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                 scale: 2.5,
               ),
             )
+         
+         
           ],
         ),
         drawer: const DrawerScreen(),
-        body: GetBuilder<EventController>(builder: (eventController) {
-          return (eventController.isLoding
-              ? const Center(child: CircularProgressIndicator())
-              : ListView.builder(
-                  itemCount: eventController.EventsData.length,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Get.to(
-                                () => NewsAndEventsDetailsScreen(
-                                      name: eventController.EventsData[index]['user']['name'],
-                                      date: eventController.EventsData[index]['createdAt'].toString(),
-                                      description: eventController.EventsData[index]['description'],
-                                      timee: eventController.EventsData[index]['date'].toString(),
-                                      title: eventController.EventsData[index]['title'],
-                                      location: eventController.EventsData[index]['location'].toString(),
-                                      eventimage:
-                                          eventController.EventsData[0]['file'].length == 0 ? null : eventController.EventsData[0]['file'][0]['file'],
-                                      eventid: eventController.EventsData[index]['_id'],
-                                    ),
-                                duration: Duration(seconds: 1),
-                                transition: Transition.fadeIn);
-                          },
-                          child: Column(
+        body: eventController.EventsData.isEmpty
+            ? Center(
+                child: Text(
+                  "No Upcoming Events",
+                  style: textroboto20,
+                ),
+              )
+            : GetBuilder<EventController>(builder: (eventController) {
+                return (eventController.isLoding
+                    ? const Center(child: CircularProgressIndicator())
+                    : ListView.builder(
+                        itemCount: eventController.EventsData.length,
+                        itemBuilder: (context, index) {
+                          return Column(
                             children: [
-                              Container(
-                                width: 0.9.sw,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.r),
-                                  color: white,
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 20.r),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      20.verticalSpace,
-                                      Row(
-                                        children: [
-                                          Container(
-                                            width: 60.h,
-                                            height: 60.h,
-                                            decoration: const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              image: DecorationImage(
-                                                image: AssetImage(
-                                                  "assets/images/Ellipse 68-1@3x.png",
+                              GestureDetector(
+                                onTap: () {
+                                  Get.to(
+                                      () => NewsAndEventsDetailsScreen(
+                                            name: eventController.EventsData[index]['user']['name'],
+                                            date: eventController.EventsData[index]['createdAt'].toString(),
+                                            description: eventController.EventsData[index]['description'],
+                                            timee: eventController.EventsData[index]['date'].toString(),
+                                            title: eventController.EventsData[index]['title'],
+                                            location: eventController.EventsData[index]['location'].toString(),
+                                            eventimage: eventController.EventsData[0]['file'].length == 0
+                                                ? null
+                                                : eventController.EventsData[0]['file'][0]['file'],
+                                            eventid: eventController.EventsData[index]['_id'],
+                                          ),
+                                      duration: Duration(seconds: 1),
+                                      transition: Transition.fadeIn);
+                                },
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      width: 0.9.sw,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10.r),
+                                        color: white,
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(horizontal: 20.r),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            20.verticalSpace,
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  width: 60.h,
+                                                  height: 60.h,
+                                                  decoration: const BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    image: DecorationImage(
+                                                      image: AssetImage(
+                                                        "assets/images/Ellipse 68-1@3x.png",
+                                                      ),
+                                                      fit: BoxFit.fill,
+
+                                                      //     NetworkImage(
+                                                      //   "https://uaw-api.thesuitchstaging.com:3090/${eventController.EventsData[index]['file'][0]['file']}",
+                                                      // ),
+                                                    ),
+                                                  ),
                                                 ),
-                                                fit: BoxFit.fill,
-
-                                                //     NetworkImage(
-                                                //   "https://uaw-api.thesuitchstaging.com:3090/${eventController.EventsData[index]['file'][0]['file']}",
-                                                // ),
-                                              ),
+                                                10.horizontalSpace,
+                                                Column(
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      eventController.EventsData[index]['user']['name'],
+                                                      style: txtstyleblue17,
+                                                    ),
+                                                    5.verticalSpace,
+                                                    Text(
+                                                      eventController.EventsData[index]['date'].toString(),
+                                                      style: textroboto12,
+                                                    ),
+                                                  ],
+                                                ),
+                                                const Spacer(),
+                                                Image.asset(
+                                                  "assets/images/Group 1333@3x.png",
+                                                  scale: 3.5,
+                                                )
+                                              ],
                                             ),
-                                          ),
-                                          10.horizontalSpace,
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                eventController.EventsData[index]['user']['name'],
-                                                style: txtstyleblue17,
-                                              ),
-                                              5.verticalSpace,
-                                              Text(
-                                                eventController.EventsData[index]['date'].toString(),
-                                                style: textroboto12,
-                                              ),
-                                            ],
-                                          ),
-                                          const Spacer(),
-                                          Image.asset(
-                                            "assets/images/Group 1333@3x.png",
-                                            scale: 3.5,
-                                          )
-                                        ],
-                                      ),
-                                      15.verticalSpace,
-                                      eventController.EventsData[index]['file'] == null || eventController.EventsData[index]['file'].length == 0
-                                          ? Container(
-                                              width: 1.sw,
-                                              height: 0.35.sh,
-                                              // height: 135.h,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10.r),
-                                                color: black,
-                                                image: const DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
-                                              ),
-                                            )
-                                          // StaggeredGrid.count(
-                                          //     crossAxisCount: 3,
-                                          //     mainAxisSpacing: 5,
-                                          //     crossAxisSpacing: 5,
-                                          //     children: [
-                                          //       StaggeredGridTile.count(
-                                          //         crossAxisCellCount: 1,
-                                          //         mainAxisCellCount: 1,
-                                          //         child: Container(
-                                          //           width: 115.w,
-                                          //           height: 135.h,
-                                          //           decoration: BoxDecoration(
-                                          //             borderRadius: BorderRadius.only(
-                                          //               topLeft: Radius.circular(10.r),
-                                          //             ),
-                                          //             color: black,
-                                          //             image:
-                                          //                 const DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
-                                          //           ),
-                                          //         ),
-                                          //       ),
-                                          //       StaggeredGridTile.count(
-                                          //         crossAxisCellCount: 1,
-                                          //         mainAxisCellCount: 1,
-                                          //         child: Container(
-                                          //           width: 115.w,
-                                          //           height: 135.h,
-                                          //           decoration: const BoxDecoration(
-                                          //             image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
-                                          //             color: black,
-                                          //           ),
-                                          //         ),
-                                          //       ),
-                                          //       StaggeredGridTile.count(
-                                          //         crossAxisCellCount: 1,
-                                          //         mainAxisCellCount: 1,
-                                          //         child: Container(
-                                          //           width: 115.w,
-                                          //           height: 135.h,
-                                          //           decoration: BoxDecoration(
-                                          //             color: black,
-                                          //             borderRadius: BorderRadius.only(
-                                          //               topRight: Radius.circular(10.r),
-                                          //             ),
-                                          //             image:
-                                          //                 const DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
-                                          //           ),
-                                          //         ),
-                                          //       ),
-                                          //       StaggeredGridTile.count(
-                                          //         crossAxisCellCount: 5,
-                                          //         mainAxisCellCount: 1,
-                                          //         child: Row(
-                                          //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          //           children: [
-                                          //             Container(
-                                          //               width: 170.w,
-                                          //               decoration: BoxDecoration(
-                                          //                 borderRadius: BorderRadius.only(
-                                          //                   bottomLeft: Radius.circular(10.r),
-                                          //                 ),
-                                          //                 color: black,
-                                          //                 image: const DecorationImage(
-                                          //                     image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
-                                          //               ),
-                                          //             ),
-                                          //             Container(
-                                          //               width: 170.w,
-                                          //               decoration: BoxDecoration(
-                                          //                 borderRadius: BorderRadius.only(
-                                          //                   bottomRight: Radius.circular(10.r),
-                                          //                 ),
-                                          //                 color: black,
-                                          //                 image: const DecorationImage(
-                                          //                     image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
-                                          //               ),
-                                          //             ),
-                                          //           ],
-                                          //         ),
-                                          //       ),
-                                          //     ],
-                                          //   )
+                                            15.verticalSpace,
+                                            eventController.EventsData[index]['file'] == null || eventController.EventsData[index]['file'].length == 0
+                                                ? Container(
+                                                    width: 1.sw,
+                                                    height: 0.35.sh,
+                                                    // height: 135.h,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(10.r),
+                                                      color: black,
+                                                      image: const DecorationImage(
+                                                          image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                                    ),
+                                                  )
+                                                // StaggeredGrid.count(
+                                                //     crossAxisCount: 3,
+                                                //     mainAxisSpacing: 5,
+                                                //     crossAxisSpacing: 5,
+                                                //     children: [
+                                                //       StaggeredGridTile.count(
+                                                //         crossAxisCellCount: 1,
+                                                //         mainAxisCellCount: 1,
+                                                //         child: Container(
+                                                //           width: 115.w,
+                                                //           height: 135.h,
+                                                //           decoration: BoxDecoration(
+                                                //             borderRadius: BorderRadius.only(
+                                                //               topLeft: Radius.circular(10.r),
+                                                //             ),
+                                                //             color: black,
+                                                //             image:
+                                                //                 const DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                                //           ),
+                                                //         ),
+                                                //       ),
+                                                //       StaggeredGridTile.count(
+                                                //         crossAxisCellCount: 1,
+                                                //         mainAxisCellCount: 1,
+                                                //         child: Container(
+                                                //           width: 115.w,
+                                                //           height: 135.h,
+                                                //           decoration: const BoxDecoration(
+                                                //             image: DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                                //             color: black,
+                                                //           ),
+                                                //         ),
+                                                //       ),
+                                                //       StaggeredGridTile.count(
+                                                //         crossAxisCellCount: 1,
+                                                //         mainAxisCellCount: 1,
+                                                //         child: Container(
+                                                //           width: 115.w,
+                                                //           height: 135.h,
+                                                //           decoration: BoxDecoration(
+                                                //             color: black,
+                                                //             borderRadius: BorderRadius.only(
+                                                //               topRight: Radius.circular(10.r),
+                                                //             ),
+                                                //             image:
+                                                //                 const DecorationImage(image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                                //           ),
+                                                //         ),
+                                                //       ),
+                                                //       StaggeredGridTile.count(
+                                                //         crossAxisCellCount: 5,
+                                                //         mainAxisCellCount: 1,
+                                                //         child: Row(
+                                                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                //           children: [
+                                                //             Container(
+                                                //               width: 170.w,
+                                                //               decoration: BoxDecoration(
+                                                //                 borderRadius: BorderRadius.only(
+                                                //                   bottomLeft: Radius.circular(10.r),
+                                                //                 ),
+                                                //                 color: black,
+                                                //                 image: const DecorationImage(
+                                                //                     image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                                //               ),
+                                                //             ),
+                                                //             Container(
+                                                //               width: 170.w,
+                                                //               decoration: BoxDecoration(
+                                                //                 borderRadius: BorderRadius.only(
+                                                //                   bottomRight: Radius.circular(10.r),
+                                                //                 ),
+                                                //                 color: black,
+                                                //                 image: const DecorationImage(
+                                                //                     image: AssetImage("assets/images/Group 1440@3x.png"), fit: BoxFit.fill),
+                                                //               ),
+                                                //             ),
+                                                //           ],
+                                                //         ),
+                                                //       ),
+                                                //     ],
+                                                //   )
 
-                                          : Image(
-                                              image: NetworkImage(
-                                                "https://uaw-api.thesuitchstaging.com:3090/${eventController.EventsData[index]['file'][0]['file']}",
-                                              ),
+                                                : Image(
+                                                    image: NetworkImage(
+                                                      "https://uaw-api.thesuitchstaging.com:3090/${eventController.EventsData[index]['file'][0]['file']}",
+                                                    ),
+                                                  ),
+                                            10.verticalSpace,
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  eventController.EventsData[index]['title'].toString(),
+                                                  style: textroboto15,
+                                                ),
+                                              ],
                                             ),
-                                      10.verticalSpace,
-                                      Row(
-                                        children: [
-                                          Text(
-                                            eventController.EventsData[index]['title'].toString(),
-                                            style: textroboto15,
-                                          ),
-                                        ],
+                                            20.verticalSpace,
+                                          ],
+                                        ),
                                       ),
-                                      20.verticalSpace,
-                                    ],
-                                  ),
+                                    ),
+                                    15.verticalSpace,
+                                  ],
                                 ),
                               ),
-                              15.verticalSpace,
                             ],
-                          ),
-                        ),
-                      ],
-                    );
-                  }));
-        }),
+                          );
+                        }));
+              }),
       ),
     );
   }

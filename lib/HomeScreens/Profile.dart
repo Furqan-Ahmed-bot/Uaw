@@ -121,7 +121,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   Positioned(
                     top: -40,
                     child: CircleAvatar(
-                      radius: 70.r,
+                      radius: 60.r,
                       backgroundImage: NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file}'),
                       backgroundColor: Colors.transparent,
                     ),

@@ -196,7 +196,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       },
                       child: UserProfileImage != null
                           ? CircleAvatar(
-                              radius: 70.r,
+                              radius: 60.r,
                               // backgroundColor: Colors.transparent,
                               backgroundImage: FileImage(
                                 File(UserProfileImage!.path),

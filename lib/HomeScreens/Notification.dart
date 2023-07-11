@@ -1,9 +1,11 @@
+import 'package:_uaw/Controllers/notificationcontroller.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+import '../Auth/APIService/API.dart';
 import 'Drawer.dart';
 
 class NotificationScreen extends StatefulWidget {
@@ -14,6 +16,12 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
+  void initState() {
+    ApiService().getNotifications();
+
+    super.initState();
+  }
+
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   bool isVisible = true;
   List<Map<String, dynamic>> detailsnotification = [
@@ -83,7 +91,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           leadingWidth: 70,
           leading: GestureDetector(
             onTap: () {
-              Get.to(() => DrawerScreen(),transition: Transition.leftToRight, duration: Duration(milliseconds: 300));
+              Get.to(() => DrawerScreen(), transition: Transition.leftToRight, duration: Duration(milliseconds: 300));
             },
             child: Center(
               child: Container(
@@ -110,31 +118,50 @@ class _NotificationScreenState extends State<NotificationScreen> {
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 15.r),
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                15.verticalSpace,
-                ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: detailsnotification.length,
-                    itemBuilder: (BuildContext context, i) {
-                      return NotificationWidget(
-                        attacheditemimage: detailsnotification[i]["attacheditemimage"],
-                        userimage: detailsnotification[i]["userimage"],
-                        type: detailsnotification[i]["type"],
-                        documenttype: detailsnotification[i]["documenttype"],
-                      );
+            child: GetBuilder<NotificationController>(builder: (notificationcontroller) {
+              return notificationcontroller.isLoding && notificationcontroller.NotificationData.isEmpty
+                  ? Center(child: const CircularProgressIndicator())
+                  : Column(
+                      children: [
+                        15.verticalSpace,
+                        ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: notificationcontroller.NotificationData.length,
+                            itemBuilder: (BuildContext context, index) {
+                              return Column(
+                                children: [
+                                  Container(
+                                    width: 1.sw,
+                                    height: 60.h,
+                                    color: colororange,
+                                    child: Text(
+                                      "testing",
+                                      style: medium18black,
+                                    ),
+                                  ),
+                                  10.verticalSpace,
+                                ],
+                              );
 
-                      //  Visibility(
-                      //   visible: detailsnotification[i]['isselected'] == true? true:false,
-                      //   child: NotificationWidget(
-                      //     attacheditemimage: detailsnotification[i]["attacheditemimage"],
-                      //     userimage: detailsnotification[i]["userimage"],
-                      //   ),
-                      // );
-                    }),
-              ],
-            ),
+                              // NotificationWidget(
+                              //   attacheditemimage: detailsnotification[i]["attacheditemimage"],
+                              //   userimage: detailsnotification[i]["userimage"],
+                              //   type: detailsnotification[i]["type"],
+                              //   documenttype: detailsnotification[i]["documenttype"],
+                              // );
+
+                              //  Visibility(
+                              //   visible: detailsnotification[i]['isselected'] == true? true:false,
+                              //   child: NotificationWidget(
+                              //     attacheditemimage: detailsnotification[i]["attacheditemimage"],
+                              //     userimage: detailsnotification[i]["userimage"],
+                              //   ),
+                              // );
+                            }),
+                      ],
+                    );
+            }),
           ),
         ),
       ),

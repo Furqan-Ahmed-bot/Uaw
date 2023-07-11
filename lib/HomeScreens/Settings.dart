@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:_uaw/Auth/APIService/API.dart';
 import 'package:_uaw/Auth/Adminlogin.dart';
 import 'package:_uaw/Helpers.dart';
@@ -17,6 +19,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -26,6 +29,9 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart' as intl;
 
 import '../Auth/Prelogin.dart';
+import '../Global.dart';
+
+bool toggle = false;
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({
@@ -38,7 +44,36 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   //switch value
-  bool switchValue = true;
+
+  void initState() {
+    super.initState();
+  }
+
+  Future<void> Notification(bool enabled) async {
+    final Url = Uri.parse("${apiGlobal}/user/update");
+    var body = {"notificationOn": enabled};
+    var jsonbody = json.encode(body);
+    http.Response response = await http.post(
+      Url,
+      headers: {
+        "Authorization": "Bearer $AuthToken",
+        'Content-Type': 'application/json',
+      },
+      body: jsonbody,
+    );
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      setState(() {});
+      Get.snackbar('succesfully', "Notification Update succesfully",
+          snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 3), backgroundColor: Colors.white, colorText: Colors.black);
+    } else {
+      setState(() {
+        toggle = !toggle;
+      });
+      Get.snackbar('Error', "Notification Not Update",
+          snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 3), backgroundColor: Colors.white, colorText: Colors.black);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,10 +136,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               scale: 0.8,
                               child: CupertinoSwitch(
                                 activeColor: bluishshade,
-                                value: switchValue,
+                                value: toggle,
                                 onChanged: (value) {
-                                  switchValue = !switchValue;
-                                  setState(() {});
+                                  toggle = !toggle;
+                                  Notification(toggle);
                                 },
                               ),
                             ),

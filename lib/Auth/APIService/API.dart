@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:_uaw/Controllers/notificationcontroller.dart';
 import 'package:flutter/material.dart' as image;
 
 import 'package:_uaw/Auth/Login.dart';
@@ -140,7 +141,7 @@ class ApiService {
       usercontroller.User(userModel.fromJson(resData));
       AuthToken = resData["data"]["token"].toString();
       userid = resData["data"]["_id"].toString();
-
+      toggle = resData["data"]["notificationOn"];
       // getAddressFromLatLng();
       Get.back();
       Get.snackbar("Message", resData["message"]);
@@ -464,6 +465,21 @@ class ApiService {
     if (resData["status"] == true) {
       documentcontroller.setLoading(false);
       documentcontroller.getDocumentsData(resData["data"]);
+    }
+  }
+
+  getNotifications() async {
+    final notificationcontroller = Get.put(NotificationController());
+    notificationcontroller.setLoading(true);
+    final uri = Uri.parse("$apiGlobal/user/notification");
+    var headers = {'Authorization': 'Bearer $AuthToken'};
+    print(headers);
+    http.Response response = await http.get(uri, headers: headers);
+    var resData = jsonDecode(response.body.toString());
+
+    if (resData["status"] == true) {
+      notificationcontroller.setLoading(false);
+      notificationcontroller.getNotificationsData(resData["data"]);
     }
   }
 
