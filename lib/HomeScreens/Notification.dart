@@ -171,7 +171,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                     return Column(children: [
                                       GestureDetector(
                                         onTap: () {
-                                          notificationcontroller.NotificationData[index]["type"].toString() == "Video"
+                                          notificationcontroller.NotificationData[index]["type"].toString() == "Videos"
                                               ? Get.to(() => VideoScreen(value: "null"))
                                               : notificationcontroller.NotificationData[index]["type"].toString() == "Magzine"
                                                   ? Get.to(() => MagzineScreen(value: "null"))
