@@ -59,7 +59,7 @@ class _NavBarScreenState extends State<NavBarScreen> with SingleTickerProviderSt
   int pageIndex = 0;
 
   final pages = [
-    HomeScreen(cameFrom: 'login'),
+    HomeScreen(cameFrom: ''),
     selection == true ? SelectedDateEventDetailsScreen() : NewsAndEventsScreen(value: "null"),
     NotificationScreen(),
     UserProfileScreen(),

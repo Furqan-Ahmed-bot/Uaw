@@ -182,7 +182,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 "useremail": userEmail.text,
                                 "userPassword": userPassword.text,
                                 "deviceType": "android",
-                                "deviceToken": "abc",
+                                "deviceToken": "$deviceToken",
                               };
 
                               setState(() {

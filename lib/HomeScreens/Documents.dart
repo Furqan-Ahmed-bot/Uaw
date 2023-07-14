@@ -190,7 +190,9 @@ class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProv
                               shrinkWrap: true,
                               itemCount: documentcontroller.DocumentsData.length,
                               itemBuilder: (BuildContext context, index) {
-                                fileName = documentcontroller.DocumentsData[index]["file"][0];
+                                fileName = documentcontroller.DocumentsData[index]["file"][0].isEmpty
+                                    ? "1687804803619-Free_Test_Data_500KB_PDF.pdf"
+                                    : documentcontroller.DocumentsData[index]["file"][0];
 
                                 String filename2 = fileName.split('/').last;
                                 print(filename2);

@@ -23,11 +23,11 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     startTimer();
-    FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance; // Change here
-    _firebaseMessaging.getToken().then((token) {
-      deviceToken = token!;
-      print('DEVICE TOKEN: $deviceToken');
-    });
+    // FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance; // Change here
+    // _firebaseMessaging.getToken().then((token) {
+    //   deviceToken = token!;
+    //   print('DEVICE TOKEN: $deviceToken');
+    // });
   }
 
   startTimer() async {

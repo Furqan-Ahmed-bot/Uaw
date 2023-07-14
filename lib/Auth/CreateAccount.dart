@@ -8,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../Controller.dart';
+import '../Global.dart';
 import 'APIService/API.dart';
 
 class CreateAccountScreen extends StatefulWidget {
@@ -287,7 +288,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                               "email": widget.email,
                               "designation": widget.designationID.toString(),
                               "deviceType": "android",
-                              "deviceToken": "abc",
+                                "deviceToken": "$deviceToken",
                             };
 
                             // setState(() {

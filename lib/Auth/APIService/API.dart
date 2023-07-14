@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:_uaw/Controllers/notificationcontroller.dart';
 import 'package:flutter/material.dart' as image;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:_uaw/Auth/Login.dart';
 import 'package:_uaw/Auth/OTPVerification.dart';
@@ -61,6 +62,8 @@ class ApiService {
     );
     var resData = json.decode(response.body.toString());
     if (resData["status"] == true) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool("userLogin", false);
       Get.snackbar("Message", resData["message"]);
       Get.to(() => const LoginScreen(), duration: const Duration(seconds: 1), transition: Transition.fadeIn);
     } else {
@@ -113,6 +116,8 @@ class ApiService {
   }
 
   loginAPI(context, loginData) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -129,7 +134,7 @@ class ApiService {
       "email": loginData["useremail"],
       "password": loginData["userPassword"],
       "deviceType": "android",
-      "deviceToken": "abc",
+      "deviceToken": deviceToken,
     };
     http.Response response = await http.post(
       uri,
@@ -142,6 +147,11 @@ class ApiService {
       AuthToken = resData["data"]["token"].toString();
       userid = resData["data"]["_id"].toString();
       toggle = resData["data"]["notificationOn"];
+      await prefs.setString('authToken', AuthToken);
+      await prefs.setString('userId', userid);
+      await prefs.setBool('toggle', toggle);
+      await prefs.setBool("userLogin", true);
+
       // getAddressFromLatLng();
       Get.back();
       Get.snackbar("Message", resData["message"]);
@@ -220,7 +230,7 @@ class ApiService {
     final data = {
       "otp": OTPdata["otp"],
       "deviceType": "android",
-      "deviceToken": AuthToken,
+      "deviceToken": deviceToken,
     };
     String jsonbody = json.encode(data);
 
@@ -314,7 +324,7 @@ class ApiService {
     request.fields['password'] = completeProfile['password'];
     request.fields['designation'] = completeProfile['designation'];
     request.fields['deviceType'] = "android";
-    request.fields['deviceToken'] = "abc";
+    request.fields['deviceToken'] = deviceToken;
 
     var multipartFile = await http.MultipartFile.fromPath('file', profileimage, filename: MyFilename, contentType: MediaType("image", "jpg"));
 
@@ -394,7 +404,7 @@ class ApiService {
 
       Get.snackbar("Message", profileData['message']);
 
-      bottomcontroller.navBarChange(2);
+      bottomcontroller.navBarChange(3);
       Get.to(() => const NavBarScreen(), duration: const Duration(seconds: 1), transition: Transition.fadeIn);
     } else {
       Get.back();

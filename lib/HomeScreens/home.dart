@@ -42,7 +42,6 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
-
 class _HomeScreenState extends State<HomeScreen> {
   dynamic documentUrl;
   bool isDrawerOpen = false;
@@ -612,7 +611,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                               shrinkWrap: true,
                                               itemCount: feedsController.feedsData.length,
                                               itemBuilder: (BuildContext, index) {
-                                                fileName = feedsController.feedsData[index]["file"][0];
+                                                fileName = feedsController.feedsData[index]["file"][0].isEmpty
+                                                    ? ''
+                                                    : feedsController.feedsData[index]["file"][0];
                                                 videoFile = feedsController.feedsData[index]["file"][0];
 
                                                 String filename2 = fileName.split('/').last;
@@ -742,11 +743,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 children: [
                                                                   Container(
                                                                     constraints: BoxConstraints(maxWidth: 200),
-                                                                    child: Text(
-                                                                      feedsController.feedsData[index]["title"],
-                                                                      overflow: TextOverflow.ellipsis,
-                                                                      style: textroboto15,
-                                                                    ),
+                                                                    child: feedsController.feedsData[index]["title"] == null
+                                                                        ? Text("")
+                                                                        : Text(
+                                                                            feedsController.feedsData[index]["title"],
+                                                                            overflow: TextOverflow.ellipsis,
+                                                                            style: textroboto15,
+                                                                          ),
                                                                   ),
                                                                 ],
                                                               ),
