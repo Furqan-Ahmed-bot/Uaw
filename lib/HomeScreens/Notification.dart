@@ -119,7 +119,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
             ),
           ),
           title: Text(
-            "NOTIFICATION",
+            "NOTIFICATIONS",
             style: textroboto18,
           ),
           centerTitle: true,

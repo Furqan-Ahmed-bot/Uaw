@@ -14,7 +14,7 @@ class VidePalayerScreen extends StatefulWidget {
 class _VidePalayerScreenState extends State<VidePalayerScreen> {
   late bool _isPlaying = false;
   late VideoPlayerController _videoPlayerController;
-  
+
   @override
   void initState() {
     super.initState();
@@ -34,17 +34,17 @@ class _VidePalayerScreenState extends State<VidePalayerScreen> {
     return [duration.inMinutes, duration.inSeconds].map((seg) => seg.remainder(60).toString().padLeft(2, '0')).join(':');
   }
 
-  @override
-  void dispose() {
-    _videoPlayerController.dispose();
-    super.dispose();
-  }
-
   void _playPause() {
     setState(() {
       _isPlaying ? _videoPlayerController.play() : _videoPlayerController.pause();
       _isPlaying = !_isPlaying;
     });
+  }
+
+  @override
+  void dispose() {
+    _videoPlayerController.dispose();
+    super.dispose();
   }
 
   @override

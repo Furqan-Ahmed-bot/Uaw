@@ -1,14 +1,18 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:_uaw/Auth/Login.dart';
-import 'package:_uaw/Auth/Prelogin.dart';
-import 'package:_uaw/Welcome.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'Controller.dart';
+import 'Controllers/usercontroller.dart';
 import 'Global.dart';
+import 'package:_uaw/Models/usermodel.dart';
+
+import 'HomeScreens/NavBar.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,6 +22,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final bottomcontroller = Get.put(BottomController());
   @override
   void initState() {
     // TODO: implement initState
@@ -31,12 +36,27 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   startTimer() async {
-    var duration = Duration(seconds: 3);
-    return new Timer(duration, loginRoute);
-  }
+    Future.delayed(Duration(seconds: 3), () async {
+      try {
+        SharedPreferences _prefs = await SharedPreferences.getInstance();
+        UserController usercontroller = Get.put(UserController());
 
-  loginRoute() {
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+        String? model = _prefs.getString("model");
+        if (model != null) {
+          final modelList = json.decode(model);
+          usercontroller.User(userModel.fromJson(modelList));
+          usercontroller.data;
+          AuthToken = _prefs.getString("globaltoken")!;
+          bottomcontroller.navBarChange(0);
+          Get.to(() => const NavBarScreen(), duration: const Duration(seconds: 1), transition: Transition.fadeIn);
+        } else {
+          Get.to(() => LoginScreen());
+        }
+      } catch (e) {
+        print(e);
+        Get.to(() => LoginScreen());
+      }
+    });
   }
 
   Widget build(BuildContext context) {

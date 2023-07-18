@@ -1,3 +1,4 @@
+import 'package:_uaw/Models/usermodel.dart';
 import 'package:_uaw/Service/notification_service.dart';
 import 'package:_uaw/test/example.dart';
 import 'package:flutter/material.dart';
@@ -92,6 +93,8 @@ class _MyAppState extends State<MyApp> {
     if (checkLogin == true) {
       AuthToken = prefs.getString('authToken');
       userid = prefs.getString('userId');
+      
+    
       bottomcontroller.navBarChange(0);
       Get.offAll(() => const NavBarScreen(), duration: const Duration(seconds: 1), transition: Transition.fadeIn);
     }

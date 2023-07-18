@@ -34,7 +34,7 @@ class Data {
   String? email;
   String? name;
   Designation? designation;
-  Image? image;
+  UserImage? image;
   String? password;
   String? token;
 
@@ -56,7 +56,7 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    location = json['location'] ;
+    location = json['location'];
     phone = json['phone'];
     userType = json['userType'];
     isDeleted = json['isDeleted'];
@@ -70,10 +70,8 @@ class Data {
     }
     email = json['email'];
     name = json['name'];
-    designation = json['designation'] != null
-        ? new Designation.fromJson(json['designation'])
-        : null;
-    image = json['image'] != null ? new Image.fromJson(json['image']) : null;
+    designation = json['designation'] != null ? new Designation.fromJson(json['designation']) : null;
+    image = json['image'] != null ? new UserImage.fromJson(json['image']) : null;
     password = json['password'];
     token = json['token'];
   }
@@ -142,13 +140,13 @@ class Designation {
   }
 }
 
-class Image {
+class UserImage {
   String? sId;
   String? file;
 
-  Image({this.sId, this.file});
+  UserImage({this.sId, this.file});
 
-  Image.fromJson(Map<String, dynamic> json) {
+  UserImage.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     file = json['file'];
   }

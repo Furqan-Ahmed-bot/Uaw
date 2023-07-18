@@ -128,7 +128,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Notification",
+                              "Notifications",
                               style: robotobluishshade16bold,
                             ),
                             Transform.scale(
@@ -163,7 +163,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Help Support",
+                              "Help & Support",
                               style: robotobluishshade16bold,
                             ),
                             Image.asset(

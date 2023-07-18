@@ -1,29 +1,34 @@
 import 'dart:io';
 
+import 'package:_uaw/Auth/APIService/API.dart';
+import 'package:_uaw/HomeScreens/NavBar.dart';
+import 'package:_uaw/HomeScreens/Notification.dart';
+import 'package:_uaw/HomeScreens/Settings.dart';
+import 'package:_uaw/HomeScreens/VideoScreen.dart';
+import 'package:_uaw/HomeScreens/VideosScreen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
+
+import '../Controller.dart';
 
 class FireBaseNotificationServices {
+  final bottomcontroller = Get.put(BottomController());
   //initialising firebase message plugin
   FirebaseMessaging messaging = FirebaseMessaging.instance;
 
   //initialising firebase message plugin
-  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   //function to initialise flutter local notification plugin to show notifications for android when app is active
-  void initLocalNotifications(
-      BuildContext context, RemoteMessage message) async {
-    var androidInitializationSettings =
-        const AndroidInitializationSettings('@mipmap/round_launcher');
+  void initLocalNotifications(BuildContext context, RemoteMessage message) async {
+    var androidInitializationSettings = const AndroidInitializationSettings('@mipmap/round_launcher');
     var iosInitializationSettings = const DarwinInitializationSettings();
 
-    var initializationSetting = InitializationSettings(
-        android: androidInitializationSettings, iOS: iosInitializationSettings);
+    var initializationSetting = InitializationSettings(android: androidInitializationSettings, iOS: iosInitializationSettings);
 
-    await _flutterLocalNotificationsPlugin.initialize(initializationSetting,
-        onDidReceiveNotificationResponse: (payload) {
+    await _flutterLocalNotificationsPlugin.initialize(initializationSetting, onDidReceiveNotificationResponse: (payload) {
       // handle interaction when app is active for android
       handleMessage(context, message);
     });
@@ -60,8 +65,7 @@ class FireBaseNotificationServices {
       // Get.snackbar("Permission", "user granted permission",
       //     snackPosition: SnackPosition.BOTTOM);
       print('user granted permission');
-    } else if (settings.authorizationStatus ==
-        AuthorizationStatus.provisional) {
+    } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
       // Get.snackbar(
       //     "Provisional Permission", "user granted provisional permission",
       //     snackPosition: SnackPosition.BOTTOM);
@@ -85,8 +89,7 @@ class FireBaseNotificationServices {
       // sound: const RawResourceAndroidNotificationSound('jetsons_doorbell'),
     );
 
-    AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails(
+    AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails(
       channel.id.toString(), channel.name.toString(),
       channelDescription: 'your channel description',
       importance: Importance.high,
@@ -98,12 +101,9 @@ class FireBaseNotificationServices {
       //  icon: largeIconPath
     );
 
-    const DarwinNotificationDetails darwinNotificationDetails =
-        DarwinNotificationDetails(
-            presentAlert: true, presentBadge: true, presentSound: true);
+    const DarwinNotificationDetails darwinNotificationDetails = DarwinNotificationDetails(presentAlert: true, presentBadge: true, presentSound: true);
 
-    NotificationDetails notificationDetails = NotificationDetails(
-        android: androidNotificationDetails, iOS: darwinNotificationDetails);
+    NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails, iOS: darwinNotificationDetails);
 
     Future.delayed(Duration.zero, () {
       _flutterLocalNotificationsPlugin.show(
@@ -132,8 +132,7 @@ class FireBaseNotificationServices {
   //handle tap on notification when app is in background or terminated
   Future<void> setupInteractMessage(BuildContext context) async {
     // when app is terminated
-    RemoteMessage? initialMessage =
-        await FirebaseMessaging.instance.getInitialMessage();
+    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
 
     if (initialMessage != null) {
       handleMessage(context, initialMessage);
@@ -147,20 +146,18 @@ class FireBaseNotificationServices {
 
   void handleMessage(BuildContext context, RemoteMessage message) {
     print("MESSAGE: " + message.data.toString());
+    bottomcontroller.navBarChange(2);
+    Get.to(() => const NavBarScreen());
+
+    // Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationScreen()));
 
     // if (message.data['type'] == 'message') {
-    //   Navigator.push(
-    //       context,
-    //       MaterialPageRoute(
-    //           builder: (context) => MessageScreen(
-    //                 id: message.data['id'],
-    //               )));
+    //   Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationScreen()));
     // }
   }
 
   Future forgroundMessage() async {
-    await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
+    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
       alert: true,
       badge: true,
       sound: true,

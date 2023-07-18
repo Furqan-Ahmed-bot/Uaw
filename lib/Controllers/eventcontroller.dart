@@ -13,6 +13,7 @@ class EventController extends GetxController {
   getEventsData(data) {
     AllEvents = data;
     EventsData = data;
+    update();
     print(EventsData);
   }
 

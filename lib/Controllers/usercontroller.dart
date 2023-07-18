@@ -14,6 +14,8 @@ class UserController extends GetxController {
     update();
   }
 
+  get data => user;
+
   void User(userModel data) {
     user = data;
     update();

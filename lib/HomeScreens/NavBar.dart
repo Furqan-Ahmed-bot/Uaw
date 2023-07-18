@@ -62,7 +62,7 @@ class _NavBarScreenState extends State<NavBarScreen> with SingleTickerProviderSt
     HomeScreen(cameFrom: ''),
     selection == true ? SelectedDateEventDetailsScreen() : NewsAndEventsScreen(value: "null"),
     NotificationScreen(),
-    UserProfileScreen(),
+    const UserProfileScreen(),
   ];
   void _onItemTapped(int pageIndex) {
     print("index" + pageIndex.toString());

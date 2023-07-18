@@ -144,9 +144,17 @@ class ApiService {
 
     if (resData["status"] == true) {
       usercontroller.User(userModel.fromJson(resData));
+      String userModelJson = json.encode(resData);
+      SharedPreferences.getInstance().then(
+        (prefs) {
+          prefs.setString("globaltoken", resData["data"]["token"]);
+          prefs.setString("model", userModelJson);
+        },
+      );
       AuthToken = resData["data"]["token"].toString();
       userid = resData["data"]["_id"].toString();
       toggle = resData["data"]["notificationOn"];
+      designationTitle = resData["data"]["designation"]["title"];
       await prefs.setString('authToken', AuthToken);
       await prefs.setString('userId', userid);
       await prefs.setBool('toggle', toggle);
@@ -326,6 +334,8 @@ class ApiService {
     request.fields['deviceType'] = "android";
     request.fields['deviceToken'] = deviceToken;
 
+    print("Device Token $deviceToken");
+
     var multipartFile = await http.MultipartFile.fromPath('file', profileimage, filename: MyFilename, contentType: MediaType("image", "jpg"));
 
     request.files.add(multipartFile);
@@ -339,7 +349,9 @@ class ApiService {
 
     if (profileData["status"] == true) {
       AuthToken = profileData["data"]["token"].toString();
+      toggle = profileData["data"]["notificationOn"];
       usercontroller.User(userModel.fromJson(profileData));
+
       // getAddressFromLatLng();
 
       Get.back();
@@ -438,6 +450,7 @@ class ApiService {
     );
     var resData = json.decode(response.body.toString());
     if (resData['status'] == true) {
+      ApiService().geteventbyuser();
       Get.snackbar('Message', resData['message']);
       bottomcontroller.navBarChange(1);
       Get.to(() => NavBarScreen());
@@ -490,6 +503,9 @@ class ApiService {
     if (resData["status"] == true) {
       notificationcontroller.setLoading(false);
       notificationcontroller.getNotificationsData(resData["data"]);
+    } else {
+      Get.snackbar("message", resData["message"]);
+      notificationcontroller.setLoading(false);
     }
   }
 

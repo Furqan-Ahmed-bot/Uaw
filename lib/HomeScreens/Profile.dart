@@ -12,6 +12,7 @@ import 'package:get/get_navigation/src/extension_navigation.dart';
 import 'package:flutter/widgets.dart' as widgets;
 import 'package:_uaw/Global.dart';
 
+import '../Auth/APIService/API.dart';
 import '../Controllers/eventcontroller.dart';
 
 class UserProfileScreen extends StatefulWidget {
@@ -34,10 +35,16 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   final UserDetails = Get.put(UserController());
   final eventcontroller = Get.put(EventController());
   final GlobalKey<ScaffoldState> _key = GlobalKey();
+  // void initState() {
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     ApiService().geteventbyuser();
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     completeAddress;
+
     String designationTitle = UserController.user.data!.designation!.title.toString();
     String capitalizedTitle = capitalizeFirstLetter(designationTitle);
 
