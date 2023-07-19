@@ -10,3 +10,4 @@ var lat;
 String? currentAddress;
 var completeAddress;
 var designationTitle;
+int checking = 0;

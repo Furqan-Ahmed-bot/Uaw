@@ -138,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             controller: userPassword,
                             obscureText: _obscureText,
                             decoration: InputDecoration(
-                              errorText: _validatepassword ? "value can't be null" : null,
+                              errorText: _validatepassword ? "Password Can't be empty" : null,
                               prefixIconConstraints: BoxConstraints(minWidth: 50),
                               prefixIcon: Container(
                                 width: 50.w,

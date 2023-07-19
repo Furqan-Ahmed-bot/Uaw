@@ -9,8 +9,10 @@ class NotificationController extends GetxController {
   }
 
   List NotificationData = [];
+  List NotificationLength = [];
   getNotificationsData(data) {
     NotificationData = data;
+    NotificationLength = data;
     print(NotificationData);
   }
 }

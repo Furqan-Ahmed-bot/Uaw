@@ -1,5 +1,6 @@
 import 'package:_uaw/Auth/APIService/API.dart';
 import 'package:_uaw/Auth/Prelogin.dart';
+import 'package:_uaw/Controllers/usercontroller.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:_uaw/HomeScreens/Documents.dart';
 import 'package:_uaw/HomeScreens/DrawerVideoPlayer.dart';
@@ -24,6 +25,7 @@ class DrawerScreen extends StatefulWidget {
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
+  final UserDetails = Get.put(UserController());
   bool _isDrawerOpen = false;
 
   void _toggleDrawer() {
@@ -76,13 +78,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   width: 0.8.sw,
                   height: 0.91.sh,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Colors.transparent.withOpacity(0.5),
-                          Color(0xff04366BCC),
-                        ]),
+                    gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [
+                      Colors.transparent.withOpacity(0.5),
+                      Color(0xff04366BCC),
+                    ]),
                   ),
                   child: Column(
                     children: [
@@ -116,18 +115,17 @@ class _DrawerScreenState extends State<DrawerScreen> {
                             color: whitecolor,
                           ),
                           image: DecorationImage(
-                              image: AssetImage(
-                                  "assets/images/Group 1433@3x1.png"),
-                              fit: BoxFit.fill),
+                            image: NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file}'),
+                          ),
                         ),
                       ),
                       20.verticalSpace,
                       Text(
-                        "John Doe",
+                        UserController.user.data!.name.toString(),
                         style: medium20white,
                       ),
                       Text(
-                        "johndoe@gmail.com",
+                        UserController.user.data!.email.toString(),
                         style: fontsize16opacitywhite,
                       ),
                       50.verticalSpace,
@@ -137,8 +135,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                if (bottomcontroller.navigationBarIndexValue !=
-                                    0) {
+                                if (bottomcontroller.navigationBarIndexValue != 0) {
                                   bottomcontroller.navBarChange(0);
                                 } else {
                                   Get.back();
@@ -317,9 +314,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                             actions: [
                               Container(
                                 width: 370.w,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15.r),
-                                    color: Color(0xffFFFFFF)),
+                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.r), color: Color(0xffFFFFFF)),
                                 child: Column(
                                   children: [
                                     Row(
@@ -334,8 +329,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                             height: 35.h,
                                             decoration: BoxDecoration(
                                               borderRadius: BorderRadius.only(
-                                                bottomLeft:
-                                                    Radius.circular(15.r),
+                                                bottomLeft: Radius.circular(15.r),
                                                 topRight: Radius.circular(15.r),
                                               ),
                                               color: bluishshade,
@@ -357,8 +351,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                     ),
                                     30.verticalSpace,
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
                                         GestureDetector(
                                           onTap: () {
@@ -368,8 +361,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                             width: 162.w,
                                             height: 55.h,
                                             decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.r),
+                                              borderRadius: BorderRadius.circular(10.r),
                                               color: redishcolor,
                                             ),
                                             child: Center(
@@ -388,8 +380,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                             width: 162.w,
                                             height: 55.h,
                                             decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.r),
+                                              borderRadius: BorderRadius.circular(10.r),
                                               color: bluishshade,
                                             ),
                                             child: Center(

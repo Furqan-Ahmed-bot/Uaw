@@ -47,6 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
           usercontroller.User(userModel.fromJson(modelList));
           usercontroller.data;
           AuthToken = _prefs.getString("globaltoken")!;
+          userid = _prefs.get("userId");
           bottomcontroller.navBarChange(0);
           Get.to(() => const NavBarScreen(), duration: const Duration(seconds: 1), transition: Transition.fadeIn);
         } else {

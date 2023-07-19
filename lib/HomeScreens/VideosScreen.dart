@@ -109,6 +109,16 @@ class _VideoScreenState extends State<VideoScreen> {
                               itemBuilder: (BuildContext context, index) {
                                 fileName = videocontroller.VideoData[index]["file"][0];
                                 String filename2 = fileName.split('/').last;
+                                String capitalizeFirstLetter(String text) {
+                                  if (text.isEmpty) return text;
+
+                                  final firstLetter = text.substring(0, 1).toUpperCase();
+                                  final remainingLetters = text.substring(1);
+                                  return '$firstLetter$remainingLetters';
+                                }
+
+                                String AdminName = videocontroller.VideoData[index]["user"]["name"];
+                                String capitalizedTitle = capitalizeFirstLetter(AdminName);
                                 return Column(
                                   children: [
                                     GestureDetector(
@@ -143,14 +153,13 @@ class _VideoScreenState extends State<VideoScreen> {
                                                         ),
                                                       ),
                                                     ),
-                                                   
                                                   ),
                                                   15.horizontalSpace,
                                                   Column(
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       Text(
-                                                        videocontroller.VideoData[index]["user"]["name"],
+                                                        capitalizedTitle,
                                                         style: txtstyleblue17,
                                                       ),
                                                       5.verticalSpace,

@@ -69,16 +69,27 @@ class _AttendingEventScreenState extends State<AttendingEventScreen> {
                             shrinkWrap: true,
                             itemCount: eventcontroller.MyEvents.length,
                             itemBuilder: (BuildContext contex, index) {
+                              String capitalizeFirstLetter(String text) {
+                                if (text.isEmpty) return text;
+
+                                final firstLetter = text.substring(0, 1).toUpperCase();
+                                final remainingLetters = text.substring(1);
+                                return '$firstLetter$remainingLetters';
+                              }
+
+                              String AdminName = eventcontroller.MyEvents[index]["user"]["name"];
+                              String capitalizedTitle = capitalizeFirstLetter(AdminName);
                               return GestureDetector(
                                 onTap: () {
                                   Get.to(
                                       () => AttendingEventDetailsScreen(
-                                            name: eventcontroller.MyEvents[index]['user']['name'],
+                                            name: capitalizedTitle,
                                             timee: eventcontroller.MyEvents[index]['date'],
                                             date: eventcontroller.MyEvents[index]['date'],
                                             title: eventcontroller.MyEvents[index]['title'],
                                             description: eventcontroller.MyEvents[index]['description'],
                                             location: eventcontroller.MyEvents[index]['location'],
+                                            eventimage: eventcontroller.MyEvents[index]['file'][0]['file'],
                                           ),
                                       duration: const Duration(seconds: 1),
                                       transition: Transition.fadeIn);
@@ -116,7 +127,7 @@ class _AttendingEventScreenState extends State<AttendingEventScreen> {
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      eventcontroller.MyEvents[index]['user']['name'],
+                                                      capitalizedTitle,
                                                       style: txtstyleblue17,
                                                     ),
                                                     5.verticalSpace,

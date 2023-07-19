@@ -415,8 +415,6 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                 scale: 2.5,
               ),
             )
-         
-         
           ],
         ),
         drawer: const DrawerScreen(),
@@ -433,13 +431,23 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                     : ListView.builder(
                         itemCount: eventController.EventsData.length,
                         itemBuilder: (context, index) {
+                          String capitalizeFirstLetter(String text) {
+                            if (text.isEmpty) return text;
+
+                            final firstLetter = text.substring(0, 1).toUpperCase();
+                            final remainingLetters = text.substring(1);
+                            return '$firstLetter$remainingLetters';
+                          }
+
+                          String AdminName = eventController.EventsData[index]["user"]["name"];
+                          String capitalizedTitle = capitalizeFirstLetter(AdminName);
                           return Column(
                             children: [
                               GestureDetector(
                                 onTap: () {
                                   Get.to(
                                       () => NewsAndEventsDetailsScreen(
-                                            name: eventController.EventsData[index]['user']['name'],
+                                            name: capitalizedTitle,
                                             date: eventController.EventsData[index]['createdAt'].toString(),
                                             description: eventController.EventsData[index]['description'],
                                             timee: eventController.EventsData[index]['date'].toString(),
@@ -491,7 +499,7 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      eventController.EventsData[index]['user']['name'],
+                                                      capitalizedTitle,
                                                       style: txtstyleblue17,
                                                     ),
                                                     5.verticalSpace,

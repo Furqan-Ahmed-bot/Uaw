@@ -12,6 +12,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 
 import '../Controller.dart';
+import '../Global.dart';
 
 class FireBaseNotificationServices {
   final bottomcontroller = Get.put(BottomController());
@@ -46,6 +47,9 @@ class FireBaseNotificationServices {
       if (Platform.isAndroid) {
         initLocalNotifications(context, message);
         showNotification(message);
+        checking++;
+
+        print("notification count ${checking}");
       }
     });
   }
@@ -140,6 +144,7 @@ class FireBaseNotificationServices {
 
     //when app ins background
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
+      print("checking");
       handleMessage(context, event);
     });
   }

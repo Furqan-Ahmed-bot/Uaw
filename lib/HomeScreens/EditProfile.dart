@@ -225,19 +225,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               ),
                             )
                           : CircleAvatar(
-                              radius: 60.r,
+                              radius: 65.r,
                               backgroundColor: Colors.transparent,
                               backgroundImage:
                                   NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file.toString()}'),
                               child: Padding(
-                                padding: EdgeInsets.only(top: 90),
+                                padding: EdgeInsets.only(
+                                  top: 90,
+                                ),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Container(
-                                      width: 40.w,
-                                      height: 40.h,
+                                      width: 70.w,
+                                      height: 70.h,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.circle,
                                         color: bluishshade,
@@ -245,7 +247,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       child: Icon(
                                         Icons.camera_alt,
                                         color: whitecolor,
-                                        size: 20,
+                                        size: 15,
                                       ),
                                     ),
                                   ],

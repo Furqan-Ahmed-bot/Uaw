@@ -87,32 +87,38 @@ class ApiService {
     final body = {
       'email': data['email'],
     };
-    http.Response response = await http.post(
-      uri,
-      body: body,
-    );
-    var resData = json.decode(response.body.toString());
-
-    if (resData['status'] == true) {
-      uniqieemail = data['email'];
-      Get.back();
-
-      Get.to(
-        () => const TermsOfServices(),
-        duration: const Duration(seconds: 1),
-        transition: Transition.fadeIn,
+    try {
+      http.Response response = await http.post(
+        uri,
+        body: body,
       );
-    } else {
-      Get.back();
-      Get.snackbar("Error", "",
-          backgroundColor: Colors.grey,
-          messageText: Text(
-            resData['message'],
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ));
-    }
+      var resData = json.decode(response.body.toString());
 
-    return resData;
+      if (resData['status'] == true) {
+        uniqieemail = data['email'];
+        Get.back();
+
+        Get.to(
+          () => const TermsOfServices(),
+          duration: const Duration(seconds: 1),
+          transition: Transition.fadeIn,
+        );
+      } else {
+        Get.back();
+        Get.snackbar("Error", "",
+            backgroundColor: Colors.grey,
+            messageText: Text(
+              resData['message'],
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ));
+      }
+
+      return resData;
+    } catch (e) {
+      // Error occurred, handle no internet connection here
+      Get.back();
+      Get.snackbar("Error", "No internet connection");
+    }
   }
 
   loginAPI(context, loginData) async {
@@ -136,73 +142,91 @@ class ApiService {
       "deviceType": "android",
       "deviceToken": deviceToken,
     };
-    http.Response response = await http.post(
-      uri,
-      body: body,
-    );
-    var resData = json.decode(response.body.toString());
-
-    if (resData["status"] == true) {
-      usercontroller.User(userModel.fromJson(resData));
-      String userModelJson = json.encode(resData);
-      SharedPreferences.getInstance().then(
-        (prefs) {
-          prefs.setString("globaltoken", resData["data"]["token"]);
-          prefs.setString("model", userModelJson);
-        },
+    try {
+      http.Response response = await http.post(
+        uri,
+        headers: headers,
+        body: json.encode(body),
       );
-      AuthToken = resData["data"]["token"].toString();
-      userid = resData["data"]["_id"].toString();
-      toggle = resData["data"]["notificationOn"];
-      designationTitle = resData["data"]["designation"]["title"];
-      await prefs.setString('authToken', AuthToken);
-      await prefs.setString('userId', userid);
-      await prefs.setBool('toggle', toggle);
-      await prefs.setBool("userLogin", true);
+      var resData = json.decode(response.body.toString());
 
-      // getAddressFromLatLng();
-      Get.back();
-      Get.snackbar("Message", resData["message"]);
+      if (resData["status"] == true) {
+        usercontroller.User(userModel.fromJson(resData));
+        String userModelJson = json.encode(resData);
+        SharedPreferences.getInstance().then(
+          (prefs) {
+            prefs.setString("globaltoken", resData["data"]["token"]);
+            prefs.setString("model", userModelJson);
+            prefs.setString("userId", resData["data"]["_id"].toString());
+          },
+        );
+        AuthToken = resData["data"]["token"].toString();
+        userid = resData["data"]["_id"].toString();
+        toggle = resData["data"]["notificationOn"];
+        designationTitle = resData["data"]["designation"]["title"];
+        await prefs.setString('authToken', AuthToken);
+        await prefs.setString('userId', userid);
+        await prefs.setBool('toggle', toggle);
+        await prefs.setBool("userLogin", true);
 
-      bottomcontroller.navBarChange(0);
-      Get.to(() => const NavBarScreen(), duration: const Duration(seconds: 1), transition: Transition.fadeIn);
-    } else {
+        // getAddressFromLatLng();
+        Get.back();
+        Get.snackbar("Message", resData["message"]);
+
+        bottomcontroller.navBarChange(0);
+        Get.to(
+          () => const NavBarScreen(),
+          duration: const Duration(seconds: 1),
+          transition: Transition.fadeIn,
+        );
+      } else {
+        Get.back();
+        Get.snackbar("Error", resData["message"]);
+      }
+    } catch (e) {
+      // Error occurred, handle no internet connection here
       Get.back();
-      Get.snackbar("Error", resData["message"]);
+      Get.snackbar("Error", "No internet connection");
     }
   }
 
   forgotPassword(context, forgotpassdata) async {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return const SpinKitRotatingCircle(
-            color: Colors.white,
-            size: 50.0,
-          );
-        });
-    final uri = Uri.parse("$apiGlobal/forgetpassword");
-    final headers = {'Content-Type': 'application/json'};
+    try {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return const SpinKitRotatingCircle(
+              color: Colors.white,
+              size: 50.0,
+            );
+          });
+      final uri = Uri.parse("$apiGlobal/forgetpassword");
+      final headers = {'Content-Type': 'application/json'};
 
-    final body = {
-      "email": forgotpassdata["email"],
-    };
-    http.Response response = await http.post(uri, body: body);
+      final body = {
+        "email": forgotpassdata["email"],
+      };
+      http.Response response = await http.post(uri, body: body);
 
-    var resData = json.decode(response.body.toString());
-    if (resData["status"] == true) {
-      AuthToken = resData["data"]["token"].toString();
+      var resData = json.decode(response.body.toString());
+      if (resData["status"] == true) {
+        AuthToken = resData["data"]["token"].toString();
+        Get.back();
+        Get.snackbar("Message", resData["message"]);
+        Get.to(
+          () => OTPVerificationScreen(),
+          duration: const Duration(seconds: 1),
+          transition: Transition.fadeIn,
+        );
+      } else {
+        Get.back();
+        Get.snackbar("Error", resData["message"]);
+      }
+    } catch (e) {
+      // Error occurred, handle no internet connection here
       Get.back();
-      Get.snackbar("Message", resData["message"]);
-      Get.to(
-        () => OTPVerificationScreen(),
-        duration: const Duration(seconds: 1),
-        transition: Transition.fadeIn,
-      );
-    } else {
-      Get.back();
-      Get.snackbar("Error", resData["message"]);
+      Get.snackbar("Error", "No internet connection");
     }
   }
 
@@ -221,150 +245,235 @@ class ApiService {
   }
 
   OTPVerification(context, OTPdata) async {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return const SpinKitRotatingCircle(
-            color: Colors.white,
-            size: 50.0,
-          );
-        });
-    final uri = Uri.parse("$apiGlobal/user/Verify");
-    Map<String, String> headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $AuthToken',
-    };
-    final data = {
-      "otp": OTPdata["otp"],
-      "deviceType": "android",
-      "deviceToken": deviceToken,
-    };
-    String jsonbody = json.encode(data);
+    try {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return const SpinKitRotatingCircle(
+              color: Colors.white,
+              size: 50.0,
+            );
+          });
+      final uri = Uri.parse("$apiGlobal/user/Verify");
+      Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $AuthToken',
+      };
+      final data = {
+        "otp": OTPdata["otp"],
+        "deviceType": "android",
+        "deviceToken": deviceToken,
+      };
+      String jsonbody = json.encode(data);
 
-    http.Response response = await http.post(
-      uri,
-      headers: headers,
-      body: jsonbody,
-    );
-    var resData = json.decode(response.body.toString());
-    if (resData["status"] == true) {
-      ResetToken = resData["data"]["token"].toString();
-      Get.back();
-      Get.snackbar("Message", resData["message"]);
-      Get.to(
-        () => const SetNewPasswordScreen(),
-        duration: const Duration(seconds: 1),
-        transition: Transition.fadeIn,
+      http.Response response = await http.post(
+        uri,
+        headers: headers,
+        body: jsonbody,
       );
-    } else {
+      var resData = json.decode(response.body.toString());
+      if (resData["status"] == true) {
+        ResetToken = resData["data"]["token"].toString();
+        Get.back();
+        Get.snackbar("Message", resData["message"]);
+        Get.to(
+          () => const SetNewPasswordScreen(),
+          duration: const Duration(seconds: 1),
+          transition: Transition.fadeIn,
+        );
+      } else {
+        Get.back();
+        Get.snackbar("Error", resData["message"]);
+      }
+    } catch (e) {
+      // Error occurred, handle no internet connection here
       Get.back();
-      Get.snackbar("Error", resData["message"]);
+      Get.snackbar("Error", "No internet connection");
     }
   }
 
   ResetPassword(context, newPasswordData) async {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return const SpinKitRotatingCircle(
-            color: Colors.white,
-            size: 50.0,
-          );
-        });
-    final uri = Uri.parse("$apiGlobal/user/resetpassword");
+    try {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return const SpinKitRotatingCircle(
+              color: Colors.white,
+              size: 50.0,
+            );
+          });
+      final uri = Uri.parse("$apiGlobal/user/resetpassword");
 
-    Map<String, String> headers = {
-      "Authorization": 'Bearer $ResetToken',
-      'Content-Type': 'application/json',
-    };
+      Map<String, String> headers = {
+        "Authorization": 'Bearer $ResetToken',
+        'Content-Type': 'application/json',
+      };
 
-    final data = {
-      "password": newPasswordData["password"],
-      "deviceType": "android",
-      "deviceToken": ResetToken,
-    };
-    String jsonbody = json.encode(data);
+      final data = {
+        "password": newPasswordData["password"],
+        "deviceType": "android",
+        "deviceToken": ResetToken,
+      };
+      String jsonbody = json.encode(data);
 
-    http.Response response = await http.post(
-      uri,
-      headers: headers,
-      body: jsonbody,
-    );
-    var resData = json.decode(response.body.toString());
-    if (resData["status"] == true) {
-      Get.back();
-      Get.snackbar("Message", resData["message"]);
-      Get.to(
-        () => const LoginScreen(),
-        duration: const Duration(seconds: 1),
-        transition: Transition.fadeIn,
+      http.Response response = await http.post(
+        uri,
+        headers: headers,
+        body: jsonbody,
       );
-    } else {
+      var resData = json.decode(response.body.toString());
+      if (resData["status"] == true) {
+        Get.back();
+        Get.snackbar("Message", resData["message"]);
+        Get.to(
+          () => const LoginScreen(),
+          duration: const Duration(seconds: 1),
+          transition: Transition.fadeIn,
+        );
+      } else {
+        Get.back();
+        Get.snackbar("Error", resData["message"]);
+      }
+    } catch (e) {
+      // Error occurred, handle no internet connection here
       Get.back();
-      Get.snackbar("Error", resData["message"]);
+      Get.snackbar("Error", "No internet connection");
     }
   }
 
   CreateProfile(context, completeProfile, profileimage) async {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return const SpinKitRotatingCircle(
-            color: Colors.white,
-            size: 50.0,
-          );
-        });
-    final uri = Uri.parse("$apiGlobal/profile");
+    try {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return const SpinKitRotatingCircle(
+              color: Colors.white,
+              size: 50.0,
+            );
+          });
+      final uri = Uri.parse("$apiGlobal/profile");
 
-    final headers = {'Content-Type': 'application/json'};
-    var MyFilename = path.basename(profileimage);
-    var request = http.MultipartRequest('POST', uri);
+      final headers = {'Content-Type': 'application/json'};
+      var MyFilename = path.basename(profileimage);
+      var request = http.MultipartRequest('POST', uri);
 
-    request.fields['name'] = completeProfile['name'];
-    request.fields["location"] = completeProfile["location"];
-    // request.fields['lat'] = completeProfile['lat'];
-    // request.fields['long'] = completeProfile['long'];
-    request.fields['phone'] = completeProfile['phone'];
-    request.fields['email'] = completeProfile['email'];
-    request.fields['password'] = completeProfile['password'];
-    request.fields['designation'] = completeProfile['designation'];
-    request.fields['deviceType'] = "android";
-    request.fields['deviceToken'] = deviceToken;
+      request.fields['name'] = completeProfile['name'];
+      request.fields["location"] = completeProfile["location"];
+      // request.fields['lat'] = completeProfile['lat'];
+      // request.fields['long'] = completeProfile['long'];
+      request.fields['phone'] = completeProfile['phone'];
+      request.fields['email'] = completeProfile['email'];
+      request.fields['password'] = completeProfile['password'];
+      request.fields['designation'] = completeProfile['designation'];
+      request.fields['deviceType'] = "android";
+      request.fields['deviceToken'] = deviceToken;
 
-    print("Device Token $deviceToken");
+      print("Device Token $deviceToken");
 
-    var multipartFile = await http.MultipartFile.fromPath('file', profileimage, filename: MyFilename, contentType: MediaType("image", "jpg"));
+      var multipartFile = await http.MultipartFile.fromPath('file', profileimage, filename: MyFilename, contentType: MediaType("image", "jpg"));
 
-    request.files.add(multipartFile);
-    request.headers.addAll(headers);
+      request.files.add(multipartFile);
+      request.headers.addAll(headers);
 
-    var resData = json.encode(request.fields);
-    var response = await request.send();
-    final res = await http.Response.fromStream(response);
-    log("res print${res.body}");
-    var profileData = json.decode(res.body.toString());
+      var resData = json.encode(request.fields);
+      var response = await request.send();
+      final res = await http.Response.fromStream(response);
+      log("res print${res.body}");
+      var profileData = json.decode(res.body.toString());
 
-    if (profileData["status"] == true) {
-      AuthToken = profileData["data"]["token"].toString();
-      toggle = profileData["data"]["notificationOn"];
-      usercontroller.User(userModel.fromJson(profileData));
+      if (profileData["status"] == true) {
+        AuthToken = profileData["data"]["token"].toString();
+        toggle = profileData["data"]["notificationOn"];
+        userid = profileData["data"]["_id"].toString();
+        usercontroller.User(userModel.fromJson(profileData));
 
-      // getAddressFromLatLng();
+        // getAddressFromLatLng();
 
+        Get.back();
+        Get.snackbar("Message", profileData['message']);
+        bottomcontroller.navBarChange(0);
+        Get.to(() => const NavBarScreen(), duration: const Duration(seconds: 1), transition: Transition.fadeIn);
+      } else {
+        Get.back();
+        Get.snackbar("Error", profileData['message']);
+      }
+    } catch (e) {
+      // Error occurred, handle no internet connection here
       Get.back();
-      Get.snackbar("Message", profileData['message']);
-      bottomcontroller.navBarChange(0);
-      Get.to(() => const NavBarScreen(), duration: const Duration(seconds: 1), transition: Transition.fadeIn);
-    } else {
-      Get.back();
-      Get.snackbar("Error", profileData['message']);
+      Get.snackbar("Error", "No internet connection");
     }
   }
 
   UpdateProfile(context, updateProfiledata, {UserProfileImage}) async {
+    try {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return const SpinKitRotatingCircle(
+              color: Colors.white,
+              size: 50.0,
+            );
+          });
+      final uri = Uri.parse("$apiGlobal/user/update");
+
+      final headers = {
+        'Authorization': 'Bearer $AuthToken',
+        'Content-Type': 'application/json',
+      };
+      dynamic MyFilename;
+      if (UserProfileImage != null) {
+        MyFilename = path.basename(UserProfileImage);
+      }
+      // var MyFilename = path.basename(UserProfileImage);
+      var request = http.MultipartRequest('POST', uri);
+
+      request.fields['name'] = updateProfiledata['name'];
+      // request.fields['lat'] = updateProfiledata['lat'];
+      // request.fields['long'] = updateProfiledata['long'];
+      request.fields['phone'] = updateProfiledata['phone'];
+      request.fields["location"] = updateProfiledata["location"];
+      // request.fields['email'] = updateProfiledata['email'];
+      request.fields['password'] = updateProfiledata['password'];
+      request.fields['designation'] = updateProfiledata['designation'];
+      if (UserProfileImage != null) {
+        var multipartFile = await http.MultipartFile.fromPath('file', UserProfileImage, filename: MyFilename, contentType: MediaType("image", "jpg"));
+        request.files.add(multipartFile);
+      }
+
+      // var multipartFile = await http.MultipartFile.fromPath('file', UserProfileImage, filename: MyFilename, contentType: MediaType("image", "jpg"));
+
+      request.headers.addAll(headers);
+
+      var resData = json.encode(request.fields);
+      var response = await request.send();
+      final res = await http.Response.fromStream(response);
+      log("res print${res.body}");
+      var profileData = json.decode(res.body.toString());
+
+      if (profileData["status"] == true) {
+        usercontroller.User(userModel.fromJson(profileData));
+        // getAddressFromLatLng();
+
+        Get.snackbar("Message", profileData['message']);
+
+        bottomcontroller.navBarChange(3);
+        Get.to(() => const NavBarScreen(), duration: const Duration(seconds: 1), transition: Transition.fadeIn);
+      } else {
+        Get.back();
+        Get.snackbar("Error", profileData['message']);
+      }
+    } catch (e) {
+      // Error occurred, handle no internet connection here
+      Get.back();
+      Get.snackbar("Error", "No internet connection");
+    }
+  }
+
+  rejectEvent(eventid, context) async {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -374,57 +483,6 @@ class ApiService {
             size: 50.0,
           );
         });
-    final uri = Uri.parse("$apiGlobal/user/update");
-
-    final headers = {
-      'Authorization': 'Bearer $AuthToken',
-      'Content-Type': 'application/json',
-    };
-    dynamic MyFilename;
-    if (UserProfileImage != null) {
-      MyFilename = path.basename(UserProfileImage);
-    }
-    // var MyFilename = path.basename(UserProfileImage);
-    var request = http.MultipartRequest('POST', uri);
-
-    request.fields['name'] = updateProfiledata['name'];
-    // request.fields['lat'] = updateProfiledata['lat'];
-    // request.fields['long'] = updateProfiledata['long'];
-    request.fields['phone'] = updateProfiledata['phone'];
-    request.fields["location"] = updateProfiledata["location"];
-    // request.fields['email'] = updateProfiledata['email'];
-    request.fields['password'] = updateProfiledata['password'];
-    request.fields['designation'] = updateProfiledata['designation'];
-    if (UserProfileImage != null) {
-      var multipartFile = await http.MultipartFile.fromPath('file', UserProfileImage, filename: MyFilename, contentType: MediaType("image", "jpg"));
-      request.files.add(multipartFile);
-    }
-
-    // var multipartFile = await http.MultipartFile.fromPath('file', UserProfileImage, filename: MyFilename, contentType: MediaType("image", "jpg"));
-
-    request.headers.addAll(headers);
-
-    var resData = json.encode(request.fields);
-    var response = await request.send();
-    final res = await http.Response.fromStream(response);
-    log("res print${res.body}");
-    var profileData = json.decode(res.body.toString());
-
-    if (profileData["status"] == true) {
-      usercontroller.User(userModel.fromJson(profileData));
-      // getAddressFromLatLng();
-
-      Get.snackbar("Message", profileData['message']);
-
-      bottomcontroller.navBarChange(3);
-      Get.to(() => const NavBarScreen(), duration: const Duration(seconds: 1), transition: Transition.fadeIn);
-    } else {
-      Get.back();
-      Get.snackbar("Error", profileData['message']);
-    }
-  }
-
-  rejectEvent(eventid, context) async {
     final uri = Uri.parse("$apiGlobal/removeuser/$eventid");
     var data = {"uid": userid};
     http.Response response = await http.patch(
@@ -433,7 +491,7 @@ class ApiService {
     );
     var resData = json.decode(response.body.toString());
     if (resData["status"] == true) {
-      Get.snackbar("Message", resData["message"]);
+      Get.snackbar("Message", "Event has been removed successfully");
       bottomcontroller.navBarChange(1);
       Get.to(() => const NavBarScreen(), duration: const Duration(seconds: 1), transition: Transition.fadeIn);
     } else {
@@ -442,6 +500,15 @@ class ApiService {
   }
 
   joinEvent(eventid, context) async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const SpinKitRotatingCircle(
+            color: Colors.white,
+            size: 50.0,
+          );
+        });
     final uri = Uri.parse("$apiGlobal/joinevent/$eventid");
     var data = {'uid': userid};
     http.Response response = await http.patch(
@@ -451,7 +518,7 @@ class ApiService {
     var resData = json.decode(response.body.toString());
     if (resData['status'] == true) {
       ApiService().geteventbyuser();
-      Get.snackbar('Message', resData['message']);
+      Get.snackbar('Message', "Event joined successfully");
       bottomcontroller.navBarChange(1);
       Get.to(() => NavBarScreen());
       // Navigator.of(context).push(MaterialPageRoute(
@@ -461,6 +528,11 @@ class ApiService {
       // Get.to(const NewsAndEventsScreen(
       //   value: '',
       // ));
+    } else {
+      Get.snackbar(
+        "message",
+        resData["message"],
+      );
     }
   }
 

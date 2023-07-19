@@ -124,6 +124,16 @@ class _MagzineScreenState extends State<MagzineScreen> {
 
                               String filename2 = fileName.split('/').last;
                               print(filename2);
+                              String capitalizeFirstLetter(String text) {
+                                if (text.isEmpty) return text;
+
+                                final firstLetter = text.substring(0, 1).toUpperCase();
+                                final remainingLetters = text.substring(1);
+                                return '$firstLetter$remainingLetters';
+                              }
+
+                              String AdminName = magazinecontroller.MagzineData[index]["user"]["name"];
+                              String capitalizedTitle = capitalizeFirstLetter(AdminName);
                               return Column(
                                 children: [
                                   Container(
@@ -164,7 +174,7 @@ class _MagzineScreenState extends State<MagzineScreen> {
                                                         crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
                                                           Text(
-                                                            magazinecontroller.MagzineData[index]["user"]["name"],
+                                                            capitalizedTitle,
                                                             style: txtstyleblue17,
                                                           ),
                                                           5.verticalSpace,

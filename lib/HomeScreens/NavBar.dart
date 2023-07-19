@@ -1,3 +1,5 @@
+import 'package:_uaw/Controllers/eventcontroller.dart';
+import 'package:_uaw/Controllers/notificationcontroller.dart';
 import 'package:_uaw/Global.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:_uaw/HomeScreens/Drawer.dart';
@@ -26,7 +28,9 @@ class NavBarScreen extends StatefulWidget {
 }
 
 class _NavBarScreenState extends State<NavBarScreen> with SingleTickerProviderStateMixin {
+  final notificationcontroller = Get.put(NotificationController());
   int _currentIndex = 0;
+  bool? shownotificationCircle;
   late PageController _pageController;
 
   late AnimationController _controller;
@@ -129,6 +133,7 @@ class _NavBarScreenState extends State<NavBarScreen> with SingleTickerProviderSt
                 onTap: () {
                   setState(() {
                     _onItemTapped(0);
+                    checking;
                   });
 
                   // Get.to(() => MainScreen());
@@ -170,55 +175,12 @@ class _NavBarScreenState extends State<NavBarScreen> with SingleTickerProviderSt
               // SizedBox(
               //   width: 30.w,
               // ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: () {
-                      setState(() {
-                        _onItemTapped(1);
-                      });
-
-                      // Get.to(() => MainScreen());
-                    },
-                    child: Container(
-                      width: 22.5.w,
-                      height: 22.5.h,
-                      child: Image.asset(
-                        "assets/images/Group 1300@3x.png",
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 5.h,
-                  ),
-                  Text(
-                    "Events",
-                    style: TextStyle(
-                      letterSpacing: -0.48,
-                      fontSize: 12.sp,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  5.verticalSpace,
-                  Container(
-                    height: 8.h,
-                    width: 15.w,
-                    decoration: BoxDecoration(
-                        color: bottomcontroller.navigationBarIndexValue == 1 ? Color(0xff38A8FE) : transparentcolor,
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(100.r), topRight: Radius.circular(100.r))),
-                  )
-                ],
-              ),
-
               GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onTap: () {
                   setState(() {
-                    _onItemTapped(2);
+                    _onItemTapped(1);
+                    checking;
                   });
 
                   // Get.to(() => MainScreen());
@@ -230,7 +192,7 @@ class _NavBarScreenState extends State<NavBarScreen> with SingleTickerProviderSt
                       width: 22.5.w,
                       height: 22.5.h,
                       child: Image.asset(
-                        "assets/images/Group 1301@3x.png",
+                        "assets/images/Group 1300@3x.png",
                         color: Colors.white,
                       ),
                     ),
@@ -238,7 +200,7 @@ class _NavBarScreenState extends State<NavBarScreen> with SingleTickerProviderSt
                       height: 5.h,
                     ),
                     Text(
-                      "Notifications",
+                      "Events",
                       style: TextStyle(
                         letterSpacing: -0.48,
                         fontSize: 12.sp,
@@ -251,11 +213,80 @@ class _NavBarScreenState extends State<NavBarScreen> with SingleTickerProviderSt
                       height: 8.h,
                       width: 15.w,
                       decoration: BoxDecoration(
-                          color: bottomcontroller.navigationBarIndexValue == 2 ? Color(0xff38A8FE) : transparentcolor,
+                          color: bottomcontroller.navigationBarIndexValue == 1 ? Color(0xff38A8FE) : transparentcolor,
                           borderRadius: BorderRadius.only(topLeft: Radius.circular(100.r), topRight: Radius.circular(100.r))),
                     )
                   ],
                 ),
+              ),
+
+              Stack(
+                clipBehavior: Clip.none,
+                alignment: Alignment.topRight,
+                children: [
+                  GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () {
+                      setState(() {
+                        _onItemTapped(2);
+                        checking;
+                      });
+
+                      // Get.to(() => MainScreen());
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                          width: 22.5.w,
+                          height: 22.5.h,
+                          child: Image.asset(
+                            "assets/images/Group 1301@3x.png",
+                            color: Colors.white,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5.h,
+                        ),
+                        Text(
+                          "Notifications",
+                          style: TextStyle(
+                            letterSpacing: -0.48,
+                            fontSize: 12.sp,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        5.verticalSpace,
+                        Container(
+                          height: 8.h,
+                          width: 15.w,
+                          decoration: BoxDecoration(
+                            color: bottomcontroller.navigationBarIndexValue == 2 ? Color(0xff38A8FE) : transparentcolor,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(100.r),
+                              topRight: Radius.circular(100.r),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    right: 15,
+                    top: 5,
+                    child: checking > 0
+                        ? Container(
+                            width: 16.w,
+                            height: 16.h,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.red,
+                            ),
+                          )
+                        : Container(),
+                  )
+                ],
               ),
               // SizedBox(
               //   width: 25.w,
@@ -265,6 +296,7 @@ class _NavBarScreenState extends State<NavBarScreen> with SingleTickerProviderSt
                 onTap: () {
                   setState(() {
                     _onItemTapped(3);
+                    checking;
                   });
 
                   // Get.to(() => MainScreen());

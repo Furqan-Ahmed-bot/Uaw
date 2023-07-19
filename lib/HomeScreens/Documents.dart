@@ -35,6 +35,16 @@ class DocumentsScreen extends StatefulWidget {
 }
 
 class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProviderStateMixin {
+  final documentcontroller = Get.put((DocumentController));
+
+  String capitalizeFirstLetter(String text) {
+    if (text.isEmpty) return text;
+
+    final firstLetter = text.substring(0, 1).toUpperCase();
+    final remainingLetters = text.substring(1);
+    return '$firstLetter$remainingLetters';
+  }
+
   dynamic fileName;
   Future<void> _downloadDocument(String url, String filename) async {
     final response = await http.get(Uri.parse(url));
@@ -196,6 +206,16 @@ class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProv
 
                                 String filename2 = fileName.split('/').last;
                                 print(filename2);
+                                String capitalizeFirstLetter(String text) {
+                                  if (text.isEmpty) return text;
+
+                                  final firstLetter = text.substring(0, 1).toUpperCase();
+                                  final remainingLetters = text.substring(1);
+                                  return '$firstLetter$remainingLetters';
+                                }
+
+                                String AdminName = documentcontroller.DocumentsData[index]["user"]["name"];
+                                String capitalizedTitle = capitalizeFirstLetter(AdminName);
                                 return Column(
                                   children: [
                                     Container(
@@ -228,7 +248,7 @@ class _DocumentsScreenState extends State<DocumentsScreen> with SingleTickerProv
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      documentcontroller.DocumentsData[index]["user"]["name"],
+                                                      capitalizedTitle,
                                                       style: txtstyleblue17,
                                                     ),
                                                     5.verticalSpace,

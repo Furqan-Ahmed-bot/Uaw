@@ -1,4 +1,5 @@
 import 'package:_uaw/Controllers/notificationcontroller.dart';
+import 'package:_uaw/Global.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:_uaw/HomeScreens/Documents.dart';
 import 'package:_uaw/HomeScreens/Magzines.dart';
@@ -30,6 +31,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     }
 
     super.initState();
+    checking = 0;
   }
 
   final GlobalKey<ScaffoldState> _key = GlobalKey();
