@@ -182,123 +182,104 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                                       : Container();
                                         },
                                         child: Container(
-                                          child: Slidable(
-                                            key: const ValueKey(0),
-                                            useTextDirection: false,
-                                            direction: Axis.horizontal,
-                                            closeOnScroll: true,
-                                            endActionPane: ActionPane(
-                                              dragDismissible: true,
-                                              extentRatio: 0.3,
-                                              children: [
-                                                25.horizontalSpace,
-                                                Image.asset(
-                                                  "assets/images/Icon metro-bin@3x.png",
-                                                  scale: 2.5,
-                                                )
-                                              ],
-                                              motion: ScrollMotion(),
+                                          child: Container(
+                                            // margin: EdgeInsets.symmetric(vertical: 5),
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(10.r),
+                                              color: white,
                                             ),
-                                            child: Container(
-                                              // margin: EdgeInsets.symmetric(vertical: 5),
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10.r),
-                                                color: white,
+                                            child: Padding(
+                                              padding: const EdgeInsets.symmetric(
+                                                horizontal: 10,
+                                                vertical: 15,
                                               ),
-                                              child: Padding(
-                                                padding: const EdgeInsets.symmetric(
-                                                  horizontal: 10,
-                                                  vertical: 15,
-                                                ),
-                                                child: Row(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  children: [
-                                                    Container(
-                                                      height: 45,
-                                                      width: 45,
-                                                      decoration: BoxDecoration(
-                                                          shape: BoxShape.circle,
-                                                          image: DecorationImage(
-                                                              image: AssetImage(
-                                                            "assets/images/Ellipse 68@3x.png",
-                                                          ))),
-                                                    ),
-                                                    10.horizontalSpace,
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        Text(notificationcontroller.NotificationData[index]["type"].toString(),
-                                                            style: txtstyleblue16),
-                                                        10.verticalSpace,
-                                                        Container(
-                                                          width: 0.5.sw,
-                                                          child: Text(
-                                                            notificationcontroller.NotificationData[index]["title"].toString(),
-                                                            style: txtstyleblue16,
-                                                            overflow: TextOverflow.visible,
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                    Spacer(),
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.end,
-                                                      children: [
-                                                        Container(
-                                                          width: 0.2.sw,
-                                                          child: Text(
-                                                            timeAgo,
-                                                            overflow: TextOverflow.clip,
-                                                            style: medium13black,
-                                                          ),
+                                              child: Row(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    height: 45,
+                                                    width: 45,
+                                                    decoration: BoxDecoration(
+                                                        shape: BoxShape.circle,
+                                                        image: DecorationImage(
+                                                            image: AssetImage(
+                                                          "assets/images/Ellipse 68@3x.png",
+                                                        ))),
+                                                  ),
+                                                  10.horizontalSpace,
+                                                  Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(notificationcontroller.NotificationData[index]["type"].toString(), style: txtstyleblue16),
+                                                      10.verticalSpace,
+                                                      Container(
+                                                        width: 0.5.sw,
+                                                        child: Text(
+                                                          notificationcontroller.NotificationData[index]["title"].toString(),
+                                                          style: txtstyleblue16,
+                                                          overflow: TextOverflow.visible,
                                                         ),
-                                                        10.verticalSpace,
-                                                        Container(
-                                                          width: 35.w,
-                                                          height: 35.h,
-                                                          decoration: BoxDecoration(
-                                                            borderRadius: BorderRadius.circular(4.r),
-                                                            image: DecorationImage(
-                                                                image: NetworkImage(
-                                                                    "https://uaw-api.thesuitchstaging.com/Uploads/${notificationcontroller.NotificationData[index]["thumbnail"]}"),
-                                                                fit: BoxFit.fill),
-                                                          ),
-                                                        )
+                                                      )
+                                                    ],
+                                                  ),
+                                                  Spacer(),
+                                                  Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                                    children: [
+                                                      Container(
+                                                        width: 0.2.sw,
+                                                        child: Text(
+                                                          timeAgo,
+                                                          overflow: TextOverflow.clip,
+                                                          style: medium13black,
+                                                        ),
+                                                      ),
+                                                      10.verticalSpace,
+                                                      Container(
+                                                        width: 35.w,
+                                                        height: 35.h,
+                                                        decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(4.r),
+                                                          image: DecorationImage(
+                                                              image: NetworkImage(
+                                                                  "https://uaw-api.thesuitchstaging.com/Uploads/${notificationcontroller.NotificationData[index]["thumbnail"]}"),
+                                                              fit: BoxFit.fill),
+                                                        ),
+                                                      )
 
-                                                        //  Container(
-                                                        //         width: 35.w,
-                                                        //         height: 35.h,
-                                                        //         decoration: BoxDecoration(
-                                                        //           borderRadius: BorderRadius.circular(4.r),
-                                                        //           image: DecorationImage(
-                                                        //               image: NetworkImage(
-                                                        //                 "https://uaw-api.thesuitchstaging.com/Uploads/${notificationcontroller.NotificationData[index]["data"]["thumbnail"]}",
-                                                        //               ),
-                                                        //               fit: BoxFit.fill),
-                                                        //         ),
-                                                        //         child: Image.asset(
-                                                        //           "assets/images/Group 1295@3x.png",
-                                                        //           scale: 15,
-                                                        //         ))
+                                                      //  Container(
+                                                      //         width: 35.w,
+                                                      //         height: 35.h,
+                                                      //         decoration: BoxDecoration(
+                                                      //           borderRadius: BorderRadius.circular(4.r),
+                                                      //           image: DecorationImage(
+                                                      //               image: NetworkImage(
+                                                      //                 "https://uaw-api.thesuitchstaging.com/Uploads/${notificationcontroller.NotificationData[index]["data"]["thumbnail"]}",
+                                                      //               ),
+                                                      //               fit: BoxFit.fill),
+                                                      //         ),
+                                                      //         child: Image.asset(
+                                                      //           "assets/images/Group 1295@3x.png",
+                                                      //           scale: 15,
+                                                      //         ))
 
-                                                        // type == "image"
-                                                        //     ? Container(
-                                                        //         width: 35.w,
-                                                        //         height: 35.h,
-                                                        //         decoration: BoxDecoration(
-                                                        //           borderRadius: BorderRadius.circular(4.r),
-                                                        //           image: DecorationImage(
-                                                        //               image: AssetImage(
-                                                        //                 attacheditemimage,
-                                                        //               ),
-                                                        //               fit: BoxFit.fill),
-                                                        //         ),
-                                                        //       )
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
+                                                      // type == "image"
+                                                      //     ? Container(
+                                                      //         width: 35.w,
+                                                      //         height: 35.h,
+                                                      //         decoration: BoxDecoration(
+                                                      //           borderRadius: BorderRadius.circular(4.r),
+                                                      //           image: DecorationImage(
+                                                      //               image: AssetImage(
+                                                      //                 attacheditemimage,
+                                                      //               ),
+                                                      //               fit: BoxFit.fill),
+                                                      //         ),
+                                                      //       )
+                                                    ],
+                                                  )
+                                                ],
                                               ),
                                             ),
                                           ),
