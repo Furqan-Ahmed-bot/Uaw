@@ -119,6 +119,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String capitalizeFirstLetter(String text) {
+      if (text.isEmpty) return text;
+
+      final firstLetter = text.substring(0, 1).toUpperCase();
+      final remainingLetters = text.substring(1);
+      return '$firstLetter$remainingLetters';
+    }
+
+    String AdminName = eventcontroller.EventsData[0]["user"]["name"];
+    String capitalizedTitle = capitalizeFirstLetter(AdminName);
     return WillPopScope(
       onWillPop: () => Future.value(false),
       child: Container(
@@ -362,7 +372,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    eventController.EventsData[0]['user']['name'],
+                                                    capitalizedTitle,
                                                     style: txtstyleblue17,
                                                   ),
                                                   5.verticalSpace,
@@ -619,6 +629,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                                 String filename2 = fileName.split('/').last;
                                                 String videoFileName = fileName.split('/').last;
+                                                String capitalizeFirstLetter(String text) {
+                                                  if (text.isEmpty) return text;
+
+                                                  final firstLetter = text.substring(0, 1).toUpperCase();
+                                                  final remainingLetters = text.substring(1);
+                                                  return '$firstLetter$remainingLetters';
+                                                }
+
+                                                String AdminName = feedsController.feedsData[index]["user"]["name"];
+                                                String capitalizedTitle = capitalizeFirstLetter(AdminName);
                                                 return Column(
                                                   children: [
                                                     GestureDetector(
@@ -657,7 +677,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   ),
                                                                   15.horizontalSpace,
                                                                   Text(
-                                                                    feedsController.feedsData[index]["user"]["name"],
+                                                                    capitalizedTitle,
                                                                     style: txtstyleblue17,
                                                                   )
                                                                 ],

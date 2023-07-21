@@ -595,14 +595,20 @@ class ApiService {
   }
 
   getVideo() async {
-    final videocontroller = Get.put(VideoController());
-    videocontroller.setLoading(true);
-    final uri = Uri.parse("$apiGlobal/video");
-    http.Response response = await http.get(uri);
-    var resData = jsonDecode(response.body.toString());
-    if (resData["status"] == true) {
-      videocontroller.setLoading(false);
-      videocontroller.getvideoData(resData["data"]);
+    try {
+      final videocontroller = Get.put(VideoController());
+      videocontroller.setLoading(true);
+      final uri = Uri.parse("$apiGlobal/video");
+      http.Response response = await http.get(uri);
+      var resData = jsonDecode(response.body.toString());
+      if (resData["status"] == true) {
+        videocontroller.setLoading(false);
+        videocontroller.getvideoData(resData["data"]);
+      }
+    } catch (e) {
+      // Error occurred, handle no internet connection here
+      Get.back();
+      Get.snackbar("Error", "No internet connection");
     }
   }
 
