@@ -151,7 +151,7 @@ class _AttendingEventDetailsScreenState extends State<AttendingEventDetailsScree
                     ),
                     15.horizontalSpace,
                     Text(
-                      widget.date,
+                      widget.timee,
                       style: textroboto14blue,
                     ),
                     // Text(

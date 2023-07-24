@@ -119,16 +119,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String capitalizeFirstLetter(String text) {
-      if (text.isEmpty) return text;
-
-      final firstLetter = text.substring(0, 1).toUpperCase();
-      final remainingLetters = text.substring(1);
-      return '$firstLetter$remainingLetters';
-    }
-
-    String AdminName = eventcontroller.EventsData[0]["user"]["name"];
-    String capitalizedTitle = capitalizeFirstLetter(AdminName);
     return WillPopScope(
       onWillPop: () => Future.value(false),
       child: Container(
@@ -372,7 +362,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    capitalizedTitle,
+                                                    "Admin",
                                                     style: txtstyleblue17,
                                                   ),
                                                   5.verticalSpace,
@@ -395,9 +385,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                               Get.to(
                                                   () => NewsAndEventsDetailsScreen(
                                                         name: eventController.EventsData[0]['user']['name'],
-                                                        date: eventController.EventsData[0]['createdAt'].toString(),
+                                                        eventTime: eventController.EventsData[0]['createdAt'].toString(),
                                                         description: eventController.EventsData[0]['description'],
-                                                        timee: eventController.EventsData[0]['createdAt'].toString(),
+                                                        eventDate: eventController.EventsData[0]['createdAt'].toString(),
                                                         title: eventController.EventsData[0]['title'],
                                                         location: eventController.EventsData[0]['location'].toString(),
                                                         eventimage: eventController.EventsData[0]['file'].length == 0

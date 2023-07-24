@@ -448,9 +448,9 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                   Get.to(
                                       () => NewsAndEventsDetailsScreen(
                                             name: capitalizedTitle,
-                                            date: eventController.EventsData[index]['createdAt'].toString(),
+                                            eventTime: eventController.EventsData[index]['time'].toString(),
                                             description: eventController.EventsData[index]['description'],
-                                            timee: eventController.EventsData[index]['date'].toString(),
+                                            eventDate: eventController.EventsData[index]['date'].toString(),
                                             title: eventController.EventsData[index]['title'],
                                             location: eventController.EventsData[index]['location'].toString(),
                                             eventimage: eventController.EventsData[0]['file'].length == 0
@@ -510,10 +510,10 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                                                   ],
                                                 ),
                                                 const Spacer(),
-                                                Image.asset(
-                                                  "assets/images/Group 1333@3x.png",
-                                                  scale: 3.5,
-                                                )
+                                                // Image.asset(
+                                                //   "assets/images/Group 1333@3x.png",
+                                                //   scale: 3.5,
+                                                // )
                                               ],
                                             ),
                                             15.verticalSpace,

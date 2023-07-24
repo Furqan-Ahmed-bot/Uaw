@@ -15,8 +15,8 @@ import '../Controller.dart';
 class NewsAndEventsDetailsScreen extends StatefulWidget {
   final eventid;
   final name;
-  final timee;
-  final date;
+  final eventTime;
+  final eventDate;
   final title;
   final description;
   final location;
@@ -24,8 +24,8 @@ class NewsAndEventsDetailsScreen extends StatefulWidget {
   const NewsAndEventsDetailsScreen({
     required this.eventid,
     required this.name,
-    required this.timee,
-    required this.date,
+    required this.eventTime,
+    required this.eventDate,
     required this.title,
     required this.description,
     required this.location,
@@ -139,7 +139,7 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                         ),
                         5.verticalSpace,
                         Text(
-                          widget.date,
+                          widget.eventDate,
                           style: textroboto12,
                         ),
                         // Text(
@@ -162,7 +162,7 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                         ),
                         5.horizontalSpace,
                         Text(
-                          widget.timee,
+                          widget.eventTime,
                           style: textroboto14blue,
                         ),
                         // Text(
@@ -220,7 +220,7 @@ class _NewsAndEventsDetailsScreenState extends State<NewsAndEventsDetailsScreen>
                     ),
                     15.horizontalSpace,
                     Text(
-                      widget.timee,
+                      widget.eventTime,
                       style: textroboto14blue,
                     ),
                     // Text(

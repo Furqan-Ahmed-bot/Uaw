@@ -319,6 +319,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     ),
                     5.verticalSpace,
                     TextFormField(
+                      enabled: false,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: white,

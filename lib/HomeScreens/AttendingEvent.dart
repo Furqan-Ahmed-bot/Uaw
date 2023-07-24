@@ -84,7 +84,7 @@ class _AttendingEventScreenState extends State<AttendingEventScreen> {
                                   Get.to(
                                       () => AttendingEventDetailsScreen(
                                             name: capitalizedTitle,
-                                            timee: eventcontroller.MyEvents[index]['date'],
+                                            timee: eventcontroller.MyEvents[index]['time'],
                                             date: eventcontroller.MyEvents[index]['date'],
                                             title: eventcontroller.MyEvents[index]['title'],
                                             description: eventcontroller.MyEvents[index]['description'],
@@ -144,10 +144,10 @@ class _AttendingEventScreenState extends State<AttendingEventScreen> {
                                                   ],
                                                 ),
                                                 const Spacer(),
-                                                Image.asset(
-                                                  "assets/images/Group 1333@3x.png",
-                                                  scale: 3.5,
-                                                )
+                                                // Image.asset(
+                                                //   "assets/images/Group 1333@3x.png",
+                                                //   scale: 3.5,
+                                                // )
                                               ],
                                             ),
                                             15.verticalSpace,
