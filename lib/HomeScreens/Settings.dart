@@ -5,6 +5,7 @@ import 'package:_uaw/Auth/Adminlogin.dart';
 import 'package:_uaw/Helpers.dart';
 import 'package:_uaw/HomeScreens/AboutApp.dart';
 import 'package:_uaw/HomeScreens/HelpAndSupport.dart';
+import 'package:_uaw/HomeScreens/NavBar.dart';
 import 'package:_uaw/HomeScreens/NewsAndEventDetails.dart';
 import 'package:_uaw/HomeScreens/PrivicyAndPolicy.dart';
 import 'package:_uaw/HomeScreens/SelectedDateEvents.dart';
@@ -90,7 +91,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           leading: Center(
             child: GestureDetector(
               onTap: () {
-                Get.back();
+                bottomcontroller.navBarChange(0);
+                Get.to(() => const NavBarScreen(), duration: const Duration(seconds: 1), transition: Transition.fadeIn);
               },
               child: Image.asset(
                 "assets/images/Group 1430@3x.png",

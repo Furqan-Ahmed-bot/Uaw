@@ -64,6 +64,7 @@ class ApiService {
     if (resData["status"] == true) {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool("userLogin", false);
+      prefs.clear();
       Get.snackbar("Message", resData["message"]);
       Get.to(() => const LoginScreen(), duration: const Duration(seconds: 1), transition: Transition.fadeIn);
     } else {
