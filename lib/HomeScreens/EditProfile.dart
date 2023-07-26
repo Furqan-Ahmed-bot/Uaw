@@ -163,150 +163,154 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+          // extendBody: true,
+          extendBodyBehindAppBar: true,
           backgroundColor: whitish,
           appBar: AppBar(
             leadingWidth: 80.w,
             elevation: 0,
             backgroundColor: Colors.transparent,
-            flexibleSpace: Stack(
-              alignment: Alignment.center,
-              clipBehavior: Clip.none,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                        // bottomLeft: Radius.circular(25.r),
-                        // bottomRight: Radius.circular(25.r),
-                        ),
-                    gradient: SweepGradient(
-                      colors: [
-                        whitecolor,
-                        bluishshade,
-                      ],
-                      center: Alignment.bottomLeft,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 120,
-                  child: GestureDetector(
-                      behavior: HitTestBehavior.translucent,
-                      onTap: () {
-                        getImage();
-                      },
-                      child: UserProfileImage != null
-                          ? CircleAvatar(
-                              radius: 60.r,
-                              // backgroundColor: Colors.transparent,
-                              backgroundImage: FileImage(
-                                File(UserProfileImage!.path),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.only(top: 90),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Container(
-                                      width: 40.w,
-                                      height: 40.h,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: bluishshade,
-                                      ),
-                                      child: Icon(
-                                        Icons.camera_alt,
-                                        color: whitecolor,
-                                        size: 20,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
-                          : CircleAvatar(
-                              radius: 65.r,
-                              backgroundColor: Colors.transparent,
-                              backgroundImage:
-                                  NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file.toString()}'),
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                  top: 90,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Container(
-                                      width: 70.w,
-                                      height: 70.h,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: bluishshade,
-                                      ),
-                                      child: Icon(
-                                        Icons.camera_alt,
-                                        color: whitecolor,
-                                        size: 15,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
-                      // Container(
-                      //   width: 140.w,
-                      //   height: 140.h,
-                      //   decoration: UserProfileImage == null
-                      //       ? BoxDecoration(
-                      //           shape: BoxShape.circle,
-                      //           border: Border.all(
-                      //             width: 5.w,
-                      //             color: Color(0xff00000026),
-                      //           ),
-                      //           image: DecorationImage(
-                      //             image: NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file.toString()}'),
-                      //             fit: BoxFit.fitWidth,
-                      //           ),
-                      //         )
-                      //       : BoxDecoration(
-                      //           shape: BoxShape.circle,
-                      //           border: Border.all(
-                      //             width: 5.w,
-                      //             color: Color(0xff00000026),
-                      //           ),
-                      //           image: DecorationImage(
-                      //             image: FileImage(
-                      //               File(UserProfileImage!.path),
-                      //             ),
-                      //             fit: BoxFit.fitWidth,
-                      //           ),
-                      //         ),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.end,
-                      //     crossAxisAlignment: CrossAxisAlignment.end,
-                      //     children: [
-                      //       Container(
-                      //         width: 40.w,
-                      //         height: 40.h,
-                      //         decoration: BoxDecoration(
-                      //           shape: BoxShape.circle,
-                      //           color: bluishshade,
-                      //         ),
-                      //         child: Icon(
-                      //           Icons.camera_alt,
-                      //           color: whitecolor,
-                      //           size: 20,
-                      //         ),
-                      //       )
-                      //     ],
-                      //   ),
-                      // ),
 
-                      ),
-                ),
-              ],
-            ),
+            // flexibleSpace: Stack(
+
+            //   alignment: Alignment.center,
+            //   clipBehavior: Clip.none,
+            //   children: [
+            //     Container(
+            //       decoration: BoxDecoration(
+            //         borderRadius: BorderRadius.only(
+            //             // bottomLeft: Radius.circular(25.r),
+            //             // bottomRight: Radius.circular(25.r),
+            //             ),
+            //         gradient: SweepGradient(
+            //           colors: [
+            //             whitecolor,
+            //             bluishshade,
+            //           ],
+            //           center: Alignment.bottomLeft,
+            //         ),
+            //       ),
+            //     ),
+            //     Positioned(
+            //       top: 120,
+            //       child: GestureDetector(
+            //           behavior: HitTestBehavior.translucent,
+            //           onTap: () {
+            //             getImage();
+            //           },
+            //           child: UserProfileImage != null
+            //               ? CircleAvatar(
+            //                   radius: 60.r,
+            //                   // backgroundColor: Colors.transparent,
+            //                   backgroundImage: FileImage(
+            //                     File(UserProfileImage!.path),
+            //                   ),
+            //                   child: Padding(
+            //                     padding: EdgeInsets.only(top: 90),
+            //                     child: Row(
+            //                       mainAxisAlignment: MainAxisAlignment.end,
+            //                       crossAxisAlignment: CrossAxisAlignment.end,
+            //                       children: [
+            //                         Container(
+            //                           width: 40.w,
+            //                           height: 40.h,
+            //                           decoration: BoxDecoration(
+            //                             shape: BoxShape.circle,
+            //                             color: bluishshade,
+            //                           ),
+            //                           child: Icon(
+            //                             Icons.camera_alt,
+            //                             color: whitecolor,
+            //                             size: 20,
+            //                           ),
+            //                         ),
+            //                       ],
+            //                     ),
+            //                   ),
+            //                 )
+            //               : CircleAvatar(
+            //                   radius: 65.r,
+            //                   backgroundColor: Colors.transparent,
+            //                   backgroundImage:
+            //                       NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file.toString()}'),
+            //                   child: Padding(
+            //                     padding: EdgeInsets.only(
+            //                       top: 90,
+            //                     ),
+            //                     child: Row(
+            //                       mainAxisAlignment: MainAxisAlignment.end,
+            //                       crossAxisAlignment: CrossAxisAlignment.end,
+            //                       children: [
+            //                         Container(
+            //                           width: 70.w,
+            //                           height: 70.h,
+            //                           decoration: BoxDecoration(
+            //                             shape: BoxShape.circle,
+            //                             color: bluishshade,
+            //                           ),
+            //                           child: Icon(
+            //                             Icons.camera_alt,
+            //                             color: whitecolor,
+            //                             size: 15,
+            //                           ),
+            //                         ),
+            //                       ],
+            //                     ),
+            //                   ),
+            //                 )
+            //           // Container(
+            //           //   width: 140.w,
+            //           //   height: 140.h,
+            //           //   decoration: UserProfileImage == null
+            //           //       ? BoxDecoration(
+            //           //           shape: BoxShape.circle,
+            //           //           border: Border.all(
+            //           //             width: 5.w,
+            //           //             color: Color(0xff00000026),
+            //           //           ),
+            //           //           image: DecorationImage(
+            //           //             image: NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file.toString()}'),
+            //           //             fit: BoxFit.fitWidth,
+            //           //           ),
+            //           //         )
+            //           //       : BoxDecoration(
+            //           //           shape: BoxShape.circle,
+            //           //           border: Border.all(
+            //           //             width: 5.w,
+            //           //             color: Color(0xff00000026),
+            //           //           ),
+            //           //           image: DecorationImage(
+            //           //             image: FileImage(
+            //           //               File(UserProfileImage!.path),
+            //           //             ),
+            //           //             fit: BoxFit.fitWidth,
+            //           //           ),
+            //           //         ),
+            //           //   child: Row(
+            //           //     mainAxisAlignment: MainAxisAlignment.end,
+            //           //     crossAxisAlignment: CrossAxisAlignment.end,
+            //           //     children: [
+            //           //       Container(
+            //           //         width: 40.w,
+            //           //         height: 40.h,
+            //           //         decoration: BoxDecoration(
+            //           //           shape: BoxShape.circle,
+            //           //           color: bluishshade,
+            //           //         ),
+            //           //         child: Icon(
+            //           //           Icons.camera_alt,
+            //           //           color: whitecolor,
+            //           //           size: 20,
+            //           //         ),
+            //           //       )
+            //           //     ],
+            //           //   ),
+            //           // ),
+
+            //           ),
+            //     ),
+            //   ],
+            // ),
             leading: GestureDetector(
               onTap: () {
                 Get.back();
@@ -358,6 +362,73 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               key: _formKey,
               child: Column(
                 children: [
+                  Container(
+                    height: 200.h,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          // bottomLeft: Radius.circular(25.r),
+                          // bottomRight: Radius.circular(25.r),
+                          ),
+                      gradient: SweepGradient(
+                        colors: [
+                          whitecolor,
+                          bluishshade,
+                        ],
+                        center: Alignment.bottomLeft,
+                      ),
+                    ),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      clipBehavior: Clip.none,
+                      children: [
+                        Positioned(
+                          top: 120.h,
+                          child: GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            onTap: () {
+                              getImage();
+                            },
+                            child: UserProfileImage != null
+                                ? CircleAvatar(
+                                    radius: 60.r,
+                                    // backgroundColor: Colors.transparent,
+                                    backgroundImage: FileImage(
+                                      File(UserProfileImage!.path),
+                                    ),
+                                  )
+                                : CircleAvatar(
+                                    radius: 65.r,
+                                    backgroundColor: Colors.transparent,
+                                    backgroundImage:
+                                        NetworkImage('https://uaw-api.thesuitchstaging.com:3090/${UserController.user.data!.image!.file.toString()}'),
+                                  ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 70.w, top: 10.h),
+                    child: GestureDetector(
+                      onTap: () {
+                        getImage();
+                      },
+                      child: Container(
+                        width: 40.w,
+                        height: 40.h,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: bluishshade,
+                        ),
+                        child: Icon(
+                          Icons.camera_alt,
+                          color: whitecolor,
+                          size: 20,
+                        ),
+                      ),
+                    ),
+                  ),
                   // Container(
                   //   width: 1.sw,
                   //   height: 180.h,
@@ -456,7 +527,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   //   ],
                   // ),
 
-                  80.verticalSpace,
+                  10.verticalSpace,
                   Text(
                     UserController.user.data!.name.toString(),
                     style: textroboto20,

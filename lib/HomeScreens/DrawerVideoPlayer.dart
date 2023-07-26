@@ -357,24 +357,18 @@ class _DrawerVideoPlayerSvreenState extends State<DrawerVideoPlayerSvreen> {
     _initializeVideoPlayer();
   }
 
-  @override
-  void dispose() {
-    _chewieController!.dispose();
-    super.dispose();
-  }
-
   Future<void> _initializeVideoPlayer() async {
-    final videoPlayerController = VideoPlayerController.network(widget.videoFilePath);
+    final chewieControllerr = VideoPlayerController.network(widget.videoFilePath);
 
-    await videoPlayerController.initialize();
+    await chewieControllerr.initialize();
 
     setState(() {
       _chewieController = ChewieController(
         placeholder: Container(
           color: Colors.black,
         ),
-        aspectRatio: videoPlayerController.value.aspectRatio,
-        videoPlayerController: videoPlayerController,
+        aspectRatio: chewieControllerr.value.aspectRatio,
+        videoPlayerController: chewieControllerr,
         autoPlay: false,
         looping: true,
       );
@@ -422,6 +416,15 @@ class _DrawerVideoPlayerSvreenState extends State<DrawerVideoPlayerSvreen> {
         _chewieController!.pause();
       }
     });
+  }
+
+  @override
+  void dispose() {
+    print("?");
+    _chewieController!.pause();
+    _chewieController!.dispose();
+
+    super.dispose();
   }
 
   @override

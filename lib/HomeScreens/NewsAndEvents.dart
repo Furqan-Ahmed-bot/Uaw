@@ -237,7 +237,7 @@ class _NewsAndEventsScreenState extends State<NewsAndEventsScreen> {
                 if (pickedDate != null) {
                   // print("date"+
                   //     pickedDate.toString()); //pickedDate output format => 2021-03-10 00:00:00.000
-                  String formattedDate = DateFormat('d MMM yyyy').format(pickedDate);
+                  String formattedDate = DateFormat('dd MMM yyyy').format(pickedDate);
                   // print("final date" + formattedDate);
                   setState(() {
                     _date = formattedDate;
