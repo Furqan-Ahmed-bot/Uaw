@@ -1,21 +1,11 @@
 import 'dart:io';
 
-import 'package:_uaw/Auth/APIService/API.dart';
-import 'package:_uaw/HomeScreens/NavBar.dart';
-import 'package:_uaw/HomeScreens/Notification.dart';
-import 'package:_uaw/HomeScreens/Settings.dart';
-import 'package:_uaw/HomeScreens/VideoScreen.dart';
-import 'package:_uaw/HomeScreens/VideosScreen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 
-import '../Controller.dart';
-import '../Global.dart';
-
 class FireBaseNotificationServices {
-  final bottomcontroller = Get.put(BottomController());
   //initialising firebase message plugin
   FirebaseMessaging messaging = FirebaseMessaging.instance;
 
@@ -47,9 +37,6 @@ class FireBaseNotificationServices {
       if (Platform.isAndroid) {
         initLocalNotifications(context, message);
         showNotification(message);
-        checking++;
-
-        print("notification count ${checking}");
       }
     });
   }
@@ -151,8 +138,6 @@ class FireBaseNotificationServices {
 
   void handleMessage(BuildContext context, RemoteMessage message) {
     print("MESSAGE: " + message.data.toString());
-    bottomcontroller.navBarChange(2);
-    Get.to(() => const NavBarScreen());
 
     // Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationScreen()));
 

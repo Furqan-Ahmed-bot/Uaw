@@ -26,6 +26,7 @@ Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  gettoken();
   runApp(MyApp());
   _handleLocationPermission(ContextAction);
 }
@@ -78,7 +79,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    gettoken();
+    
     getData();
     notificationServices.requestNotificationPermission();
     notificationServices.forgroundMessage();

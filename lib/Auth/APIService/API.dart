@@ -35,9 +35,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 String apiGlobal = "https://uaw-api.thesuitchstaging.com:3090/api/v1";
 final bottomcontroller = Get.put(BottomController());
 final usercontroller = Get.put(UserController());
-
-class ApiService {
-  logoutAPI(context) async {
+class ApiService {  logoutAPI(context) async {
     showDialog(
         context: context,
         barrierDismissible: false,
